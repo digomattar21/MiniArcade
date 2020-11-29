@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Tetris</title>
+</head>
+<body>
+    
+    <div id='title-container'>
+        <img id='title' src="/img/tetris_title.png" alt="tetris title">
+    </div>
+    <div id = 'choose'>
+        <p>Choose a level to start</p>
+    </div>
+    
+    <div id='buttons'>
+        <div id='container'>
+        <button id = 'hard'>Hard</button>
+        <button id = 'medium'>Medium</button>
+        <button id = 'easy'>Easy</button>
+        </div>
+    </div>
+    
+    <div id ='canvas-container'>
+        <canvas id='canvas' width='240' height="400"></canvas>
+    </div>
+    <script type='module'src ='/js/src/main.js'></script>
+    <script src='./js/src/game.js'></script>
+    
+</body>
+</html>

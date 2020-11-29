@@ -1,0 +1,120 @@
+
+html{
+    background-image: linear-gradient(black, rgb(15, 15, 15));
+}
+
+#canvas{
+    border: 1px solid darkgray;
+}
+
+#canvas-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 2%;
+}
+
+#title-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#title{
+    align-self: center;
+    width:30%;
+}
+
+#buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#hard {
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+	background-color:#d0451b;
+	border-radius:3px;
+	border:1px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #854629;
+}
+#hard:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+#hard:active {
+	position:relative;
+	top:1px;
+}
+
+#easy {
+	box-shadow:inset 0px 1px 0px 0px #3dc21b;
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	background-color:#44c767;
+	border-radius:3px;
+	border:1px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2f6627;
+}
+#easy:hover {
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	background-color:#5cbf2a;
+}
+#easy:active {
+	position:relative;
+	top:1px;
+}
+
+#medium {
+	box-shadow:inset 0px 1px 0px 0px #9ec6f0;
+	background:linear-gradient(to bottom, #1756d4 5%, #465c9c 100%);
+	background-color:#1756d4;
+	border-radius:3px;
+	border:1px solid #3d8eb3;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #2e2a66;
+}
+#medium:hover {
+	background:linear-gradient(to bottom, #465c9c 5%, #1756d4 100%);
+	background-color:#465c9c;
+}
+#medium:active {
+	position:relative;
+	top:1px;
+}
+
+#choose {
+    text-align: center;
+    font-size: 1.2rem;
+    color:white;
+}
+
+
+
+
+
+
+
