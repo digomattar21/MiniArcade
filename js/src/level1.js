@@ -11,39 +11,40 @@ class Game {
         }
         this.isOver = false;
         this.time =0;
-        this.lastTime;
-        this.dt;
         this.arena;
-        
+        this.colors=['red','green', 'darkblue', 'lightblue', 'purple', 'yellow', 'orange'];
+        this.score;
+        this.gameOver;
+        this.levelCleared;
     }
 
     start (){
         this.arena = this.createMatrix(12,20);
+        this.score = new Score(this.canvas);
         
-        
-    
         const update = () => {
             this.draw();
-            
 
             if (!this.isOver){
                 window.requestAnimationFrame(update)
                 this.time++;
+            } else{
+                this.gameOver = new GameOver(this.score.getScore());
+                this.gameOver.gameOverScreen();
             }
 
-            if (this.time % 80==0 && this.level=='easy'){
+            if (this.time % 60==0 && this.level=='easy'){
+                this.playerDrop(); 
+            }
+            else if (this.time % 40==0 && this.level=='medium'){
                 this.playerDrop();
             }
-            else if (this.time % 60==0 && this.level=='medium'){
-                this.playerDrop();
-            }
-            else if (this.time % 40==0 && this.level=='hard'){
+            else if (this.time % 20==0 && this.level=='hard'){
                 this.playerDrop();
             }
             
         }
-        console.log(this.arena)
-
+        
         window.requestAnimationFrame(update);
 
     }
@@ -55,11 +56,13 @@ class Game {
         this.drawMatrix(this.player.matrix, this.player.pos);
     }
 
-    drawMatrix(matrix, offset){
+    drawMatrix(matrix, offset,color){
         matrix.forEach((row,y)=>{
             row.forEach((value,x)=>{
                 if (value!==0){
-                    this.ctx.fillStyle='red';
+                    this.ctx.fillStyle= this.colors[value];
+                    this.ctx.strokeStyle='black'
+                    //this.ctx.strokeRect(x+offset.x+0.1,y+offset.y+0.1,1,1)
                     this.ctx.fillRect(x + offset.x,y+offset.y,1,1);
                 }
             })
@@ -105,6 +108,20 @@ class Game {
            this.resetPiece()
            this.player.pos.y=0;
        }
+       //check if row is filled then clear it 
+       let newArray = [0,0,0,0,0,0,0,0,0,0,0,0]
+
+       for (let y = 0; y<this.arena.length;y++){
+        let rowFilled = this.arena[y].every(function (e){
+            return e>0;
+        })
+        if (rowFilled){
+            this.arena.splice(y,1);
+            this.arena.unshift(newArray);
+            this.score.rowScore();
+        }
+        ;
+    }
     }
 
     move(dir) {
@@ -128,9 +145,6 @@ class Game {
                 return;
             }
         }
-            
-
-        
 
     }
 
@@ -156,15 +170,18 @@ class Game {
 
 
     resetPiece() {
-        this.player.matrix = this.createPiece(Math.floor(Math.random()*7))
-        this.player.pos.y =0;
-        this.player.pos.x = 6
-    }
-    
-    createPiece(x) {
-        
-        console.log(x)
+        this.player.matrix = this.createPiece(Math.floor(Math.random()*7));
+        this.player.pos.y =-1;
+        this.player.pos.x = 6;
 
+        if(this.collision(this.arena, this.player)){
+            this.isOver=true;
+
+        }
+ 
+    }
+
+    createPiece(x) {
         switch(x){
             case 0:
                 return [
@@ -175,39 +192,39 @@ class Game {
             case 1:
                 return [
                     [0,0,0],
-                    [1,1,1],
+                    [2,2,2],
                     [0,0,0]
                 ]
             case 2:
                 return [
                     [0,0,0],
-                    [0,1,1],
-                    [0,1,1]
+                    [0,3,3],
+                    [0,3,3]
                 ]
             case 3:
                 return [
                     [0,0,0],
-                    [1,0,0],
-                    [1,1,1]
+                    [4,0,0],
+                    [4,4,4]
                 ]
 
             case 4:
                 return [
                     [0,0,0],
-                    [0,0,1],
-                    [1,1,1]
+                    [0,0,5],
+                    [5,5,5]
                 ]
             case 5:
                 return [
                     [0,0,0],
-                    [1,1,0],
-                    [0,1,1]
+                    [6,6,0],
+                    [0,6,6]
                 ]
             case 6:
                 return [
                     [0,0,0],
-                    [0,1,1],
-                    [1,1,0]
+                    [0,7,7],
+                    [7,7,0]
                 ]
             default:
                 break;
