@@ -1,10 +1,12 @@
 
 html{
-    background-image: linear-gradient(black, rgb(15, 15, 15));
+    background-color: black;
 }
 
 #canvas{
-    border: 1px solid darkgray;
+	border: 1px solid darkgray;
+	margin-top: -5%;
+	margin-bottom: 10%;
 }
 
 #canvas-container{
@@ -21,10 +23,13 @@ html{
     justify-content: space-around;
     align-items: center;
 }
-
-#title{
-    align-self: center;
-    width:30%;
+ 
+#choose{
+	margin-top: -3%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
 }
 
 #buttons{
@@ -48,6 +53,8 @@ html{
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #854629;
+	height:20rem;
+	width: 20rem;
 }
 #hard:hover {
 	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
@@ -72,6 +79,8 @@ html{
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2f6627;
+	height:20rem;
+	width: 20rem;
 }
 #easy:hover {
 	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
@@ -96,6 +105,8 @@ html{
 	padding:6px 24px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #2e2a66;
+	height:20rem;
+	width: 20rem;
 }
 #medium:hover {
 	background:linear-gradient(to bottom, #465c9c 5%, #1756d4 100%);
@@ -106,11 +117,9 @@ html{
 	top:1px;
 }
 
-#choose {
-    text-align: center;
-    font-size: 1.2rem;
-    color:white;
-}
+
+
+
 
 
 
