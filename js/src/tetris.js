@@ -28,13 +28,13 @@ class Game {
             this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height)
             this.ctx.fillStyle='red';
             this.ctx.font="2px 'Press Start 2P'"
-            this.ctx.fillText('READY?', 0,8)
+            this.ctx.fillText('READY?', 0.1,8)
             }
             WebFont.load({
                 google: {families: ['Press Start 2P']},
               active: renderText1
         });
-        },10)
+        },100)
 
 
         setTimeout(()=>{
