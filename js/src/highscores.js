@@ -33,7 +33,7 @@ myform.addEventListener('submit', (event) =>{
     var formData = new FormData(myform);
     formData.append("score", score)
 
-    fetch("./scores.php",{
+    fetch("/js/src/scores.php",{
         method:"post",
         body: formData
     })
@@ -51,7 +51,7 @@ myform.addEventListener('submit', (event) =>{
 
 
 function get_scores(callback){
-    let file = 'scores.json';
+    let file = '/js/src/scores.json';
     fetch(file,{cache:'no-cache'})
     .then(function(response){
         if (response.status !==200){
