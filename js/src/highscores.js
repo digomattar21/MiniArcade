@@ -35,9 +35,9 @@ myform.addEventListener('submit', (event) =>{
     formData.append("score", score)
     let file1 = "https://digomattar21.github.io/MiniArcade/js/src/scores.php"
 
-    fetch(file1,{
+    fetch('/js/src/scores.php',{
         method:'POST',
-        body: formData
+        body: JSON.stringify(formData)
     })
     .then (function (response){
         console.log('to aqui');
