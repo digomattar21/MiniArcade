@@ -19,16 +19,17 @@ class Game {
         this.inc;
         this.nextLvlWarning = true;
         this.next;
+        this.noGameArea = 7;
     }
     
     start (interval){
         setTimeout(()=>{
             let renderText1 = ()=>{
             this.ctx.fillStyle= 'black';
-            this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height)
+            this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400)
             this.ctx.fillStyle='red';
             this.ctx.font="2px 'Press Start 2P'"
-            this.ctx.fillText('READY?', 0.1,8)
+            this.ctx.fillText('READY?', 0.1,this.noGameArea+ 8)
             }
             WebFont.load({
                 google: {families: ['Press Start 2P']},
@@ -40,10 +41,10 @@ class Game {
         setTimeout(()=>{
         let renderText2 = ()=>{
         this.ctx.fillStyle= 'black';
-        this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height)
+        this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400)
         this.ctx.fillStyle='red';
         this.ctx.font="2px 'Press Start 2P'"
-        this.ctx.fillText('SET?', 3,8)
+        this.ctx.fillText('SET?', 3,this.noGameArea+8)
         }
         WebFont.load({
             google: {families: ['Press Start 2P']},
@@ -54,10 +55,10 @@ class Game {
     setTimeout(()=>{
         let renderText3 = ()=>{
         this.ctx.fillStyle= 'black';
-        this.ctx.fillRect(0,0,this.canvas.width, this.canvas.height)
+        this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400)
         this.ctx.fillStyle='red';
         this.ctx.font="2px 'Press Start 2P'"
-        this.ctx.fillText('GO!', 3,8)
+        this.ctx.fillText('GO!', 3,this.noGameArea+8)
         }
         WebFont.load({
             google: {families: ['Press Start 2P']},
@@ -68,9 +69,11 @@ class Game {
 
         
         setTimeout(()=>{
+            
             this.arena = this.createMatrix(12,20);
             const update = () => {
             this.draw();
+
 
             
 
@@ -134,6 +137,7 @@ class Game {
         }
 
         this.drawNextPiece();
+        this.drawLine();
         
     }
 
@@ -143,7 +147,19 @@ class Game {
                 if (value!==0){
                 this.ctx.fillStyle= this.colors[value-1];
                 //this.ctx.strokeRect(x+offset.x+0.1,y+offset.y+0.1,1,1)
-                this.ctx.fillRect(x + offset.x,y+offset.y,1,1);
+                this.ctx.fillRect(x + offset.x,this.noGameArea+y+offset.y,1,1);
+                } 
+            })
+        })
+    }
+
+    drawPiece(matrix, offset){
+        matrix.forEach((row,y)=>{
+            row.forEach((value,x)=>{
+                if (value!==0){
+                this.ctx.fillStyle= this.colors[value-1];
+                //this.ctx.strokeRect(x+offset.x+0.1,y+offset.y+0.1,1,1)
+                this.ctx.fillRect(x + offset.x,y+offset.y,1.1,1.2);
                 } 
             })
         })
@@ -186,7 +202,7 @@ class Game {
            this.player.pos.y--;
            this.merge(this.arena, this.player);
            this.resetPiece();
-           this.player.pos.y=0;
+           this.player.pos.y=3;
        }
        //check if row is filled then clear it 
        let newArray = [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -204,7 +220,7 @@ class Game {
         };
     }
         if (filled!=0){
-            this.inc = 12*filled;
+            this.inc = 10*filled*(filled);
             this.scoreAnimation();
             this.score+=this.inc;
         }
@@ -260,25 +276,38 @@ class Game {
     resetPiece() {
         this.nextPiece.push(Math.floor(Math.random()*7)+1);
         this.player.matrix = this.createPiece(this.nextPiece[0]);
-        this.player.pos.y =0;
+        this.player.pos.y = 3;
         this.player.pos.x = 6;
         this.nextPiece.shift();
         this.next = this.nextPiece[0];
+
         if(this.collision(this.arena, this.player)){
             this.isOver=true;
+            console.log(true)
 
         }
  
     }
 
+   
+
     drawNextPiece () {
         if (this.next){
             this.ctx.fillStyle = 'white';
             this.ctx.font='1px georgia';
-            this.ctx.fillText('Next',0.2,1);
+            this.ctx.fillText('Next',5,1.2);
             let matrix = this.createPiece(this.next)
-            this.drawMatrix(matrix, {x:0.6,y:1.2})  
+            this.drawPiece(matrix, {x:5,y:1.9})  
         }
+    }
+
+    drawLine() {
+        this.ctx.strokeStyle = 'darkgray';
+        this.ctx.lineWidth=0.1
+        this.ctx.beginPath();
+        this.ctx.moveTo(0,this.noGameArea-0.5);
+        this.ctx.lineTo(this.canvas.width, this.noGameArea-0.5);
+        this.ctx.stroke();
     }
 
 
@@ -289,7 +318,7 @@ class Game {
     scoreAnimation() {
         this.ctx.font = '2px "Press Start 2p"';
         this.ctx.fillStyle='green';
-        this.ctx.fillText(`+${this.inc}`,5.5,15);
+        this.ctx.fillText(`+${this.inc}`,5.5,this.noGameArea+15);
 
     }
 
@@ -297,7 +326,7 @@ class Game {
     drawScore() {
         this.ctx.font='0.7px "Press Start 2P"';
         this.ctx.fillStyle='blue';
-        this.ctx.fillText(`Score:${this.score}`,5.5,1)
+        this.ctx.fillText(`Score:${this.score}`,5.5,this.noGameArea+1)
     }
 
     createPiece(x) {

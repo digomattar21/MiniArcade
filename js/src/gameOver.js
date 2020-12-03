@@ -15,13 +15,13 @@ class GameOver {
     renderText() {
         let renderText = () => {
         this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(0,5.5,12, 6)
+        this.ctx.fillRect(0,12.5,12, 6)
         this.ctx.font = `1.2px 'Press Start 2P'`;
         this.ctx.fillStyle='red';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
-        this.ctx.fillText('Game Over', 6, 7);
-        this.ctx.fillText(`Score: ${this.score}`,6,10)
+        this.ctx.fillText('Game Over', 6, 14);
+        this.ctx.fillText(`Score: ${this.score}`,6,16)
         console.log('entrou')
       }
       WebFont.load({

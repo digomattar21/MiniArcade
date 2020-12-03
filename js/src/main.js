@@ -19,11 +19,16 @@ window.onload = () =>{
     function startTetris(interval){
         let element=document.getElementById('canvas-container');
         let canvas = document.createElement('canvas');
+        let tetrisInstructions = document.createElement('img')
+        tetrisInstructions.src='/img/commands.png';
+
         canvas.id='canvas';
-        canvas.height= 400;
+        canvas.height= 540;
         canvas.width=240;
         element.appendChild(canvas);
+        element.appendChild(tetrisInstructions);
         let canvasTetris = document.getElementById('canvas')
+
 
         //Removing the buttons that user pressed to choose game
         let buttonsContainer = document.getElementById('container')
