@@ -33,17 +33,19 @@ myform.addEventListener('submit', (event) =>{
 
     var formData = new FormData(myform);
     formData.append("score", score)
+    let file1 = "https://digomattar21.github.io/MiniArcade/js/src/scores.php"
 
-    fetch("https://digomattar21.github.io/MiniArcade/js/src/scores.php",{
-        method:"post",
+    fetch(file1,{
+        method:'POST',
         body: formData
     })
     .then (function (response){
+        console.log('to aqui');
         return response.text();
     })
     .then (function(text){
         reset_Form();
-        //console.log(text);
+        console.log(text);
     })
     .catch(function(err){
         Errors.innerHTML= err;
