@@ -33,7 +33,7 @@ myform.addEventListener('submit', (event) =>{
     var formData = new FormData(myform);
     formData.append("score", score)
 
-    fetch("/js/src/scores.php",{
+    fetch("js/src/scores.php",{
         method:"post",
         body: formData
     })
@@ -49,9 +49,10 @@ myform.addEventListener('submit', (event) =>{
     })
 })
 
+let scores;
 
 function get_scores(callback){
-    let file = '/js/src/scores.json';
+    let file = 'js/src/scores.json';
     fetch(file,{cache:'no-cache'})
     .then(function(response){
         if (response.status !==200){
@@ -59,7 +60,7 @@ function get_scores(callback){
         }
 
         response.json().then(function(data){
-            let scores = JSON.stringify(data);
+            scores = JSON.stringify(data);
             console.log(scores);
             callback(scores);
         });
@@ -71,14 +72,16 @@ function get_scores(callback){
 }
 
 
-var list_scores = (scores) => {
+var list_scores = function(scores){
     let object = JSON.parse(scores);
-    let lowest_score = object[9].score;
+    //console.log(scores)
+    //console.log(object)
+    let lowest_score = object[8].score;
     document.getElementById('lowscore').value = lowest_score;
 
     for (let i=0; i<object.length;i++){
         let li = document.createElement('LI');
-        let text = document.createTextNode(object[i].name+" ... " + objectc[i].score)
+        let text = document.createTextNode(object[i].name+"-----> " + object[i].score)
         li.appendChild(text);
         List.appendChild(li);
 
@@ -94,4 +97,6 @@ var list_scores = (scores) => {
             li.setAttribute("class", "top3");
         }
     }
+    myform.style.visibility='hidden';
 }
+

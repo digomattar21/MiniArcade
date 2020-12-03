@@ -56,7 +56,40 @@ html{
 #highscores-container{
 	visibility: hidden;
 	color: white;
-	margin-bottom: 50%;
+	margin-bottom: 10%;
+}
+
+#highscores-img{
+	height: 100px;
+	width: 200px;
+	margin-top: 0%;
+}
+
+
+
+#highscores{
+	margin-top: -5%;
+	margin-right: 0%;
+	color: white;
+	font-size: 1.5rem;
+
+}
+
+.top1{
+	font-size: 2rem;
+	color: lightgreen;
+
+}
+
+.top2{
+	font-size: 1.8rem;
+	color: lightblue;
+}
+
+.top3{
+	font-size: 1.6rem;
+	color:orange;
+
 }
 
 

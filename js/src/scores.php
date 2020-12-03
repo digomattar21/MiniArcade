@@ -5,7 +5,8 @@ $player_score = (int) $_POST[player_score];
 
 $player_array = array("name"=>$player_name, "score"=>$player_score);
 
-$highscoresJSON = file_get_contents("scores.json");
+$highscoresJSON = file_get_contents("/js/src/scores.json");
+
 $highscore_array = json_decode($highscoresJSON, true);
 
 $key = 0;
@@ -33,7 +34,7 @@ if ($player_score>$highscore_array[9][score]){
     }
 
     $json_scores = json_encode($highscores);
-    file_put_contents("scores.json", $json_scores);
+    file_put_contents("/js/src/scores.json", $json_scores);
     var_dump('HOORAY!');
 }
 else {
