@@ -16,7 +16,8 @@ function reset_Form() {
 myform.addEventListener('submit', (event) =>{
     event.preventDefault();
     var tenth_score = document.getElementById('lowscore').value;
-    var this_score = document.getElementById('score').value
+    var this_score = document.getElementById('score').value;
+    console.log(this_score)
 
     if (this_score> tenth_score){
         //document.getElementById('message').src='/img/highscore.gif'
@@ -27,13 +28,13 @@ myform.addEventListener('submit', (event) =>{
     else{
         //document.getElementById('message').src='/img/goodluck.gif'
         //document.getElementById('message').alt='highscore'
-        console.log('entrou');
+        console.log('no highscore');
     }
 
     var formData = new FormData(myform);
     formData.append("score", score)
 
-    fetch("js/src/scores.php",{
+    fetch("/js/src/scores.php",{
         method:"post",
         body: formData
     })
@@ -42,7 +43,7 @@ myform.addEventListener('submit', (event) =>{
     })
     .then (function(text){
         reset_Form();
-        console.log(text);
+        //console.log(text);
     })
     .catch(function(err){
         Errors.innerHTML= err;
@@ -52,7 +53,7 @@ myform.addEventListener('submit', (event) =>{
 let scores;
 
 function get_scores(callback){
-    let file = 'js/src/scores.json';
+    let file = '/js/src/scores.json';
     fetch(file,{cache:'no-cache'})
     .then(function(response){
         if (response.status !==200){
@@ -61,7 +62,7 @@ function get_scores(callback){
 
         response.json().then(function(data){
             scores = JSON.stringify(data);
-            console.log(scores);
+            //console.log(scores);
             callback(scores);
         });
     })
@@ -78,6 +79,7 @@ var list_scores = function(scores){
     //console.log(object)
     let lowest_score = object[8].score;
     document.getElementById('lowscore').value = lowest_score;
+    console.log(lowest_score);
 
     for (let i=0; i<object.length;i++){
         let li = document.createElement('LI');
