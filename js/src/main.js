@@ -150,8 +150,5 @@ window.onload = () =>{
             btnDiv.childNodes[0].childNodes[0].childNodes[2].id ='easy';
 
 
-        
-
-
     }
     }
