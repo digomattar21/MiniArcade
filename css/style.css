@@ -96,7 +96,7 @@ html{
 
 #hard {
 	box-shadow:inset 0px 1px 0px 0px #cf866c;
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	border-radius:3px;
@@ -108,7 +108,7 @@ html{
 	width: 20rem;
 }
 #hard:hover {
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	transform: scale(1.2);
@@ -120,7 +120,7 @@ html{
 
 #easy {
 	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	border-radius:3px;
@@ -132,7 +132,7 @@ html{
 	width: 20rem;
 }
 #easy:hover {
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	transform: scale(1.2);
 }
@@ -143,7 +143,7 @@ html{
 
 #medium {
 	box-shadow:inset 0px 1px 0px 0px #9ec6f0;
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	border-radius:3px;
@@ -155,7 +155,7 @@ html{
 	width: 20rem;
 }
 #medium:hover {
-	background-image: url('/img/tetris.png');
+	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	background-size:100% ;
 	transform: scale(1.2);
