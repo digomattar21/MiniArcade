@@ -1,42 +1,56 @@
 window.onload = () =>{
     document.getElementById('hard').onclick = () => {
+        var btnsCopy = document.getElementById('buttons').cloneNode(true);
         startTetris(20);
         clicked++
+        document.getElementById('homeButton').addEventListener('click', ()=>{
+            renderHomeScreen(btnsCopy)
+        })
     }
 
     document.getElementById('medium').onclick = () => {
+        var btnsCopy = document.getElementById('buttons').cloneNode(true);
         startTetris(40)
         clicked++
+        document.getElementById('homeButton').addEventListener('click', ()=>{
+            renderHomeScreen(btnsCopy)
+        })
     }
 
     document.getElementById('easy').onclick = () => {
+        var btnsCopy = document.getElementById('buttons').cloneNode(true);
         startTetris(60);
         clicked++
+        document.getElementById('homeButton').addEventListener('click', ()=>{
+            renderHomeScreen(btnsCopy)
+        })
     }
+
+
 
     let clicked = 1;
 
     function startTetris(interval){
         let element=document.getElementById('canvas-container');
         let canvas = document.createElement('canvas');
-        let tetrisInstructions = document.createElement('img')
-        tetrisInstructions.src='./commands.png';
+        let tetrisInstructions = document.createElement('img');
+        tetrisInstructions.src='https://www.canva.com/design/DAEPOP_rM4c/view';
 
         canvas.id='canvas';
         canvas.height= 540;
         canvas.width=240;
         element.appendChild(canvas);
         element.appendChild(tetrisInstructions);
-        let canvasTetris = document.getElementById('canvas')
+        
+        let canvasTetris = document.getElementById('canvas');
 
 
         //Removing the buttons that user pressed to choose game
-        let buttonsContainer = document.getElementById('container')
+        let buttonsContainer = document.getElementById('container');
 
         while (buttonsContainer.hasChildNodes()){
             buttonsContainer.removeChild(buttonsContainer.firstChild);
         }
-
 
 
         if (clicked==1){
@@ -48,7 +62,7 @@ window.onload = () =>{
                 var game = new Game(canvasTetris, 'easy');
             }
             
-            game.start(interval);
+            game.start(interval)
             WebFont.load({
                 google: {families: ['Press Start 2P']},
               active: game.scoreAnimation()
@@ -83,4 +97,41 @@ window.onload = () =>{
     });
     
     }
-}
+
+    function renderHomeScreen (btnsCopy) {
+        let canvasContainer = document.getElementById('canvas-container')
+        var canvas = document.getElementById('canvas')
+        var ctx = canvas.getContext('2d');
+        var btnDiv = document.getElementsByClassName('btn');
+        var buttons = document.getElementById('buttons')
+        var homeBtn = document.getElementById('homeButton')
+        var container = document.getElementById('container')
+
+            //while(btnDiv.hasChildNodes){
+                //btnDiv.removeChild(btnDiv.firstChild);
+                //while(btnDiv.childNode.hasChildNodes){
+                  //  btnDiv.childNode.removeChild(btnDiv.childNode.firstChild)
+                //}
+            //}
+            
+            container.remove();
+            buttons.remove();
+            while (canvasContainer.hasChildNodes){
+                canvasContainer.removeChild(canvasContainer.firstChild);
+            }
+            
+
+
+            btnDiv.innerHTML=`<div id="buttons">
+            <div id="container">
+            <button id = "hard">Tetris Hard</button>
+            <button id = "medium">Tetris Medium</button>
+            <button id = "easy">Tetris Easy</button>
+            </div>
+        </div>`;
+
+        
+
+
+    }
+    }

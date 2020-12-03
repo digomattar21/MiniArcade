@@ -18,6 +18,7 @@ html{
 	margin-left: 30%;
 }
 
+
 #canvas-container > img {
 	width: 250px;
 	height: 150px;
@@ -48,24 +49,22 @@ html{
 
 #hard {
 	box-shadow:inset 0px 1px 0px 0px #cf866c;
-	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
-	background-color:#d0451b;
+	background-image: url('/img/tetris.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
 	border-radius:3px;
 	border:1px solid #942911;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
 	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #854629;
-	height:20rem;
+	height:13rem;
 	width: 20rem;
 }
 #hard:hover {
-	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
-	background-color:#bc3315;
+	background-image: src('/img/tetris.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	transform: scale(1.2);
 }
 #hard:active {
 	position:relative;
@@ -74,24 +73,21 @@ html{
 
 #easy {
 	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
-	background-color:#44c767;
+	background-image: url('/img/tetris.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
 	border-radius:3px;
 	border:1px solid #18ab29;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
 	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2f6627;
-	height:20rem;
+	height:13rem;
 	width: 20rem;
 }
 #easy:hover {
-	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
-	background-color:#5cbf2a;
+	background-image: url('/img/tetris.png');
+	background-repeat: no-repeat;
+	transform: scale(1.2);
 }
 #easy:active {
 	position:relative;
@@ -100,24 +96,23 @@ html{
 
 #medium {
 	box-shadow:inset 0px 1px 0px 0px #9ec6f0;
-	background:linear-gradient(to bottom, #1756d4 5%, #465c9c 100%);
-	background-color:#1756d4;
+	background-image: url('/img/tetris.png');
+	background-repeat: no-repeat;
+	background-size: 100%;
 	border-radius:3px;
 	border:1px solid #3d8eb3;
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:13px;
 	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #2e2a66;
-	height:20rem;
+	height:13rem;
 	width: 20rem;
 }
 #medium:hover {
-	background:linear-gradient(to bottom, #465c9c 5%, #1756d4 100%);
-	background-color:#465c9c;
+	background-image: url('/img/tetris.png');
+	background-repeat: no-repeat;
+	background-size:100% ;
+
+	transform: scale(1.2);
 }
 #medium:active {
 	position:relative;
@@ -125,7 +120,37 @@ html{
 }
 
 
+#homebutton-container{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
 
+
+#homeButton {
+	visibility: hidden;
+	background:linear-gradient(to bottom, #bd1dcc 5%, #c337e6 100%);
+	background-color:#bd1dcc;
+	border-radius:28px;
+	border:1px solid #ae19cc;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #9519bf;
+}
+#homeButton:hover {
+	background:linear-gradient(to bottom, #c337e6 5%, #bd1dcc 100%);
+	background-color:#c337e6;
+}
+#homeButton:active {
+	position:relative;
+	top:1px;
+}
 
 
 
