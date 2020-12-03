@@ -20,7 +20,7 @@ window.onload = () =>{
         let element=document.getElementById('canvas-container');
         let canvas = document.createElement('canvas');
         let tetrisInstructions = document.createElement('img')
-        tetrisInstructions.src='/./img/commands.png';
+        tetrisInstructions.src='./commands.png';
 
         canvas.id='canvas';
         canvas.height= 540;
