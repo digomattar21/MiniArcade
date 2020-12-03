@@ -6,7 +6,7 @@ $player_score = strip_tags( trim( (int)$_POST[score]) );
 
 $player_array = array("name"=>$player_name, "score"=>$player_score);
 
-$highscoresJSON = file_get_contents("../src/scores.jsons");
+$highscoresJSON = file_get_contents("../src/scores.json");
 
 $highscore_array = json_decode($highscoresJSON, true);
 
