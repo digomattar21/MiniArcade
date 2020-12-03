@@ -7,6 +7,7 @@ html{
 	border: 1px solid darkgray;
 	margin-top: -5%;
 	margin-bottom: 10%;
+	margin-right: 10%;
 }
 
 #canvas-container{
@@ -15,14 +16,14 @@ html{
     align-items: center;
 	justify-content: space-around;
 	margin-top: 2%;
-	margin-left: 30%;
 }
 
 
 #canvas-container > img {
 	width: 250px;
 	height: 150px;
-	margin-right: 40%;
+	margin-right: 30%;
+
 }
 
 #title-container{
@@ -47,6 +48,19 @@ html{
     justify-content: space-around;
 }
 
+#commands{
+	visibility: hidden;
+	margin-left:0%;
+}
+
+#highscores-container{
+	visibility: hidden;
+	color: white;
+	margin-bottom: 50%;
+}
+
+
+
 #hard {
 	box-shadow:inset 0px 1px 0px 0px #cf866c;
 	background-image: url('/img/tetris.png');
@@ -61,7 +75,7 @@ html{
 	width: 20rem;
 }
 #hard:hover {
-	background-image: src('/img/tetris.png');
+	background-image: url('/img/tetris.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	transform: scale(1.2);
@@ -85,7 +99,7 @@ html{
 	width: 20rem;
 }
 #easy:hover {
-	background-image: url('/img/tetris.png');
+	background-image: url('img/tetris.png');
 	background-repeat: no-repeat;
 	transform: scale(1.2);
 }
@@ -111,7 +125,6 @@ html{
 	background-image: url('/img/tetris.png');
 	background-repeat: no-repeat;
 	background-size:100% ;
-
 	transform: scale(1.2);
 }
 #medium:active {
@@ -124,7 +137,7 @@ html{
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: center;
+	align-items: center;margin-top: -5%;
 }
 
 
@@ -138,7 +151,7 @@ html{
 	cursor:pointer;
 	color:#ffffff;
 	font-family:Arial;
-	font-size:17px;
+	font-size:1.5rem;
 	padding:16px 31px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #9519bf;
@@ -149,13 +162,41 @@ html{
 }
 #homeButton:active {
 	position:relative;
-	top:1px;
+	top:0px;
+}
+
+#restart {
+	visibility: hidden;
+	background:linear-gradient(to bottom, #bd1dcc 5%, #c337e6 100%);
+	background-color:#bd1dcc;
+	border-radius:28px;
+	border:1px solid #ae19cc;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:1.5rem;
+	padding:16px 31px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #9519bf;
+	margin-left: 5%;
+}
+#restart:hover {
+	background:linear-gradient(to bottom, #c337e6 5%, #bd1dcc 100%);
+	background-color:#c337e6;
+}
+#restart:active {
+	position:relative;
+	top:0px;
 }
 
 
-
-
-
+.highscores-container{
+	margin-right: 15%;
+	margin-bottom: 60%;
+	color:white;
+	width:300%;
+}
 
 
 

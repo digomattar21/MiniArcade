@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <title>RM's Arcade</title>
 </head>
-<body>
+<body onload="get_scores(list_scores)">
     
     <div id='title-container'>
         <img id='title'src="img/rodrigosarcade.png" alt="rodrigo's arcade">
@@ -24,15 +24,36 @@
     </div>
     </div>
     
-    <div id ='canvas-container'></div>
+    <div id ='canvas-container'>
+        <div id = 'highscores-container'>
+            <h2>High Score List</h2>
+            <div id ='error'></div>
+            <ol id ='highscores'></ol>
+            <input type="hidden" id='lowscore'>
+            <form id='myform'>
+                Your Name: <br>
+                <input type="text" name='player_name' class='greenBtn' id='player_name' placeholder="Type your name" required></input>
+                <br>Your Score: <br>
+                <input type="text" name ='player_score' class='greenBtn' type= 'number' value =0 id='score' readonly></input><br>
+                <button type='submit' class='submitBtn'>Submit</button>
+            </form>
+            
+        </div>
+        <div>
+            <img id='commands' src="img/commands.png" alt="command"></img>
+        </div>
+        
+    </div>
 
     <div id ='homebutton-container'>
         <button id='homeButton'>Home</button>
+        <button id='restart'>Restart</button>
     </div>
         
     <script src ='js/src/main.js'></script>
     <script src='js/src/tetris.js'></script>
     <script src='js/src/gameOver.js'></script>
+    <script type='text/javascript' src='js/src/highscores.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     
     

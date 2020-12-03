@@ -20,6 +20,7 @@ class Game {
         this.nextLvlWarning = true;
         this.next;
         this.noGameArea = 7;
+        this.restartBtn = document.getElementById('restart');
     }
     
     start (interval){
@@ -69,10 +70,16 @@ class Game {
 
         
         setTimeout(()=>{
+            let restartBtn = document.getElementById('restart')
             
             this.arena = this.createMatrix(12,20);
             const update = () => {
             this.draw();
+
+            restartBtn.addEventListener('click',()=>{
+                this.isOver=true;
+                
+            })
 
 
             
@@ -84,6 +91,10 @@ class Game {
                 window.cancelAnimationFrame(update);
                 var gameOver = new GameOver(this.score,this.canvas);
                 gameOver.renderText();
+                restartBtn.onclick=()=>{
+                    this.resetEverything();
+                    this.start(40);
+                }
                 
             }
 
