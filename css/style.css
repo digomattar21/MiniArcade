@@ -118,7 +118,7 @@ html{
 
 #bbBtn {
 	box-shadow:inset 0px 1px 0px 0px #3dc21b;
-	background-image: url('../img/tetris.png');
+	background-image: url('../img/brickbreaker.png');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	border-radius:3px;
@@ -130,7 +130,7 @@ html{
 	width: 20rem;
 }
 #bbBtn:hover {
-	background-image: url('../img/tetris.png');
+	background-image: url('../img/brickbreaker.png');
 	background-repeat: no-repeat;
 	transform: scale(1.2);
 }
@@ -139,29 +139,6 @@ html{
 	top:1px;
 }
 
-#medium {
-	box-shadow:inset 0px 1px 0px 0px #9ec6f0;
-	background-image: url('../img/tetris.png');
-	background-repeat: no-repeat;
-	background-size: 100%;
-	border-radius:3px;
-	border:1px solid #3d8eb3;
-	display:inline-block;
-	cursor:pointer;
-	padding:6px 24px;
-	height:13rem;
-	width: 20rem;
-}
-#medium:hover {
-	background-image: url('../img/tetris.png');
-	background-repeat: no-repeat;
-	background-size:100% ;
-	transform: scale(1.2);
-}
-#medium:active {
-	position:relative;
-	top:1px;
-}
 
 
 #homebutton-container{

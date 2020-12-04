@@ -1,22 +1,15 @@
 window.onload = () =>{
     document.getElementById('hard').onclick = () => {
-        startTetris(20);
+        startTetris(40);
 
         document.getElementById('homeButton').addEventListener('click', ()=>{
             renderHomeScreen()
         })
     }
 
-    document.getElementById('medium').onclick = () => {
-        startTetris(40);
-        
-        document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen();
-        })
-    }
 
     document.getElementById('bbBtn').onclick = () => {
-        //startTetris(60);
+        startBrickBreaker()
     
         document.getElementById('homeButton').addEventListener('click', ()=>{
             renderHomeScreen();
@@ -24,11 +17,12 @@ window.onload = () =>{
         })
     }
 
-    var restartBtn = document.getElementById('restart')
+    //var restartBtn = document.getElementById('restart')
     var homeBtn = document.getElementById('homeButton')
     var btnsCopy = document.getElementById('buttons').cloneNode(true);
     var highscoreContainer = document.getElementById('highscores-container');
-    var mainImg = document.getElementById('title')
+    var mainImg = document.getElementById('title');
+    let canvasContainer = document.getElementById('canvas-container');
 
     
 
@@ -58,16 +52,15 @@ window.onload = () =>{
             buttonsContainer.removeChild(buttonsContainer.firstChild);
         }
 
-
-            if (interval==20){
-                var game = new Game(canvasTetris, 'hard');
-            } else if (interval===40){
-                var game = new Game(canvasTetris, 'medium');
-            }
-            game.start(interval)
-            WebFont.load({
-                google: {families: ['Press Start 2P']},
-              active: game.scoreAnimation()
+        if (interval==40){
+            var game = new Game(canvasTetris, 'hard');
+        }
+        game.start(interval)
+        
+        
+        WebFont.load({
+            google: {families: ['Press Start 2P']},
+        active: game.scoreAnimation()
         });
         
         
@@ -101,9 +94,48 @@ window.onload = () =>{
     homeBtn.scrollIntoView(false)
     }
 
+
+    function startBrickBreaker(){
+        let canvasContainer = document.getElementById('canvas-container');
+        let bbCanvas = document.createElement('canvas');
+        let container = document.getElementById('homebutton-container');
+
+        
+
+        container.removeChild(container.lastChild);
+        homeBtn.style.visibility='visible';
+        
+
+        while(canvasContainer.hasChildNodes()){
+            canvasContainer.removeChild(canvasContainer.firstChild)
+        }
+
+        bbCanvas.id='canvas';
+        bbCanvas.height=320;
+        bbCanvas.width=480;
+        bbCanvas.style.marginLeft='10%';
+        canvasContainer.appendChild(bbCanvas);
+
+        let canvas = document.getElementById('canvas');
+
+        let buttonsContainer = document.getElementById('container');
+
+        while (buttonsContainer.hasChildNodes()){
+            buttonsContainer.removeChild(buttonsContainer.firstChild);
+        }
+
+
+        //Initialize game
+        var game1 = new bbGame(canvas, 4);
+        game1.renderStartScreen()
+
+    }
+
+
+
+
+
     function renderHomeScreen () {
-        let canvasContainer = document.getElementById('canvas-container')
-        var canvas = document.getElementById('canvas')
         var btnDiv = document.getElementById('btn');
         var homeBtn = document.getElementById('homeButton');
         var commands = document.getElementById('commands').cloneNode(true);
@@ -138,7 +170,7 @@ window.onload = () =>{
         container.appendChild(button2);
         container.appendChild(button3);
 
-        restartBtn.style.visibility='hidden';
+        //restartBtn.style.visibility='hidden';
         homeBtn.style.visibility='hidden';
 
         canvasContainer.appendChild(highscoreContainer);

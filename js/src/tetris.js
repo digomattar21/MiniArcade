@@ -76,14 +76,6 @@ class Game {
             const update = () => {
             this.draw();
 
-            restartBtn.addEventListener('click',()=>{
-                this.isOver=true;
-                
-            })
-
-
-            
-
             if (!this.isOver){
                 window.requestAnimationFrame(update)
                 this.time++;
@@ -91,10 +83,6 @@ class Game {
                 window.cancelAnimationFrame(update);
                 var gameOver = new GameOver(this.score,this.canvas);
                 gameOver.renderText();
-                restartBtn.onclick=()=>{
-                    this.resetEverything();
-                    this.start(40);
-                }
                 
             }  
             
