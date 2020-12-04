@@ -118,7 +118,7 @@ html{
 	top:1px;
 }
 
-#easy {
+#bbBtn {
 	box-shadow:inset 0px 1px 0px 0px #3dc21b;
 	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
@@ -131,12 +131,12 @@ html{
 	height:13rem;
 	width: 20rem;
 }
-#easy:hover {
+#bbBtn:hover {
 	background-image: url('../img/tetris.png');
 	background-repeat: no-repeat;
 	transform: scale(1.2);
 }
-#easy:active {
+#bbBtn:active {
 	position:relative;
 	top:1px;
 }

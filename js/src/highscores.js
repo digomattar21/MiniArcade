@@ -33,7 +33,7 @@ myform.addEventListener('submit', (event) =>{
 
     var formData = new FormData(myform);
     formData.append("score", score)
-    let file1 = "https://digomattar21.github.io/MiniArcade/js/src/scores.php"
+    //let file1 = "https://digomattar21.github.io/MiniArcade/js/src/scores.php"
 
     fetch('/js/src/scores.php',{
         method:'POST',
@@ -64,8 +64,9 @@ function get_scores(callback){
 
         response.json().then(function(data){
             scores = JSON.stringify(data);
-            //console.log(scores);
+            console.log(scores);
             callback(scores);
+            return scores
         });
     })
     .catch(function(err){
@@ -79,9 +80,8 @@ var list_scores = function(scores){
     let object = JSON.parse(scores);
     //console.log(scores)
     //console.log(object)
-    let lowest_score = object[8].score;
+    let lowest_score = object[9].score;
     document.getElementById('lowscore').value = lowest_score;
-    console.log(lowest_score);
 
     for (let i=0; i<object.length;i++){
         let li = document.createElement('LI');

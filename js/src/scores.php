@@ -2,7 +2,7 @@
 
 $player_name = strip_tags(  trim( $_POST[player_name] ) );
 
-$player_score = strip_tags( trim( (int)$_POST[score]) );
+$player_score = strip_tags( trim( (int)$_POST[player_score]) );
 
 $player_array = array("name"=>$player_name, "score"=>$player_score);
 
@@ -13,7 +13,7 @@ $highscore_array = json_decode($highscoresJSON, true);
 $key = 0;
 $highscores = array();
 
-if ($player_score>$highscore_array[8][score]){
+if ($player_score>$highscore_array[9][score]){
 
     foreach ($highscore_array as $k => $value){
         $score = $value[score];

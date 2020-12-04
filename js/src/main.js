@@ -2,33 +2,34 @@ window.onload = () =>{
     document.getElementById('hard').onclick = () => {
         startTetris(20);
         homeBtn.style.visibility='visible';
-        restartBtn.style.visibility='visible'
-        highscoreContainer.style.visibility= 'visible'
-        clicked++
+        restartBtn.style.visibility='visible';
+        highscoreContainer.style.visibility= 'visible';
+        clicked++;
         document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen(btnsCopy)
+            renderHomeScreen()
         })
     }
 
     document.getElementById('medium').onclick = () => {
-        startTetris(40)
-        clicked++
+        startTetris(40);
+        clicked++;
         homeBtn.style.visibility='visible';
         restartBtn.style.visibility='visible';
-        highscoreContainer.style.visibility= 'visible'
+        highscoreContainer.style.visibility= 'visible';
         document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen(btnsCopy)
+            renderHomeScreen()
         })
     }
 
-    document.getElementById('easy').onclick = () => {
-        startTetris(60);
-        homeBtn.style.visibility='visible'
+    document.getElementById('bbBtn').onclick = () => {
+        //startTetris(60);
+        homeBtn.style.visibility='visible';
         restartBtn.style.visibility='visible';
-        highscoreContainer.style.visibility= 'visible'
-        clicked++
+
+        
+        clicked++;
         document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen(btnsCopy)
+            renderHomeScreen()
         })
     }
 
@@ -109,45 +110,44 @@ window.onload = () =>{
     homeBtn.scrollIntoView(false)
     }
 
-    function renderHomeScreen (btnsCopy) {
+    function renderHomeScreen () {
         let canvasContainer = document.getElementById('canvas-container')
         var canvas = document.getElementById('canvas')
         var ctx = canvas.getContext('2d');
-        var btnDiv = document.getElementsByClassName('btn');
-        var buttons = document.getElementById('buttons')
-        var homeBtn = document.getElementById('homeButton')
-        var container = document.getElementById('container')
+        var btnDiv = document.getElementById('btn');
+        var homeBtn = document.getElementById('homeButton');
+        
         
 
-            //while(btnDiv.hasChildNodes){
-                //btnDiv.removeChild(btnDiv.firstChild);
-                //while(btnDiv.childNode.hasChildNodes){
-                  //  btnDiv.childNode.removeChild(btnDiv.childNode.firstChild)
-                //}
-            //}
+        while(btnDiv.hasChildNodes()){
+            btnDiv.removeChild(btnDiv.firstChild);
+        }
+        
             
-            container.remove();
-            buttons.remove();
-            while (canvasContainer.hasChildNodes){
-                canvasContainer.removeChild(canvasContainer.firstChild);
-            }
+        
+        while (canvasContainer.hasChildNodes()){
+            canvasContainer.removeChild(canvasContainer.firstChild);
+        }
+
+        var buttons = documen.createElement('div');
+        var container = document.createElement('div');
+        container.id='container';
+        buttons.id='buttons';
+        btnDiv.appendChild(buttons);
+        buttons.appendChild(container);
+
+        var button1 = documen.createElement('button');
+        var button2 = documen.createElement('button');
+        var button3 = documen.createElement('button');
+
+
+        
+
+
             
 
 
-            btnDiv.innerHTML=`
-            <div>
-            <div>
-            <button>Tetris Hard</button>
-            <button>Tetris Medium</button>
-            <button>Tetris Easy</button>
-            </div>
-            </div>`;
 
-            btnDiv.childNodes[0].id='buttons';
-            btnDiv.childNodes.childNodes[0].id='container'
-            btnDiv.childNodes[0].childNodes[0].childNodes[0].id ='hard';
-            btnDiv.childNodes[0].childNodes[0].childNodes[1].id ='medium';
-            btnDiv.childNodes[0].childNodes[0].childNodes[2].id ='easy';
 
 
     }

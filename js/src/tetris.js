@@ -96,16 +96,9 @@ class Game {
                     this.start(40);
                 }
                 
-            }
-
-            if (this.time % interval==0 && this.level=='easy'){
-                this.playerDrop();
-                if (this.time%150==0){
-                    this.score++;
-                }
-                
-            }
-            else if (this.time % interval==0 && this.level=='medium'){
+            }  
+            
+            if (this.time % interval==0 && this.level=='medium'){
                 this.playerDrop();
                 if (this.time%150==0){
                     this.score++;
