@@ -16,11 +16,11 @@
             this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
             this.ctx.font= `60px 'Press Start 2P'`;
             this.ctx.fillStyle='red';
-            this.ctx.fillText('coming', this.canvas.width/2-170, this.canvas.height/2+10)
-            this.ctx.fillText('soon...', this.canvas.width/2-170, this.canvas.height/2+80);
+            this.ctx.fillText('Coming', this.canvas.width/2-170, this.canvas.height/2+10);
+            this.ctx.fillText('Soon...', this.canvas.width/2-170, this.canvas.height/2+70);
         },100);
 
-        
+
         
        
        

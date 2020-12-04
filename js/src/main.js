@@ -23,24 +23,31 @@ window.onload = () =>{
     var highscoreContainer = document.getElementById('highscores-container');
     var mainImg = document.getElementById('title');
     let canvasContainer = document.getElementById('canvas-container');
+    var commands = document.getElementById('commands').cloneNode(true);
 
     
 
     function startTetris(interval){
         let element=document.getElementById('canvas-container');
         let canvas = document.createElement('canvas');
-        //let tetrisInstructions = document.createElement('img');
-        let commands = document.getElementById('commands');
-        commands.style.visibility= 'visible';
+        let div = document.createElement('div');
+
         highscoreContainer.style.visibility= 'visible';
 
         homeBtn.style.visibility='visible';
         
-        mainImg.scrollIntoView(true)
         canvas.id='canvas';
         canvas.height= 540;
         canvas.width=240;
         element.appendChild(canvas);
+
+        var commands = new Image();
+        commands.src='../../img/commands.png';
+        commands.id='commands'
+        element.appendChild(div);
+        div.appendChild(commands);
+        console.log(commands)
+    
         
         let canvasTetris = document.getElementById('canvas');
 
@@ -138,14 +145,13 @@ window.onload = () =>{
     function renderHomeScreen () {
         var btnDiv = document.getElementById('btn');
         var homeBtn = document.getElementById('homeButton');
-        var commands = document.getElementById('commands').cloneNode(true);
         var highscoreContainer = document.getElementById('highscores-container').cloneNode(true);
         
         while(btnDiv.hasChildNodes()){
             btnDiv.removeChild(btnDiv.firstChild);
         }
         
-            
+        console.log(commands)
         
         while (canvasContainer.hasChildNodes()){
             canvasContainer.removeChild(canvasContainer.firstChild);
@@ -160,38 +166,44 @@ window.onload = () =>{
 
         var button1 = document.createElement('button');
         var button2 = document.createElement('button');
-        var button3 = document.createElement('button');
 
         button1.id='hard';
-        button2.id='medium';
-        button3.id='bbBtn';
+        button2.id='bbBtn';
 
         container.appendChild(button1);
         container.appendChild(button2);
-        container.appendChild(button3);
 
         //restartBtn.style.visibility='hidden';
         homeBtn.style.visibility='hidden';
 
         canvasContainer.appendChild(highscoreContainer);
         highscoreContainer.style.visibility='hidden';
-        canvasContainer.appendChild(commands);
-        commands.style.visibility='hidden';
+        //canvasContainer.appendChild(commands);
+        //commands.style.visibility='hidden';
 
         button1.onclick=()=>{
-            startTetris(20);
+            startTetris(40);
             highscoreContainer.style.visibility='visible';
         }
 
         button2.addEventListener('click', ()=>{
-            startTetris(40);
+            startBrickBreaker();
             highscoreContainer.style.visibility='visible';
         })
 
-        button3.addEventListener('click', ()=>{
-            
-        })
 
 
     }
     }
+
+    /*setTimeout(()=>{
+        this.ctx.fillStyle='black';
+        this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
+        this.ctx.font= `60px 'Press Start 2P'`;
+        this.ctx.fillStyle='red';
+        this.ctx.fillText('GO!', this.canvas.width/2-70, this.canvas.height/2+10);
+    },1500);
+
+    setTimeout(()=>{
+        this.start()
+    },2000)K*/
