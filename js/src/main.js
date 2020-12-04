@@ -19,7 +19,8 @@ window.onload = () =>{
         //startTetris(60);
     
         document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen()
+            renderHomeScreen();
+    
         })
     }
 
@@ -27,6 +28,8 @@ window.onload = () =>{
     var homeBtn = document.getElementById('homeButton')
     var btnsCopy = document.getElementById('buttons').cloneNode(true);
     var highscoreContainer = document.getElementById('highscores-container');
+    var mainImg = document.getElementById('title')
+
     
 
     function startTetris(interval){
@@ -39,7 +42,7 @@ window.onload = () =>{
 
         homeBtn.style.visibility='visible';
         
-
+        mainImg.scrollIntoView(true)
         canvas.id='canvas';
         canvas.height= 540;
         canvas.width=240;
@@ -56,17 +59,17 @@ window.onload = () =>{
         }
 
 
-            if (interval===20){
+            if (interval==20){
                 var game = new Game(canvasTetris, 'hard');
             } else if (interval===40){
                 var game = new Game(canvasTetris, 'medium');
-            
+            }
             game.start(interval)
             WebFont.load({
                 google: {families: ['Press Start 2P']},
               active: game.scoreAnimation()
         });
-        }
+        
         
         window.addEventListener('keydown', (event)=>{
             let key = event.key;
@@ -106,7 +109,6 @@ window.onload = () =>{
         var commands = document.getElementById('commands').cloneNode(true);
         var highscoreContainer = document.getElementById('highscores-container').cloneNode(true);
         
-
         while(btnDiv.hasChildNodes()){
             btnDiv.removeChild(btnDiv.firstChild);
         }
