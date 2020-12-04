@@ -1,10 +1,7 @@
 window.onload = () =>{
     document.getElementById('hard').onclick = () => {
         startTetris(20);
-        homeBtn.style.visibility='visible';
-        restartBtn.style.visibility='visible';
-        highscoreContainer.style.visibility= 'visible';
-        clicked++;
+
         document.getElementById('homeButton').addEventListener('click', ()=>{
             renderHomeScreen()
         })
@@ -12,22 +9,15 @@ window.onload = () =>{
 
     document.getElementById('medium').onclick = () => {
         startTetris(40);
-        clicked++;
-        homeBtn.style.visibility='visible';
-        restartBtn.style.visibility='visible';
-        highscoreContainer.style.visibility= 'visible';
+        
         document.getElementById('homeButton').addEventListener('click', ()=>{
-            renderHomeScreen()
+            renderHomeScreen();
         })
     }
 
     document.getElementById('bbBtn').onclick = () => {
         //startTetris(60);
-        homeBtn.style.visibility='visible';
-        restartBtn.style.visibility='visible';
-
-        
-        clicked++;
+    
         document.getElementById('homeButton').addEventListener('click', ()=>{
             renderHomeScreen()
         })
@@ -38,14 +28,16 @@ window.onload = () =>{
     var btnsCopy = document.getElementById('buttons').cloneNode(true);
     var highscoreContainer = document.getElementById('highscores-container');
     
-    let clicked = 1;
 
     function startTetris(interval){
         let element=document.getElementById('canvas-container');
         let canvas = document.createElement('canvas');
         //let tetrisInstructions = document.createElement('img');
-        let commands = document.getElementById('commands')
+        let commands = document.getElementById('commands');
         commands.style.visibility= 'visible';
+        highscoreContainer.style.visibility= 'visible';
+
+        homeBtn.style.visibility='visible';
         
 
         canvas.id='canvas';
@@ -64,14 +56,10 @@ window.onload = () =>{
         }
 
 
-        if (clicked==1){
             if (interval===20){
                 var game = new Game(canvasTetris, 'hard');
             } else if (interval===40){
                 var game = new Game(canvasTetris, 'medium');
-            } else if (interval===60){
-                var game = new Game(canvasTetris, 'easy');
-            }
             
             game.start(interval)
             WebFont.load({
@@ -113,10 +101,10 @@ window.onload = () =>{
     function renderHomeScreen () {
         let canvasContainer = document.getElementById('canvas-container')
         var canvas = document.getElementById('canvas')
-        var ctx = canvas.getContext('2d');
         var btnDiv = document.getElementById('btn');
         var homeBtn = document.getElementById('homeButton');
-        
+        var commands = document.getElementById('commands').cloneNode(true);
+        var highscoreContainer = document.getElementById('highscores-container').cloneNode(true);
         
 
         while(btnDiv.hasChildNodes()){
@@ -129,25 +117,46 @@ window.onload = () =>{
             canvasContainer.removeChild(canvasContainer.firstChild);
         }
 
-        var buttons = documen.createElement('div');
+        var buttons = document.createElement('div');
         var container = document.createElement('div');
         container.id='container';
         buttons.id='buttons';
         btnDiv.appendChild(buttons);
         buttons.appendChild(container);
 
-        var button1 = documen.createElement('button');
-        var button2 = documen.createElement('button');
-        var button3 = documen.createElement('button');
+        var button1 = document.createElement('button');
+        var button2 = document.createElement('button');
+        var button3 = document.createElement('button');
 
+        button1.id='hard';
+        button2.id='medium';
+        button3.id='bbBtn';
 
-        
+        container.appendChild(button1);
+        container.appendChild(button2);
+        container.appendChild(button3);
 
+        restartBtn.style.visibility='hidden';
+        homeBtn.style.visibility='hidden';
 
+        canvasContainer.appendChild(highscoreContainer);
+        highscoreContainer.style.visibility='hidden';
+        canvasContainer.appendChild(commands);
+        commands.style.visibility='hidden';
+
+        button1.onclick=()=>{
+            startTetris(20);
+            highscoreContainer.style.visibility='visible';
+        }
+
+        button2.addEventListener('click', ()=>{
+            startTetris(40);
+            highscoreContainer.style.visibility='visible';
+        })
+
+        button3.addEventListener('click', ()=>{
             
-
-
-
+        })
 
 
     }
