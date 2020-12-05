@@ -60,7 +60,7 @@ class Game {
             google: {families: ['Press Start 2P']},
           active: renderText2
     });
-    },1000)
+    },2000)
 
     setTimeout(()=>{
         let renderText3 = ()=>{
@@ -74,7 +74,7 @@ class Game {
             google: {families: ['Press Start 2P']},
           active: renderText3
     });
-    },2000)
+    },4000)
 
 
         
@@ -104,7 +104,7 @@ class Game {
             //console.log(this.inc)
         }
         window.requestAnimationFrame(update);
-    },3000)
+    },5000)
         
     
 
