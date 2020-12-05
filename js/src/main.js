@@ -1,5 +1,5 @@
 window.onload = () =>{
-    document.getElementById('hard').onclick = () => {
+    document.getElementById('tetris').onclick = () => {
         startTetris(40);
 
         document.getElementById('homeButton').addEventListener('click', ()=>{
@@ -8,8 +8,8 @@ window.onload = () =>{
     }
 
 
-    document.getElementById('bbBtn').onclick = () => {
-        startBrickBreaker()
+    document.getElementById('galaga').onclick = () => {
+        startGalaga();
     
         document.getElementById('homeButton').addEventListener('click', ()=>{
             renderHomeScreen();
@@ -23,7 +23,7 @@ window.onload = () =>{
     var highscoreContainer = document.getElementById('highscores-container');
     var mainImg = document.getElementById('title');
     let canvasContainer = document.getElementById('canvas-container');
-    var commands = document.getElementById('commands').cloneNode(true);
+    //var commands = document.getElementById('commands').cloneNode(true);
 
     
 
@@ -60,7 +60,7 @@ window.onload = () =>{
         }
 
         if (interval==40){
-            var game = new Game(canvasTetris, 'hard');
+            var game = new Game(canvasTetris);
         }
         game.start(interval)
         
@@ -102,9 +102,9 @@ window.onload = () =>{
     }
 
 
-    function startBrickBreaker(){
+    function startGalaga(){
         let canvasContainer = document.getElementById('canvas-container');
-        let bbCanvas = document.createElement('canvas');
+        let galagaCanvas = document.createElement('canvas');
         let container = document.getElementById('homebutton-container');
 
         
@@ -117,13 +117,14 @@ window.onload = () =>{
             canvasContainer.removeChild(canvasContainer.firstChild)
         }
 
-        bbCanvas.id='canvas';
-        bbCanvas.height=320;
-        bbCanvas.width=480;
-        bbCanvas.style.marginLeft='10%';
-        canvasContainer.appendChild(bbCanvas);
+        galagaCanvas.id='canvas';
+        galagaCanvas.height=600;
+        galagaCanvas.width=600;
+        galagaCanvas.style.marginLeft='10%';
+        canvasContainer.appendChild(galagaCanvas);
 
         let canvas = document.getElementById('canvas');
+        canvas.style.marginRight='10%';
 
         let buttonsContainer = document.getElementById('container');
 
@@ -133,8 +134,34 @@ window.onload = () =>{
 
 
         //Initialize game
-        var game1 = new bbGame(canvas, 4);
-        game1.renderStartScreen()
+        var game1 = new GalagaGame(canvas, 5);
+        game1.renderStartScreen();
+        canvas.scrollIntoView(true)
+
+
+        window.addEventListener('keydown', (event)=>{
+            event.preventDefault();
+            let code = event.code;
+            switch(code){
+                case "ArrowLeft":
+                    game1.player.moveLeft();
+                    break;
+                case "ArrowRight":
+                    game1.player.moveRight();
+                    break;
+                case "ArrowUp":
+                    game1.player.moveUp();
+                    break;
+                case "ArrowDown":
+                    game1.player.moveDown();
+                    break;
+                case "Space":
+                    game1.createShot();
+                    break;
+                default:
+                    break;
+            }
+        })
 
     }
 
@@ -167,8 +194,8 @@ window.onload = () =>{
         var button1 = document.createElement('button');
         var button2 = document.createElement('button');
 
-        button1.id='hard';
-        button2.id='bbBtn';
+        button1.id='tetris';
+        button2.id='galaga';
 
         container.appendChild(button1);
         container.appendChild(button2);
@@ -187,7 +214,7 @@ window.onload = () =>{
         }
 
         button2.addEventListener('click', ()=>{
-            startBrickBreaker();
+            startGalaga();
             highscoreContainer.style.visibility='visible';
         })
 
@@ -195,15 +222,3 @@ window.onload = () =>{
 
     }
     }
-
-    /*setTimeout(()=>{
-        this.ctx.fillStyle='black';
-        this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
-        this.ctx.font= `60px 'Press Start 2P'`;
-        this.ctx.fillStyle='red';
-        this.ctx.fillText('GO!', this.canvas.width/2-70, this.canvas.height/2+10);
-    },1500);
-
-    setTimeout(()=>{
-        this.start()
-    },2000)K*/

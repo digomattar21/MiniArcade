@@ -1,7 +1,6 @@
 class Game {
-    constructor(canvas, level){
+    constructor(canvas){
         this.canvas = canvas;
-        this.level=level;
         this.ctx = this.canvas.getContext('2d');
         this.ctx.scale(20,20);
         this.nextPiece=[Math.floor(Math.random()*7)+1];
@@ -15,12 +14,10 @@ class Game {
         this.colors=['lightgreen','darkgreen', 'darkblue', 'lightblue', 'purple', 'yellow', 'orange'];
         this.score=0;
         this.gameOver;
-        this.levelCleared;
         this.inc;
         this.nextLvlWarning = true;
         this.next;
         this.noGameArea = 7;
-        this.restartBtn = document.getElementById('restart');
     }
     
     start (interval){
@@ -70,7 +67,6 @@ class Game {
 
         
         setTimeout(()=>{
-            let restartBtn = document.getElementById('restart')
             
             this.arena = this.createMatrix(12,20);
             const update = () => {
@@ -86,14 +82,7 @@ class Game {
                 
             }  
             
-            if (this.time % interval==0 && this.level=='medium'){
-                this.playerDrop();
-                if (this.time%150==0){
-                    this.score++;
-                }
-                
-            }
-            else if (this.time % interval==0 && this.level=='hard'){
+            if (this.time % interval==0){
                 this.playerDrop();
                 if (this.time%150==0){
                     this.score++;
