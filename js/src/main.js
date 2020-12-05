@@ -41,12 +41,6 @@ window.onload = () =>{
         canvas.width=240;
         element.appendChild(canvas);
 
-        var commands = new Image();
-        commands.src='../../img/commands.png';
-        commands.id='commands'
-        element.appendChild(div);
-        div.appendChild(commands);
-        console.log(commands)
     
         
         let canvasTetris = document.getElementById('canvas');
@@ -99,9 +93,6 @@ window.onload = () =>{
             let touch = e.touches;
             let x =touch[0].clientX;
             let y = touch[0].clientY;
-
-            console.log(touch);
-
 
             if (x > 240){
                 game.move(1);
@@ -208,8 +199,6 @@ window.onload = () =>{
         while(btnDiv.hasChildNodes()){
             btnDiv.removeChild(btnDiv.firstChild);
         }
-        
-        console.log(commands)
         
         while (canvasContainer.hasChildNodes()){
             canvasContainer.removeChild(canvasContainer.firstChild);
