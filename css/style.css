@@ -158,6 +158,56 @@ html{
 }
 
 
+@media (max-width: 450px) {
+	#title-container {
+		display: flex;
+		justify-content:center;
+		margin-left: 6%;
+		width: 90%;
+	}
 
+	#title{
+		width: 100%;
+	
+	}
+
+	#choose{
+		width: 200px;
+
+
+	}
+
+	#choose-title{
+		width: 300px;
+		height:100px;
+		margin-left: 170px;
+	}
+
+	#buttons{
+		display: flex;
+		flex-direction: column;
+		justify-content:space-around;
+		align-items:center;
+	}
+
+	#container{
+		display: flex;
+		flex-direction: column;
+		justify-content:space-around;
+		align-items:center;
+	}
+
+	#canvas-container{
+		display: flex;
+		justify-content:space-between;
+		align-items:center;
+		flex-direction:column;
+	}
+
+	
+
+
+
+  }
 
 

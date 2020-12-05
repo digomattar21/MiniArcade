@@ -94,11 +94,42 @@ window.onload = () =>{
                     break;
             }
         })
+
+        canvasTetris.addEventListener('touchstart', function (e){
+            let touch = e.touches;
+            let x =touch[0].clientX;
+            let y = touch[0].clientY;
+
+            console.log(touch);
+
+
+            if (x > 240){
+                game.move(1);
+                game.time++;
+
+            } else if (x<150){
+                game.move(-1);
+                game.time++;
+            }
+
+            if (y < 520 && x > 145 && x<245){
+                game.rotatePlayer(1);
+                game.time++;
+            }
+
+            if (y>600 && x>145 && x <245){
+                game.playerDrop();
+                game.time++;
+            }
+
+        })
+
+
         WebFont.load({
             google: {families: ['Press Start 2P']},
           active: game.drawScore()
     });
-    homeBtn.scrollIntoView(false)
+    canvas.scrollIntoView(true)
     }
 
 

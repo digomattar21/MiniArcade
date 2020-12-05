@@ -26,8 +26,14 @@ class Game {
             this.ctx.fillStyle= 'black';
             this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400)
             this.ctx.fillStyle='red';
-            this.ctx.font="2px 'Press Start 2P'"
-            this.ctx.fillText('READY?', 0.1,this.noGameArea+ 8)
+            this.ctx.font="2px 'Press Start 2P'";
+            this.ctx.fillText('READY?', 0.1,this.noGameArea+ 8);
+            this.ctx.font='1px Press Start';
+            this.ctx.fillStyle='white';
+            this.ctx.fillText('Rotate', 5, this.noGameArea+2);
+            this.ctx.fillText('Left', 1, this.noGameArea+10);
+            this.ctx.fillText('Right', 9, this.noGameArea+10);
+            this.ctx.fillText('down', 5, 24);
             }
             WebFont.load({
                 google: {families: ['Press Start 2P']},
@@ -39,10 +45,16 @@ class Game {
         setTimeout(()=>{
         let renderText2 = ()=>{
         this.ctx.fillStyle= 'black';
-        this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400)
+        this.ctx.fillRect(0,this.noGameArea,this.canvas.width, 400);
         this.ctx.fillStyle='red';
-        this.ctx.font="2px 'Press Start 2P'"
-        this.ctx.fillText('SET?', 3,this.noGameArea+8)
+        this.ctx.font="2px 'Press Start 2P'";
+        this.ctx.fillText('SET?', 3,this.noGameArea+8);
+        this.ctx.font='1px Press Start';
+        this.ctx.fillStyle='white';
+        this.ctx.fillText('Rotate', 5, this.noGameArea+2);
+        this.ctx.fillText('Left', 1, this.noGameArea+10);
+        this.ctx.fillText('Right', 9, this.noGameArea+10);
+        this.ctx.fillText('down', 5, 24);
         }
         WebFont.load({
             google: {families: ['Press Start 2P']},
