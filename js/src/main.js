@@ -16,20 +16,25 @@ window.onload = () => {
   let canvasContainer = document.getElementById("canvas-container");
 
   function startTetris(interval) {
+
     let element = document.getElementById("canvas-container");
     let canvas = document.createElement("canvas");
     var highscoreContainer = document.getElementById("highscores-container");
+    var submitBtn = document.getElementsByClassName("submitBtn")[0];
 
+
+    
     highscoreContainer.style.visibility = "visible";
+    submitBtn.style.visibility = "visible";
 
     homeBtn.style.visibility = "visible";
 
-    canvas.id = "canvas";
+    canvas.id = "canvasTetris";
     canvas.height = 540;
     canvas.width = 240;
     element.appendChild(canvas);
 
-    let canvasTetris = document.getElementById("canvas");
+    let canvasTetris = document.getElementById("canvasTetris");
 
     //Removing the buttons that user pressed to choose game
     let buttonsContainer = document.getElementById("container");
@@ -208,6 +213,8 @@ window.onload = () => {
     var button1 = document.createElement("button");
     var button2 = document.createElement("button");
 
+
+
     button1.id = "tetris";
     button2.id = "galaga";
 
@@ -219,6 +226,8 @@ window.onload = () => {
     button1.onclick = () => {
       canvasContainer.appendChild(highscoreContainer);
       startTetris(40);
+      var submitBtn = document.getElementsByClassName('submitBtn')[0];
+      submitBtn.style.visibility='visible';
     };
 
     button2.addEventListener("click", () => {

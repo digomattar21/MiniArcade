@@ -23,10 +23,13 @@ class GalagaGame {
     this.enemyShot;
     this.waveMessage = false;
     this.score;
-    this.healthBuff=false;
-    this.sprayBuff=false;
+    this.healthBuff = false;
+    this.sprayBuff = false;
     this.sprayShot;
-    this.sprayShots=[];
+    this.sprayShots = [];
+    this.buffs = []
+    this.bossFight;
+    this.bossFightOn=false;
   }
 
   renderStartScreen() {
@@ -114,6 +117,13 @@ class GalagaGame {
           enemy.multiplier = 1.7;
         });
         break;
+      case 5:
+        this.bossFight = new BossFight(this.canvas);
+        this.bossFightOn=true;
+        this.createEnemies(10);
+        this.enemies.forEach((enemy,index) => {
+          enemy.multiplier=1.2;
+        })
       default:
         break;
     }
@@ -125,6 +135,10 @@ class GalagaGame {
     this.drawEnemies();
     this.score.drawSelf();
 
+    if(this.bossFightOn){
+      this.bossFight.drawSelf();
+    }
+
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
         //shot.drawSelf();
@@ -134,11 +148,11 @@ class GalagaGame {
         }
       });
     }
-    if (this.sprayShots.length>0){
-      this.sprayShots.forEach((shot,index)=>{
+    if (this.sprayShots.length > 0) {
+      this.sprayShots.forEach((shot, index) => {
         shot.drawSelf();
-        if (shot.y<0){
-          this.sprayShots.splice(index,1);
+        if (shot.y < 0) {
+          this.sprayShots.splice(index, 1);
         }
       })
     }
@@ -182,16 +196,16 @@ class GalagaGame {
   }
 
   createShot() {
-    if (this.sprayBuff){
-    this.sprayShot = new SprayShot(this.canvas,this.player.playerX+40, this.player.playerY-5)
-    this.sprayShots.push(this.sprayShot);
-    } else{
-    let x = this.player.playerX + 40;
-    let y = this.player.playerY;
-    this.shot = new Shot(this.canvas, x, y);
-    this.shotsFired.push(this.shot);
+    if (this.sprayBuff) {
+      this.sprayShot = new SprayShot(this.canvas, this.player.playerX + 40, this.player.playerY - 5)
+      this.sprayShots.push(this.sprayShot);
+    } else {
+      let x = this.player.playerX + 40;
+      let y = this.player.playerY;
+      this.shot = new Shot(this.canvas, x, y);
+      this.shotsFired.push(this.shot);
     }
-    
+
   }
 
   drawEnemies() {
@@ -265,11 +279,17 @@ class GalagaGame {
           switch (this.buffType) {
             case "health":
               this.player.health += 250;
-              this.healthBuff=true;
+              this.healthBuff = true;
               delete this.buff;
+              this.buffs.splice(0, 1);
+              this.animTime = true;
               break;
             case "spray":
+              this.player.playerBuff = true;
               this.sprayBuff = true;
+              delete this.buff;
+              this.buffs.splice(0, 1);
+              this.animTime = true;
               break;
           }
         }
@@ -277,16 +297,21 @@ class GalagaGame {
     }
   }
 
-
-
-  checkHealthBuff() {
-    if (this.healthBuff===true){
-      this.ctx.font=`45px 'Press Start 2P'`;
-      this.ctx.fillStyle='green';
-      this.ctx.fillText(`+250HP`, 160,100);
+  checkDrawBuffs() {
+    if (this.healthBuff && this.animTime) {
+      this.ctx.font = `45px 'Press Start 2P'`;
+      this.ctx.fillStyle = 'green';
+      this.ctx.fillText(`+250HP`, 160, 50);
     }
-    setTimeout(() => {this.healthBuff=false},1500)
+    if (this.sprayBuff && this.animTime) {
+      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.fillStyle = 'green';
+      this.ctx.fillText(`SPRAY BUFF ON`, 60, 100);
+    }
+
   }
+
+
 
   checkShotHit() {
     //Check if enemy is hit
@@ -312,7 +337,9 @@ class GalagaGame {
                 this.chosen.enemyX,
                 this.chosen.enemyY
               );
+
               this.buffType = this.buff.chooseBuff();
+              this.buffs.push(this.buff)
             }
 
             this.enemies.splice(index, 1);
@@ -345,7 +372,7 @@ class GalagaGame {
           let c8 = shot.x3 + 2.5 <= enemy.enemyX + enemy.radius;
           let c3 = shot.y + 5 >= enemy.enemyY;
           let c4 = shot.y + 5 <= enemy.enemyY + enemy.radius;
-          if (((c1 && c2) || (c5 &c6) || (c7 &&c8))&& (c3 && c4)) {
+          if (((c1 && c2) || (c5 & c6) || (c7 && c8)) && (c3 && c4)) {
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
@@ -361,6 +388,7 @@ class GalagaGame {
                 this.chosen.enemyY
               );
               this.buffType = this.buff.chooseBuff();
+              this.buffs.push(this.buff)
             }
 
             this.enemies.splice(index, 1);
@@ -410,10 +438,24 @@ class GalagaGame {
       this.enemyShoot();
       this.score.drawScoreIncrease();
       this.checkBuffGrab();
-      this.checkHealthBuff();
+      this.checkDrawBuffs();
+      if(this.bossFight){
+        this.bossFight.updateTimes();
+        let rando = Math.floor(Math.random()*10)
+        if (rando<3){
+          this.bossFight.drawShot();
+        }
+      }
 
       if (this.time % 200 == 0) {
         this.score.timeUpdate();
+
+      }
+      if (this.time % 800 == 0) {
+        setTimeout(() => { this.animTime = false }, 600);
+        this.healthBuff = false;
+
+
       }
     };
 

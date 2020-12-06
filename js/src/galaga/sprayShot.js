@@ -12,10 +12,10 @@ class SprayShot  {
     }
 
     drawSelf() {
-        this.ctx.fillStyle='green';
-        this.ctx.fillRect(this.x,this.y,5,10);
-        this.ctx.fillRect(this.x2,this.y2,5,10);
-        this.ctx.fillRect(this.x3,this.y3,5,10);
+        this.ctx.fillStyle='lawngreen';
+        this.ctx.fillRect(this.x-2.5,this.y,5,10);
+        this.ctx.fillRect(this.x2-2.5,this.y2,5,10);
+        this.ctx.fillRect(this.x3-2.5,this.y3,5,10);
     
         this.updateSelf();
 
@@ -29,6 +29,4 @@ class SprayShot  {
         this.x3+=-0.5;
         this.y3+=this.speedY;
     }
-    
-
-}
+} 
