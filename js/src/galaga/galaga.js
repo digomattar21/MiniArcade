@@ -1,9 +1,8 @@
 class GalagaGame {
-  constructor(canvas, lives) {
+  constructor(canvas) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.welcomeImage;
-    this.lives = lives;
     this.isOver = false;
     this.time = 0;
     this.background;
@@ -18,11 +17,12 @@ class GalagaGame {
     this.now;
     this.then;
     this.delta;
-    this.buffs = [0, 1, 2, 3];
     this.buff;
     this.chosen;
     this.enemyShots = [];
     this.enemyShot;
+    this.waveMessage = false;
+    this.score;
   }
 
   renderStartScreen() {
@@ -63,8 +63,9 @@ class GalagaGame {
   start() {
     //Initialize everything and call update()
     this.background = new Background(this.canvas);
-    this.player = new Player(this.canvas, this.lives);
-    this.createEnemies(18);
+    this.player = new Player(this.canvas, 500);
+    this.score = new Score(this.canvas);
+    this.createEnemies(5);
 
     setTimeout(() => {
       this.update();
@@ -72,22 +73,45 @@ class GalagaGame {
   }
 
   startNextWave() {
-    setTimeout(() =>{
-        this.createWaves();
-        this.update();
-    },2000)
+    if (this.wave <= 4) {
+      this.waveMessage = true;
+    }
+
+    setTimeout(() => {
+      this.createWaves();
+      this.update();
+      this.waveMessage = false;
+    }, 2000);
   }
 
   createWaves() {
     let wave = this.wave;
     switch (wave) {
       case 1:
-        this.createEnemies(25);
+        this.createEnemies(10);
+        this.enemies.forEach((enemy, index) => {
+          enemy.multiplier = 1.2;
+        });
       case 2:
+        this.createEnemies(15);
+        this.enemies.forEach((enemy, index) => {
+          enemy.multiplier = 1.5;
+        });
+        break;
+      case 3:
         this.createEnemies(20);
         this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = Math.random() * 2 + 1;
+          enemy.multiplier = 1.7;
         });
+        break;
+      case 4:
+        this.createEnemies(25);
+        this.enemies.forEach((enemy, index) => {
+          enemy.multiplier = 1.7;
+        });
+        break;
+      default:
+        break;
     }
   }
 
@@ -95,6 +119,7 @@ class GalagaGame {
     this.background.drawSelf();
     this.player.drawSelf();
     this.drawEnemies();
+    this.score.drawSelf();
 
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
@@ -105,13 +130,20 @@ class GalagaGame {
         }
       });
     }
-    if (this.enemyShots.length>0){
-        this.enemyShots.forEach((enemyShot, index)=>{
-            enemyShot.drawRegular();
-            if (enemyShot.shotY>600){
-                this.enemyShots.splice(index, 1);
-            }
-        })
+    if (this.enemyShots.length > 0) {
+      this.enemyShots.forEach((enemyShot, index) => {
+        enemyShot.drawRegular();
+        if (enemyShot.shotY > 600) {
+          this.enemyShots.splice(index, 1);
+        }
+      });
+    }
+    if (this.waveMessage) {
+      this.ctx.font = '35px "Press Start 2P"';
+      this.ctx.fillStyle = "red";
+
+      this.ctx.fillText(`Wave ${this.wave} cleared`, 60, 250);
+      this.ctx.fillText(`Get ready`, 150, 350);
     }
   }
 
@@ -145,11 +177,12 @@ class GalagaGame {
   }
 
   drawEnemies() {
-    if (this.enemies.length>0){
-    this.enemies.forEach((enemy, index) => {
-      enemy.drawSelf();
-    });
-  }}
+    if (this.enemies.length > 0) {
+      this.enemies.forEach((enemy, index) => {
+        enemy.drawSelf();
+      });
+    }
+  }
 
   createEnemies(armySize) {
     let rand = Math.floor(Math.random() * armySize);
@@ -173,7 +206,6 @@ class GalagaGame {
       }
     }
     this.chosen = this.enemies[rand];
-
   }
 
   moveEnemies() {
@@ -185,20 +217,51 @@ class GalagaGame {
   }
 
   enemyShoot() {
-    let rand = Math.random() *100;
+    let rand = Math.random() * 100;
 
-      if (this.enemies.length > 0) {
-        let chosenToShoot = this.enemies[Math.floor(Math.random() *this.enemies.length)];
-        let x = chosenToShoot.enemyX;
-        let y = chosenToShoot.enemyY;
-        if (rand<1){
-            this.enemyShot = new EnemyShot(this.canvas, chosenToShoot.enemyX, chosenToShoot.enemyY);
-            this.enemyShots.push(this.enemyShot);
+    if (this.enemies.length > 0) {
+      let chosenToShoot = this.enemies[
+        Math.floor(Math.random() * this.enemies.length)
+      ];
+      let x = chosenToShoot.enemyX;
+      let y = chosenToShoot.enemyY;
+      if (rand < 1) {
+        this.enemyShot = new EnemyShot(
+          this.canvas,
+          chosenToShoot.enemyX,
+          chosenToShoot.enemyY
+        );
+        this.enemyShots.push(this.enemyShot);
+      }
+    }
+  }
+
+  checkBuffGrab() {
+    if (this.buff) {
+      if (this.buff.buff) {
+        console.log("entrou sim");
+        let c1 = this.buff.x + 12.5 > this.player.playerX;
+        let c2 = this.buff.x + 12.5 < this.player.playerX + 80;
+        let c3 = this.buff.y + 12.5 > this.player.playerY;
+        let c4 = this.buff.y + 12.5 < this.player.playerY + 80;
+        if (c1 && c2 && c3 && c4) {
+          console.log("pegou");
+          switch (this.buffType) {
+            case "health":
+              this.player.health += 250;
+              delete this.buff;
+              break;
+            case "spray":
+              //implemment other buffs here
+              break;
+          }
         }
       }
+    }
   }
 
   checkShotHit() {
+    //Check if enemy is hit
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
         this.enemies.forEach((enemy, index) => {
@@ -209,24 +272,50 @@ class GalagaGame {
           if (c1 && c2 && c3 && c4) {
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
+            this.explosionTime = true;
             if (this.enemies.length === 1) {
               this.wave++;
               this.startNextWave();
             }
 
-            if(this.enemies[index]===this.chosen){
-                console.log('Escolhido')
+            if (this.enemies[index] === this.chosen) {
+              this.buff = new Buffs(
+                this.canvas,
+                this.chosen.enemyX,
+                this.chosen.enemyY
+              );
+              this.buffType = this.buff.chooseBuff();
             }
 
-
             this.enemies.splice(index, 1);
+            this.score.killUpdate();
 
-            //this.now= Date.now();
-
-            this.ctx.drawImage(this.explosion,enemy.enemyX,enemy.enemyY,30,30);
-
+            if ((this.explosionTime = true)) {
+              this.ctx.drawImage(
+                this.explosion,
+                enemy.enemyX,
+                enemy.enemyY,
+                30,
+                30
+              );
+            }
+            setTimeout(() => {
+              (this.explosionTime = false), 800;
+            });
           }
         });
+      });
+    }
+    //Check if player is hit by a shot
+    if (this.enemyShots.length > 0) {
+      this.enemyShots.forEach((shot, index) => {
+        let c1 = shot.shotX + 2.5 > this.player.playerX;
+        let c2 = shot.shotX + 2.5 < this.player.playerX + 80;
+        let c3 = shot.shotY + 5 < this.player.playerY + 80;
+        let c4 = shot.shotY + 5 > this.player.playerY;
+        if (c1 && c2 && c3 && c4) {
+          this.player.health--;
+        }
       });
     }
   }
@@ -243,7 +332,12 @@ class GalagaGame {
       this.checkShotHit();
       this.checkBoundaries();
       this.enemyShoot();
+      this.score.drawScoreIncrease();
+      this.checkBuffGrab();
 
+      if (this.time % 200 == 0) {
+        this.score.timeUpdate();
+      }
     };
 
     window.requestAnimationFrame(update);
