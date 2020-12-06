@@ -5,10 +5,10 @@ class Buffs {
     this.x = x;
     this.y = y;
     //this.types = ['missel', 'shield', 'health', 'spray']
-    this.types = ["health"];
+    this.types = ["health","spray"];
     this.speedY = 0.9;
     this.healthImage = new Image();
-    this.healthImage.src = "../../../img/health.png";
+    this.bulletImage= new Image();
     this.buff = false;
   }
 
@@ -41,7 +41,9 @@ class Buffs {
     this.drawHealthBuff();
   }
 
-  sprayBuff() {}
+  sprayBuff() {
+      this.drawSprayBuff();
+  }
 
   updateSelf() {
     this.y += this.speedY;
@@ -53,7 +55,8 @@ class Buffs {
 
   drawHealthBuff() {
     if (this.y < 600) {
-      this.healthImage.onload = () => {
+        this.healthImage.src = "../../../img/health.png";
+        this.healthImage.onload = () => {
         setInterval(() => {
           this.ctx.drawImage(this.healthImage, this.x, this.y, 25, 25);
           this.updateSelf();
@@ -64,5 +67,17 @@ class Buffs {
     }
   }
 
-  drawSprayBuff() {}
+  drawSprayBuff() {
+      if (this.y < 600){
+        this.bulletImage.src = "../../../img/bullet.png";
+          this.bulletImage.onload=()=>{
+              setInterval(()=>{
+                  this.ctx.drawImage(this.bulletImage, this.x,this.y, 25, 25);
+                  this.updateSelf();
+              },5);
+          }
+      } else {
+          this.buff= false;
+      }
+  }
 }

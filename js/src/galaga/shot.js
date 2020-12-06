@@ -8,14 +8,6 @@ class Shot {
     this.image;
   }
 
-  drawFirstBuff() {
-    this.image = new Image();
-    this.image.src = "../../../img/laser.png";
-    this.image.onload = () => {
-      this.ctx.drawImage(this.image, this.shotX - 15, this.shotY + 40, 30, 40);
-    };
-    this.updateSelf();
-  }
 
   drawRegular() {
     this.ctx.fillStyle = "#e83bad";

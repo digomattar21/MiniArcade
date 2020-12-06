@@ -50,7 +50,6 @@ class Player {
 
   moveDown() {
     //We can use set interval to change the speed gradually.
-
     this.playerY += 20;
   }
 }

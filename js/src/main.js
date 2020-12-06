@@ -9,6 +9,7 @@ window.onload = () => {
 
   document.getElementById("galaga").onclick = () => {
     startGalaga();
+
   };
 
   var homeBtn = document.getElementById("homeButton");
@@ -108,6 +109,7 @@ window.onload = () => {
     let galagaCanvas = document.createElement("canvas");
     let container = document.getElementById("homebutton-container");
 
+    container.removeChild(container.lastChild);
     homeBtn.style.visibility = "visible";
 
     while (canvasContainer.hasChildNodes()) {
@@ -129,7 +131,7 @@ window.onload = () => {
       buttonsContainer.removeChild(buttonsContainer.firstChild);
     }
     //Initialize game
-    var game1 = new GalagaGame(canvas);
+    var game1 = new GalagaGame(canvas, 5);
     game1.renderStartScreen();
     canvas.scrollIntoView(true);
 
