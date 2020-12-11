@@ -5,6 +5,7 @@ class Background {
     this.speed = 1;
     this.x = 0;
     this.y = 0;
+    this.backList = []
   }
 
   drawSelf() {
@@ -15,10 +16,12 @@ class Background {
     background.onload = () => {
       this.ctx.drawImage(background, this.x, this.y);
       this.ctx.drawImage(background, this.x, this.y - this.canvas.height);
+      this.backList.push(background);
     };
 
     if (this.y >= this.canvas.height) {
       this.y = 0;
+      this.backList.splice(0,this.backList.length+1)
     }
   }
 }

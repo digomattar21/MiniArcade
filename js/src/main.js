@@ -113,8 +113,8 @@ window.onload = () => {
     let canvasContainer = document.getElementById("canvas-container");
     let galagaCanvas = document.createElement("canvas");
     let container = document.getElementById("homebutton-container");
+    let homeBtn = document.getElementById("homeButton")
 
-    container.removeChild(container.lastChild);
     homeBtn.style.visibility = "visible";
 
     while (canvasContainer.hasChildNodes()) {
@@ -213,8 +213,6 @@ window.onload = () => {
     var button1 = document.createElement("button");
     var button2 = document.createElement("button");
 
-
-
     button1.id = "tetris";
     button2.id = "galaga";
 
@@ -232,6 +230,7 @@ window.onload = () => {
 
     button2.addEventListener("click", () => {
       startGalaga();
+      //homeBtn.style.visibility='visible';
     });
   }
 };

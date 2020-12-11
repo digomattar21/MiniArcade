@@ -1,0 +1,5 @@
+class GameLost {
+    constructor(canvas){
+        
+    }
+}
