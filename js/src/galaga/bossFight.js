@@ -20,8 +20,6 @@ class BossFight {
         this.laserOn=false;
         this.shotX=this.x+100;
         this.shotY=this.y+120;
-
-
     }
 
     looseHealth(){
@@ -36,7 +34,7 @@ class BossFight {
                 this.bossImage.onload=()=>{
                 this.ctx.drawImage(this.bossImage,this.x,this.y)}
                 //this.drawLaser(this.randlaserDir);
-                
+    
                 break;
             case 'left-mid':
                 this.bossImage.src='../../../img/boss_left.png';
@@ -77,16 +75,6 @@ class BossFight {
 
     }
 
-
-    drawShot() {
-        this.ctx.fillStyle = "#e83bad";
-        this.ctx.arc(this.shotX,this.shotY,15,0,Math.PI*2)
-        this.updateShot();
-    }
-
-    
-
-
     updateSelf() {
         let rando = Math.floor(Math.random()*2);
         let newDir;
@@ -113,10 +101,6 @@ class BossFight {
         this.y+=this.speedY*this.directionY;
     }
 
-    updateShot() {
-        this.shotY+=-5;
-    }
-
 
     updateTimes() {
         this.laserLoad ++;
@@ -125,6 +109,4 @@ class BossFight {
             setTimeout(()=>{this.laserOn=false},1000)
         } 
     }
-
-
 }

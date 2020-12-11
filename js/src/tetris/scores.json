@@ -1,12 +1,12 @@
 [
-    {"name": "Rodrigo", "score": 90},
-    {"name": "Kleber", "score": 80},
-    {"name": "Bazoooca", "score": 70},
-    {"name": "Pied Piper", "score": 60},
-    {"name": "I Love You", "score": 50},
-    {"name": "Arctic Monkeys", "score": 30},
-    {"name": "Donnie Darko", "score": 20},
-    {"name": "Kevin Mitnick", "score": 10},
-    {"name": "I hate PHP", "score": 1},
-    {"name": "At last beat me", "score": 0}
+    {"name": "Rodrigo", "score": 691},
+    {"name": "Kleber", "score": 599},
+    {"name": "Bazoooca", "score": 586},
+    {"name": "Pied Piper", "score": 580},
+    {"name": "I Love You", "score": 576},
+    {"name": "Arctic Monkeys", "score": 566},
+    {"name": "Donnie Darko", "score": 552},
+    {"name": "Kevin Mitnick", "score": 521},
+    {"name": "Elite Proxy", "score": 508},
+    {"name": "Osint", "score": 493}
 ]

@@ -12,7 +12,7 @@ class GalagaGame {
     this.enemies = [];
     this.enemy;
     this.enemyStartPos = { x: 100, y: 50 };
-    this.wave = 0;
+    this.wave = 4;
     this.explosion;
     this.now;
     this.then;
@@ -27,9 +27,12 @@ class GalagaGame {
     this.sprayBuff = false;
     this.sprayShot;
     this.sprayShots = [];
-    this.buffs = []
+    this.buffs = [];
     this.bossFight;
-    this.bossFightOn=false;
+    this.bossFightOn = false;
+    this.bossShotsFired=[];
+    this.buffList = ["health", "spray"];
+    this.soundTheme;
   }
 
   renderStartScreen() {
@@ -119,14 +122,30 @@ class GalagaGame {
         break;
       case 5:
         this.bossFight = new BossFight(this.canvas);
-        this.bossFightOn=true;
+        this.bossFightOn = true;
         this.createEnemies(10);
-        this.enemies.forEach((enemy,index) => {
-          enemy.multiplier=1.2;
-        })
+        this.enemies.forEach((enemy, index) => {
+          enemy.multiplier = 1.2;
+        });
       default:
         break;
     }
+  }
+
+  playSound(src,play) {
+    var sound = document.createElement('audio');
+    sound.src= src;
+    sound.setAttribute("preload", "auto");
+    sound.setAttribute("controls", "none");
+    sound.style.display = "none";
+    document.body.appendChild(sound);
+    
+    if (play===true){
+      sound.play();
+    } else {
+      sound.pause()
+    }
+  
   }
 
   draw() {
@@ -135,10 +154,18 @@ class GalagaGame {
     this.drawEnemies();
     this.score.drawSelf();
 
-    if(this.bossFightOn){
+    if (this.bossFightOn) {
       this.bossFight.drawSelf();
-    }
-
+      if (this.bossShotsFired.length>0){
+        this.bossShotsFired.forEach((shot,index)=>{
+          shot.drawRegular();
+          if(shot.shotY>600){
+            this.bossShotsFired.splice(index,1)
+          }
+        })
+      }
+      }
+      
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
         //shot.drawSelf();
@@ -146,7 +173,7 @@ class GalagaGame {
         if (shot.shotY < 0) {
           this.shotsFired.splice(index, 1);
         }
-      });
+      })
     }
     if (this.sprayShots.length > 0) {
       this.sprayShots.forEach((shot, index) => {
@@ -154,7 +181,7 @@ class GalagaGame {
         if (shot.y < 0) {
           this.sprayShots.splice(index, 1);
         }
-      })
+      });
     }
     if (this.enemyShots.length > 0) {
       this.enemyShots.forEach((enemyShot, index) => {
@@ -197,7 +224,11 @@ class GalagaGame {
 
   createShot() {
     if (this.sprayBuff) {
-      this.sprayShot = new SprayShot(this.canvas, this.player.playerX + 40, this.player.playerY - 5)
+      this.sprayShot = new SprayShot(
+        this.canvas,
+        this.player.playerX + 40,
+        this.player.playerY - 5
+      );
       this.sprayShots.push(this.sprayShot);
     } else {
       let x = this.player.playerX + 40;
@@ -205,7 +236,6 @@ class GalagaGame {
       this.shot = new Shot(this.canvas, x, y);
       this.shotsFired.push(this.shot);
     }
-
   }
 
   drawEnemies() {
@@ -280,18 +310,27 @@ class GalagaGame {
             case "health":
               this.player.health += 250;
               this.healthBuff = true;
+              //setTimout(()=>{this.playerGrab=false},1000)
               delete this.buff;
-              this.buffs.splice(0, 1);
               this.animTime = true;
+
               break;
             case "spray":
               this.player.playerBuff = true;
               this.sprayBuff = true;
+              this.buffs.forEach((buff,index)=>{
+                buff.playerGrab=true;
+              })
               delete this.buff;
-              this.buffs.splice(0, 1);
+              if (this.buffList.includes("spray")) {
+                this.buffList.pop();
+              }
               this.animTime = true;
               break;
           }
+          this.buffs.forEach((buff,index)=>{
+            buff.playerGrab=true;
+          })
         }
       }
     }
@@ -300,23 +339,20 @@ class GalagaGame {
   checkDrawBuffs() {
     if (this.healthBuff && this.animTime) {
       this.ctx.font = `45px 'Press Start 2P'`;
-      this.ctx.fillStyle = 'green';
+      this.ctx.fillStyle = "green";
       this.ctx.fillText(`+250HP`, 160, 50);
     }
     if (this.sprayBuff && this.animTime) {
       this.ctx.font = `35px 'Press Start 2P'`;
-      this.ctx.fillStyle = 'green';
+      this.ctx.fillStyle = "green";
       this.ctx.fillText(`SPRAY BUFF ON`, 60, 100);
     }
-
   }
-
-
 
   checkShotHit() {
     //Check if enemy is hit
     if (this.shotsFired.length > 0) {
-      this.shotsFired.forEach((shot, index) => {
+      this.shotsFired.forEach((shot, index1) => {
         this.enemies.forEach((enemy, index) => {
           let c1 = shot.shotX + 2.5 >= enemy.enemyX;
           let c2 = shot.shotX + 2.5 <= enemy.enemyX + enemy.radius;
@@ -326,6 +362,9 @@ class GalagaGame {
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
+            this.playSound('../sounds/explosionenemy.mp3',true);
+            this.shotsFired.splice(index1,1)
+            
             if (this.enemies.length === 1) {
               this.wave++;
               this.startNextWave();
@@ -335,11 +374,13 @@ class GalagaGame {
               this.buff = new Buffs(
                 this.canvas,
                 this.chosen.enemyX,
-                this.chosen.enemyY
+                this.chosen.enemyY,
+                this.buffList
               );
 
               this.buffType = this.buff.chooseBuff();
-              this.buffs.push(this.buff)
+              this.buffs.push(this.buff);
+              
             }
 
             this.enemies.splice(index, 1);
@@ -362,7 +403,7 @@ class GalagaGame {
       });
     }
     if (this.sprayShots.length > 0) {
-      this.sprayShots.forEach((shot, index) => {
+      this.sprayShots.forEach((shot, index1) => {
         this.enemies.forEach((enemy, index) => {
           let c1 = shot.x + 2.5 >= enemy.enemyX;
           let c2 = shot.x + 2.5 <= enemy.enemyX + enemy.radius;
@@ -372,10 +413,11 @@ class GalagaGame {
           let c8 = shot.x3 + 2.5 <= enemy.enemyX + enemy.radius;
           let c3 = shot.y + 5 >= enemy.enemyY;
           let c4 = shot.y + 5 <= enemy.enemyY + enemy.radius;
-          if (((c1 && c2) || (c5 & c6) || (c7 && c8)) && (c3 && c4)) {
+          if (((c1 && c2) || c5 & c6 || (c7 && c8)) && c3 && c4) {
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
+            this.shotsFired.splice(index1,1)
             if (this.enemies.length === 1) {
               this.wave++;
               this.startNextWave();
@@ -385,10 +427,11 @@ class GalagaGame {
               this.buff = new Buffs(
                 this.canvas,
                 this.chosen.enemyX,
-                this.chosen.enemyY
+                this.chosen.enemyY,
+                this.buffList
               );
               this.buffType = this.buff.chooseBuff();
-              this.buffs.push(this.buff)
+              this.buffs.push(this.buff);
             }
 
             this.enemies.splice(index, 1);
@@ -424,6 +467,14 @@ class GalagaGame {
     }
   }
 
+  createBossShots() {
+    let rando = Math.floor(Math.random()*300)
+        if (rando<=4){
+          let shot = new BossShot(this.canvas, this.bossFight.x+100, this.bossFight.y+120);
+          this.bossShotsFired.push(shot)  
+    }
+  }
+
   update() {
     const update = () => {
       if (!this.isOver) {
@@ -439,23 +490,26 @@ class GalagaGame {
       this.score.drawScoreIncrease();
       this.checkBuffGrab();
       this.checkDrawBuffs();
-      if(this.bossFight){
+
+      if (this.bossFight) {
+        this.createBossShots();
         this.bossFight.updateTimes();
-        let rando = Math.floor(Math.random()*10)
-        if (rando<3){
-          this.bossFight.drawShot();
-        }
       }
 
       if (this.time % 200 == 0) {
         this.score.timeUpdate();
-
       }
       if (this.time % 800 == 0) {
-        setTimeout(() => { this.animTime = false }, 600);
+        setTimeout(() => {
+          this.animTime = false;
+        }, 600);
         this.healthBuff = false;
-
-
+      }
+      if (this.sprayBuff) {
+        setTimeout(() => {
+          this.sprayBuff = false;
+          this.player.playerBuff = false;
+        }, 10000);
       }
     };
 

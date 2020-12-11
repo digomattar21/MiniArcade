@@ -12,16 +12,15 @@ class Enemy {
     this.directionX = 1;
     this.directionY = 1;
     this.enemy = new Image();
-    
-
+    this.hit=false
     this.radius = 30;
   }
 
   drawSelf() {
     //possibly create another type of enemy thats stronger in a class extended
-    this.enemy.src = "../../img/enemy.png";
-    this.enemy.onload = () => {
-      this.ctx.drawImage(
+      this.enemy.src = "../../img/enemy.png";
+      this.enemy.onload = () => {
+        this.ctx.drawImage(
         this.enemy,
         this.enemyX,
         this.enemyY,
@@ -29,6 +28,8 @@ class Enemy {
         this.radius
       );
     };
+    
+    
   }
 
   moveSelf() {
