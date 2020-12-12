@@ -9,21 +9,17 @@ window.onload = () => {
 
   document.getElementById("galaga").onclick = () => {
     startGalaga();
-
   };
 
   var homeBtn = document.getElementById("homeButton");
   let canvasContainer = document.getElementById("canvas-container");
 
   function startTetris(interval) {
-
     let element = document.getElementById("canvas-container");
     let canvas = document.createElement("canvas");
     var highscoreContainer = document.getElementById("highscores-container");
     var submitBtn = document.getElementsByClassName("submitBtn")[0];
 
-
-    
     highscoreContainer.style.visibility = "visible";
     submitBtn.style.visibility = "visible";
 
@@ -113,7 +109,7 @@ window.onload = () => {
     let canvasContainer = document.getElementById("canvas-container");
     let galagaCanvas = document.createElement("canvas");
     let container = document.getElementById("homebutton-container");
-    let homeBtn = document.getElementById("homeButton")
+    let homeBtn = document.getElementById("homeButton");
 
     homeBtn.style.visibility = "visible";
 
@@ -224,8 +220,8 @@ window.onload = () => {
     button1.onclick = () => {
       canvasContainer.appendChild(highscoreContainer);
       startTetris(40);
-      var submitBtn = document.getElementsByClassName('submitBtn')[0];
-      submitBtn.style.visibility='visible';
+      var submitBtn = document.getElementsByClassName("submitBtn")[0];
+      submitBtn.style.visibility = "visible";
     };
 
     button2.addEventListener("click", () => {

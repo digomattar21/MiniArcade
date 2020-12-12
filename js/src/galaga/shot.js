@@ -8,7 +8,6 @@ class Shot {
     this.image;
   }
 
-
   drawRegular() {
     this.ctx.fillStyle = "#e83bad";
     this.ctx.fillRect(this.shotX - 2.5, this.shotY, 5, 10);

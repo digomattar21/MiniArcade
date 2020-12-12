@@ -3,21 +3,24 @@ class Player {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.health = health;
-    this.player;
+    this.player = new Image();
     this.playerBuff = false;
     this.playerX = this.canvas.width / 2 - 40;
     this.playerY = this.canvas.height - 120;
     this.speedX = 0;
     this.speedY = 0;
+    this.shieldBuff = false;
   }
 
   drawSelf() {
-    this.player = new Image();
-
-    if (this.playerBuff) {
-      this.player.src = "../../img/spaceship_buff.png";
+    if (this.playerBuff && this.shieldBuff) {
+      this.player.src = "../../../img/sprayShieldBuff.png";
+    } else if (this.shieldBuff) {
+      this.player.src = "../../../img/shieldBuff.png";
+    } else if (this.playerBuff) {
+      this.player.src = "../../../img/spaceship_buff.png";
     } else {
-      this.player.src = "../../img/spaceship.png";
+      this.player.src = "../../../img/spaceship.png";
     }
 
     this.player.onload = () => {

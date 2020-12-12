@@ -28,14 +28,17 @@ class GalagaGame {
     this.sprayShot;
     this.sprayShots = [];
     this.buffs = [];
+    this.shieldBuff = false;
+    this.shieldLeft = 10;
     this.bossFight;
     this.bossFightOn = false;
-    this.bossShotsFired=[];
-    this.buffList = ["health","spray"];
+    this.bossShotsFired = [];
+    this.buffList = [ "spray", "shield"];
     this.soundTheme;
-    this.bossMessage=false;
+    this.bossMessage = false;
     this.playerWon;
     this.playerLost;
+    this.overAnimation = false;
   }
 
   renderStartScreen() {
@@ -89,8 +92,8 @@ class GalagaGame {
   startNextWave() {
     if (this.wave <= 4) {
       this.waveMessage = true;
-    } else if (this.wave===5){
-      this.bossMessage = true
+    } else if (this.wave === 5) {
+      this.bossMessage = true;
     }
 
     setTimeout(() => {
@@ -141,61 +144,56 @@ class GalagaGame {
   }
 
   playExplosionSound(play) {
-    var sound = document.getElementsByTagName('audio')[0]
+    var sound = document.getElementsByTagName("audio")[0];
     sound.setAttribute("preload", "auto");
     sound.style.display = "none";
-    
-    if (play){
-      sound.currentTime=0;
+
+    if (play) {
+      sound.currentTime = 0;
       sound.play();
     } else {
-      sound.pause()
+      sound.pause();
     }
-  
   }
 
   playThemeSound(play) {
-    var sound = document.getElementsByTagName('audio')[1];
+    var sound = document.getElementsByTagName("audio")[1];
     sound.setAttribute("preload", "auto");
     sound.style.display = "none";
-    
-    if (play){
-      sound.currentTime=0;
+
+    if (play) {
+      sound.currentTime = 0;
       sound.play();
     } else {
-      sound.pause()
+      sound.pause();
     }
-  
   }
 
   playBossHitSound(play) {
-    var sound = document.getElementsByTagName('audio')[2]
+    var sound = document.getElementsByTagName("audio")[2];
     sound.setAttribute("preload", "auto");
     sound.style.display = "none";
-    
-    if (play){
-      sound.currentTime=0;
+
+    if (play) {
+      sound.currentTime = 0;
       sound.play();
     } else {
-      sound.pause()
+      sound.pause();
     }
-  
   }
 
   playPlayerHitSound(play) {
-    var sound = document.getElementsByTagName('audio')[3]
+    var sound = document.getElementsByTagName("audio")[3];
     sound.setAttribute("preload", "auto");
     sound.style.display = "none";
-    
-    if (play){
-      sound.currentTime=0;
+
+    if (play) {
+      sound.currentTime = 0;
       sound.play();
     } else {
-      sound.pause()
+      sound.pause();
     }
-  
   }
-
 
   draw() {
     this.background.drawSelf();
@@ -205,16 +203,16 @@ class GalagaGame {
 
     if (this.bossFightOn) {
       this.bossFight.drawSelf();
-      if (this.bossShotsFired.length>0){
-        this.bossShotsFired.forEach((shot,index)=>{
+      if (this.bossShotsFired.length > 0) {
+        this.bossShotsFired.forEach((shot, index) => {
           shot.drawRegular();
-          if(shot.shotY>600){
-            this.bossShotsFired.splice(index,1)
+          if (shot.shotY > 600) {
+            this.bossShotsFired.splice(index, 1);
           }
-        })
+        });
       }
-      }
-      
+    }
+
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
         //shot.drawSelf();
@@ -222,7 +220,7 @@ class GalagaGame {
         if (shot.shotY < 0) {
           this.shotsFired.splice(index, 1);
         }
-      })
+      });
     }
     if (this.sprayShots.length > 0) {
       this.sprayShots.forEach((shot, index) => {
@@ -247,7 +245,7 @@ class GalagaGame {
       this.ctx.fillText(`Wave ${this.wave} cleared`, 60, 250);
       this.ctx.fillText(`Get ready`, 150, 350);
     }
-    if(this.bossMessage){
+    if (this.bossMessage) {
       this.ctx.font = '35px "Press Start 2P"';
       this.ctx.fillStyle = "red";
 
@@ -367,38 +365,64 @@ class GalagaGame {
               this.player.health += 250;
               this.healthBuff = true;
               //setTimout(()=>{this.playerGrab=false},1000)
-              delete this.buff;
               this.animTime = true;
-
+              this.buffs.splice(0, this.buffs.length)
+              delete this.buff
               break;
             case "spray":
               this.player.playerBuff = true;
               this.sprayBuff = true;
-              this.buffs.forEach((buff,index)=>{
-                buff.playerGrab=true;
-              })
-              delete this.buff;
+              this.buffs.forEach((buff, index) => {
+                buff.playerGrab = true;
+              });
               this.animTime = true;
+              this.buffs.splice(0, this.buffs.length)
+              delete this.buff
+              break;
+            case "shield":
+              this.shieldBuff = true;
+              this.shieldLeft = 10;
+              this.player.shieldBuff = true;
+              this.animTime = true;
+              this.buffs.splice(0, this.buffs.length)
+              delete this.buff
               break;
           }
-          this.buffs.forEach((buff,index)=>{
-            buff.playerGrab=true;
-          })
+          this.buffs.forEach((buff, index) => {
+            buff.playerGrab = true;
+          });
         }
       }
     }
   }
 
+  checkDrawShieldLeft() {
+    if (this.shieldBuff && this.shieldLeft > 0) {
+      this.ctx.font = `15px 'Press Start 2P'`;
+      this.ctx.fillStyle = "#0097f5";
+      this.ctx.fillText(`Shield: ${this.shieldLeft}`, 440, 40);
+    }
+    if (this.shieldLeft <= 1) {
+      this.shieldBuff = false;
+      this.player.shieldBuff = false;
+    }
+  }
+
   checkDrawBuffs() {
     if (this.healthBuff && this.animTime) {
-      this.ctx.font = `45px 'Press Start 2P'`;
-      this.ctx.fillStyle = "green";
-      this.ctx.fillText(`+250HP`, 160, 100);
-    }
-    if (this.sprayBuff && this.animTime) {
       this.ctx.font = `35px 'Press Start 2P'`;
       this.ctx.fillStyle = "green";
-      this.ctx.fillText(`SPRAY BUFF ON`, 60, 200);
+      this.ctx.fillText(`+250HP`, 170, 100);
+    }
+    if (this.sprayBuff && this.animTime && !this.shieldBuff) {
+      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.fillStyle = "lawngreen";
+      this.ctx.fillText(`SPRAY BUFF ON`, 660, 200);
+    }
+    if (this.shieldBuff && this.animTime && !this.sprayBuff) {
+      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.fillStyle = "blue";
+      this.ctx.fillText(`SHIELD BUFF ON`, 60, 200);
     }
   }
 
@@ -416,9 +440,9 @@ class GalagaGame {
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
             this.playExplosionSound(true);
-            this.shotsFired.splice(index1,1)
-            
-            if (this.enemies.length === 1 && this.wave !=5) {
+            this.shotsFired.splice(index1, 1);
+
+            if (this.enemies.length === 1 && this.wave != 5) {
               this.wave++;
               this.startNextWave();
             }
@@ -430,10 +454,9 @@ class GalagaGame {
                 this.chosen.enemyY,
                 this.buffList
               );
-
+              this.buff.loadImgs();
               this.buffType = this.buff.chooseBuff();
               this.buffs.push(this.buff);
-              
             }
 
             this.enemies.splice(index, 1);
@@ -470,7 +493,7 @@ class GalagaGame {
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
-            this.shotsFired.splice(index1,1)
+            this.shotsFired.splice(index1, 1);
             this.playExplosionSound(true);
             if (this.enemies.length === 1) {
               this.wave++;
@@ -484,6 +507,7 @@ class GalagaGame {
                 this.chosen.enemyY,
                 this.buffList
               );
+              this.buff.loadImgs();
               this.buffType = this.buff.chooseBuff();
               this.buffs.push(this.buff);
             }
@@ -515,151 +539,163 @@ class GalagaGame {
         let c3 = shot.shotY + 5 < this.player.playerY + 80;
         let c4 = shot.shotY + 5 > this.player.playerY;
         if (c1 && c2 && c3 && c4) {
-          this.player.health--;
-          this.playPlayerHitSound(true)
+          if (!this.shieldBuff) {
+            this.player.health -= 5;
+          } else if (this.shieldLeft > 0) {
+            this.shieldLeft--;
+          }
+          this.playPlayerHitSound(true);
+          this.enemyShots.splice(index, 1);
         }
       });
     }
   }
 
   checkBossHit() {
-    if (this.bossFightOn){
-      if (this.shotsFired.length>0 || this.sprayShots.length>0){
-        this.shotsFired.forEach((shot,index)=>{
+    if (this.bossFightOn) {
+      if (this.shotsFired.length > 0 || this.sprayShots.length > 0) {
+        this.shotsFired.forEach((shot, index) => {
           let c1 = shot.shotX + 2.5 > this.bossFight.x;
-          let c2 = shot.shotX + 2.5 < this.bossFight.x+200;
+          let c2 = shot.shotX + 2.5 < this.bossFight.x + 200;
           let c3 = shot.shotY + 5 > this.bossFight.y;
-          let c4 = shot.shotY + 5 < this.bossFight.y+120;
-          if (c1 && c2 && c3 && c4){
-            this.bossFight.looseHealth();
-            this.playBossHitSound(true)
-            this.shotsFired.splice(index,1)
-            this.explosion = new Image();
-            this.explosion.src = "../../../img/explosion.png";
-            this.explosionTime = true;
-            this.ctx.drawImage(
-              this.explosion,
-              shot.shotX,
-              shot.shotY,
-              30,
-              30
-            );
-          }
-            
-          
-        })
-        this.sprayShots.forEach((shot,index)=>{
-          let c1 = shot.x + 2.5 > this.bossFight.x;
-          let c2 = shot.x + 2.5 < this.bossFight.x+200;
-          let c3 = shot.y + 5 > this.bossFight.y;
-          let c4 = shot.y + 5 < this.bossFight.y+120;
-          let c11 = shot.x2 + 2.5 > this.bossFight.x;
-          let c22 = shot.x2 + 2.5 < this.bossFight.x+200;
-          let c33 = shot.y2 + 5 > this.bossFight.y;
-          let c44 = shot.y2 + 5 < this.bossFight.y+120;
-          let c111 = shot.x3 + 2.5 > this.bossFight.x;
-          let c222 = shot.x3 + 2.5 < this.bossFight.x+200;
-          let c333 = shot.y3 + 5 > this.bossFight.y;
-          let c444 = shot.y3 + 5 < this.bossFight.y+120;
-          if ((c1 && c2 && c3 && c4)||(c11 && c22 && c33 & c44) || (c111 & c222 & c333 & c444)){
+          let c4 = shot.shotY + 5 < this.bossFight.y + 120;
+          if (c1 && c2 && c3 && c4) {
             this.bossFight.looseHealth();
             this.playBossHitSound(true);
-            this.sprayShots.splice(index,1);
+            this.shotsFired.splice(index, 1);
             this.explosion = new Image();
             this.explosion.src = "../../../img/explosion.png";
             this.explosionTime = true;
-            this.ctx.drawImage(
-              this.explosion,
-              shot.x,
-              shot.y,
-              30,
-              30
-            );
+            this.ctx.drawImage(this.explosion, shot.shotX, shot.shotY, 30, 30);
           }
-          
-        })
-
+        });
+        this.sprayShots.forEach((shot, index) => {
+          let c1 = shot.x + 2.5 > this.bossFight.x;
+          let c2 = shot.x + 2.5 < this.bossFight.x + 200;
+          let c3 = shot.y + 5 > this.bossFight.y;
+          let c4 = shot.y + 5 < this.bossFight.y + 120;
+          let c11 = shot.x2 + 2.5 > this.bossFight.x;
+          let c22 = shot.x2 + 2.5 < this.bossFight.x + 200;
+          let c33 = shot.y2 + 5 > this.bossFight.y;
+          let c44 = shot.y2 + 5 < this.bossFight.y + 120;
+          let c111 = shot.x3 + 2.5 > this.bossFight.x;
+          let c222 = shot.x3 + 2.5 < this.bossFight.x + 200;
+          let c333 = shot.y3 + 5 > this.bossFight.y;
+          let c444 = shot.y3 + 5 < this.bossFight.y + 120;
+          if (
+            (c1 && c2 && c3 && c4) ||
+            (c11 && c22 && c33 & c44) ||
+            c111 & c222 & c333 & c444
+          ) {
+            this.bossFight.looseHealth();
+            this.playBossHitSound(true);
+            this.sprayShots.splice(index, 1);
+            this.explosion = new Image();
+            this.explosion.src = "../../../img/explosion.png";
+            this.explosionTime = true;
+            this.ctx.drawImage(this.explosion, shot.x, shot.y, 30, 30);
+          }
+        });
       }
-
     }
   }
 
   checkPlayerHitByBoss() {
-    if (this.bossShotsFired.length>0){
-      this.bossShotsFired.forEach((shot,index)=>{
+    if (this.bossShotsFired.length > 0) {
+      this.bossShotsFired.forEach((shot, index) => {
         let c1 = shot.shotX + 5 < this.player.playerX + 80;
         let c2 = shot.shotX + 5 > this.player.playerX;
-        let c3 = shot.shotY + 5 < this.player.playerY+80;
+        let c3 = shot.shotY + 5 < this.player.playerY + 80;
         let c4 = shot.shotY + 5 > this.player.playerY;
-        if(c1 && c2 && c3 && c4){
-          this.player.health-=20;
-          this.bossShotsFired.splice(index,1);
+        if (c1 && c2 && c3 && c4) {
+          if (!this.shieldBuff || this.shieldleft <= 0) {
+            this.player.health -= 20;
+          } else {
+            this.shieldLeft -= 2;
+          }
+
+          this.bossShotsFired.splice(index, 1);
           this.explosion = new Image();
           this.explosion.src = "../../../img/explosion.png";
           this.explosionTime = true;
-          this.playPlayerHitSound(true)
-          this.ctx.drawImage(
-            this.explosion,
-            shot.x,
-            shot.y,
-            30,
-            30
-          );
+          this.playPlayerHitSound(true);
+          this.ctx.drawImage(this.explosion, shot.x, shot.y, 30, 30);
         }
-      })
+      });
     } else {
-      console.log('')
+      console.log("");
       /*
       if (this.bossFight.laserFired.length>0){
         this.bossFight.laserFired.forEach((laser,index)=>{
           let c1 = laser.x 
         })*/
-      }
     }
-
+  }
 
   drawBossHealth(increment) {
-    this.ctx.strokeStyle='white';
-    this.ctx.lineWidth=2;
+    this.ctx.strokeStyle = "white";
+    this.ctx.lineWidth = 0.5;
     this.ctx.beginPath();
-    this.ctx.moveTo(13,40);
-    this.ctx.lineTo(167,40);
-    this.ctx.moveTo(167,40);
-    this.ctx.lineTo(167,60);
-    this.ctx.moveTo(167,60);
-    this.ctx.lineTo(13,60);
-    this.ctx.moveTo(13,60);
-    this.ctx.lineTo(13,60);
+    this.ctx.moveTo(this.bossFight.x+30, this.bossFight.y-4);
+    this.ctx.lineTo(this.bossFight.x+150, this.bossFight.y-4);
+    this.ctx.moveTo(this.bossFight.x+150, this.bossFight.y-4);
+    this.ctx.lineTo(this.bossFight.x+150, this.bossFight.y);
+    this.ctx.moveTo(this.bossFight.x+150, this.bossFight.y);
+    this.ctx.lineTo(this.bossFight.x+30, this.bossFight.y);
+    this.ctx.moveTo(this.bossFight.x+30, this.bossFight.y);
+    this.ctx.lineTo(this.bossFight.x+30, this.bossFight.y-4);
     this.ctx.stroke();
     this.ctx.closePath();
-    this.ctx.fillStyle='red';
-    this.ctx.fillRect(15,40,increment/66.6,20)
-    this.ctx.font =`12px 'Press Start 2P'`;
-    this.ctx.fillStyle='white';
-    this.ctx.fillText(`Boss Health`,10,40)
+    this.ctx.fillStyle = "red";
+    this.ctx.fillRect(this.bossFight.x+30, this.bossFight.y-4, increment / 83.333, 4);
+    this.ctx.font = `10px 'Press Start 2P'`;
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText(`Boss Health`, this.bossFight.x+35, this.bossFight.y-10);
   }
-  
 
   createBossShots() {
-    let rando = Math.floor(Math.random()*300)
-        if (rando<=4){
-          let shot = new BossShot(this.canvas, this.bossFight.x+100, this.bossFight.y+120);
-          this.bossShotsFired.push(shot)  
+    let rando = Math.floor(Math.random() * 300);
+    if (rando <= 4) {
+      let shot = new BossShot(
+        this.canvas,
+        this.bossFight.x + 100,
+        this.bossFight.y + 120
+      );
+      this.bossShotsFired.push(shot);
     }
   }
 
-checkHealth() {
-  if (this.player.health<=0){
-    this.isOver=true;
-    //this.playerLost=true;
-  } 
-  if (this.bossFight){
-    if (this.bossFight.bossHealth<=0){
-      //this.isOver=true;
-      this.playerWon=true;
+  checkIfMoreBuffs() {
+    if (this.bossFight) {
+      if (this.bossFight.bossHealth ===7500 || this.bossFight.bossHealth ===5000 || this.bossFight.bossHealth === 2500) {
+        if (this.buffs.length<=2){
+        this.buff = new Buffs(
+          this.canvas,
+          this.bossFight.x+100,
+          this.bossFight.y+110,
+          this.buffList
+        );
+        this.buff.loadImgs();
+        this.buffType = this.buff.chooseBuff();
+        this.buffs.push(this.buff);}
+      } 
     }
   }
-}
+
+  checkHealth() {
+    if (this.player.health <= 0) {
+      this.isOver = true;
+      this.playerLost = true;
+      this.overAnimation = true;
+    }
+    if (this.bossFight) {
+      if (this.bossFight.bossHealth <= 0) {
+        this.isOver = true;
+        this.playerWon = true;
+        this.overAnimation = true;
+      }
+    }
+  }
 
   update() {
     const update = () => {
@@ -667,16 +703,52 @@ checkHealth() {
         window.requestAnimationFrame(update);
         this.time++;
       } else {
-        let sound = document.getElementsByTagName('audio')[1]
+        let sound = document.getElementsByTagName("audio")[1];
         sound.pause();
-      }
 
-      if(this.playerWon){
-        window.cancelAnimationFrame(update);
-      } else if (this.playerLost){
-        window.cancelAnimationFrame(update);
-        
-
+        if (this.playerWon) {
+          let gameWon = new GameWon(this.canvas);
+          window.cancelAnimationFrame(update);
+          this.explosion = new Image();
+          this.explosion.src = "../../../img/explosion.png";
+          this.playExplosionSound(true);
+          if (this.overAnimation) {
+            setInterval(() => {
+              this.ctx.drawImage(
+                this.explosion,
+                this.bossFight.x,
+                this.bossFight.y,
+                200,
+                150
+              );
+            }, 5);
+            setTimeout(() => {
+              this.overAnimation = false;
+              gameWon.renderSelf();
+            }, 800);
+          }
+        } else if (this.playerLost) {
+          let gameOver = new GameLost(this.canvas, this.score.score);
+          window.cancelAnimationFrame(update);
+          this.explosion = new Image();
+          this.explosion.src = "../../../img/explosion.png";
+          this.playExplosionSound(true);
+          if (this.overAnimation) {
+            setInterval(() => {
+              this.ctx.drawImage(
+                this.explosion,
+                this.player.playerX,
+                this.player.playerY,
+                80,
+                80
+              );
+            }, 5);
+            setTimeout(() => {
+              this.overAnimation = false;
+              gameOver.renderSelf();
+            }, 800);
+          }
+        }
       }
 
       this.draw();
@@ -688,7 +760,7 @@ checkHealth() {
       this.checkBuffGrab();
       this.checkDrawBuffs();
       this.checkHealth();
-  
+      this.checkDrawShieldLeft();
 
       if (this.bossFight) {
         this.createBossShots();
@@ -697,18 +769,19 @@ checkHealth() {
         this.bossFight.drawLaserShot();
         this.checkPlayerHitByBoss();
         this.drawBossHealth(this.bossFight.bossHealth);
+        this.checkIfMoreBuffs();
       }
 
       if (this.time % 200 == 0) {
         this.score.timeUpdate();
       }
-      if (this.time % 50==0){
-        this.ctx.clearRect(0,0,600,600)
+      if (this.time % 50 == 0) {
+        this.ctx.clearRect(0, 0, 600, 600);
       }
       if (this.time % 800 == 0) {
         setTimeout(() => {
           this.animTime = false;
-        }, 600);
+        }, 400);
         this.healthBuff = false;
       }
       if (this.sprayBuff) {
@@ -716,6 +789,12 @@ checkHealth() {
           this.sprayBuff = false;
           this.player.playerBuff = false;
         }, 10000);
+      }
+      if (this.shieldBuff) {
+        setTimeout(() => {
+          this.shieldBuff = false;
+          this.player.shieldBuff = false;
+        }, 15000);
       }
     };
 

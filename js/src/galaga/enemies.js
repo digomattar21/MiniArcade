@@ -12,32 +12,34 @@ class Enemy {
     this.directionX = 1;
     this.directionY = 1;
     this.enemy = new Image();
-    this.hit=false
+    this.hit = false;
     this.radius = 30;
-    this.imgSrc=['../../../img/enemy.png']
-    this.imgs =[this.enemy]
-    this.loadCount=0
+    this.imgSrc = ["../../../img/enemy.png"];
+    this.imgs = [this.enemy];
+    this.loadCount = 0;
   }
 
   loadImg() {
-    for (let i =0; i<1;i++){
-      this.loadImage(this.imgs[i],this.imgSrc[i])
+    for (let i = 0; i < 1; i++) {
+      this.loadImage(this.imgs[i], this.imgSrc[i]);
     }
   }
 
-  loadImage(img,src) {
-    img.addEventListener('load', ()=>{this.loadCount++});
-    img.src=src
+  loadImage(img, src) {
+    img.addEventListener("load", () => {
+      this.loadCount++;
+    });
+    img.src = src;
   }
 
   drawSelf() {
-        this.ctx.drawImage(
-        this.enemy,
-        this.enemyX,
-        this.enemyY,
-        this.radius,
-        this.radius
-      );
+    this.ctx.drawImage(
+      this.enemy,
+      this.enemyX,
+      this.enemyY,
+      this.radius,
+      this.radius
+    );
   }
 
   moveSelf() {

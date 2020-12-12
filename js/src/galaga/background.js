@@ -5,7 +5,7 @@ class Background {
     this.speed = 1;
     this.x = 0;
     this.y = 0;
-    this.backList = []
+    this.backList = [];
   }
 
   drawSelf() {
@@ -21,7 +21,7 @@ class Background {
 
     if (this.y >= this.canvas.height) {
       this.y = 0;
-      this.backList.splice(0,this.backList.length+1)
+      this.backList.splice(0, this.backList.length + 1);
     }
   }
 }
