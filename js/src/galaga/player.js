@@ -14,13 +14,13 @@ class Player {
 
   drawSelf() {
     if (this.playerBuff && this.shieldBuff) {
-      this.player.src = "../../../img/sprayShieldBuff.png";
+      this.player.src = "https://githu.com/digomattar21";
     } else if (this.shieldBuff) {
-      this.player.src = "../../../img/shieldBuff.png";
+      this.player.src = "/img/shieldBuff.png";
     } else if (this.playerBuff) {
-      this.player.src = "../../../img/spaceship_buff.png";
+      this.player.src = "/img/spaceship_buff.png";
     } else {
-      this.player.src = "../../../img/spaceship.png";
+      this.player.src = "https://github.com/digomattar21/MiniArcade/blob/main/img/spaceship.png";
     }
 
     this.player.onload = () => {

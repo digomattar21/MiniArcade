@@ -9,23 +9,22 @@ class Buffs {
     this.healthImage = new Image();
     this.bulletImage = new Image();
     this.shieldImage = new Image();
+    this.imgSrcs = ["/img/health.png", "/img/bullet.png", "/img/shield.png"];
+    this.images =[this.healthImage, this.bulletImage, this.shieldImage];
+    this.loadCount = 0;
     this.buff = false;
     this.playerGrab = false;
   }
 
   loadImgs() {
-    this.healthImage.src = "../../../img/health.png";
-    this.bulletImage.src = "../../../img/bullet.png";
-    this.shieldImage.src = "../../../img/shield.png";
-    this.healthImage.addEventListener("load", () => {
-      console.log("Health img loaded");
-    });
-    this.bulletImage.addEventListener("load", () => {
-      console.log("Spray img loaded");
-    });
-    this.shieldImage.addEventListener("load", () => {
-      console.log("Shield img loaded");
-    });
+    for (let i = 0; i<this.images.length;i ++){
+      this.loadImage(this.images[i], this.imgSrcs[i]);
+    }
+  }
+
+  loadImage(img,src){
+    img.addEventListener('load',()=>{this.loadCount++})
+    img.src=src;
   }
 
   chooseBuff() {

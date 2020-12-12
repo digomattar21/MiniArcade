@@ -1,5 +1,5 @@
 class Enemy {
-  constructor(canvas, x, y, lives) {
+  constructor(canvas, x, y, lives,enemy) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.enemyX = x;
@@ -8,13 +8,12 @@ class Enemy {
     this.multiplier = 0;
     this.speedX = Math.random() * 2.5 + 0.5 * this.multiplier;
     this.speedY = Math.random() * 1 + 0.5 * this.multiplier;
-    this.enemy;
     this.directionX = 1;
     this.directionY = 1;
     this.enemy = new Image();
     this.hit = false;
     this.radius = 30;
-    this.imgSrc = ["../../../img/enemy.png"];
+    this.imgSrc = ["/img/enemy.png"];
     this.imgs = [this.enemy];
     this.loadCount = 0;
   }

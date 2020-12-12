@@ -39,6 +39,8 @@ class GalagaGame {
     this.playerWon;
     this.playerLost;
     this.overAnimation = false;
+    this.shieldBuffTime=2000;
+    this.sprayBuffTime = 2000;
   }
 
   renderStartScreen() {
@@ -372,15 +374,14 @@ class GalagaGame {
             case "spray":
               this.player.playerBuff = true;
               this.sprayBuff = true;
-              this.buffs.forEach((buff, index) => {
-                buff.playerGrab = true;
-              });
+              this.sprayBuffTime=2000;
               this.animTime = true;
               this.buffs.splice(0, this.buffs.length)
               delete this.buff
               break;
             case "shield":
               this.shieldBuff = true;
+              this.shieldBuffTime=2000;
               this.shieldLeft = 10;
               this.player.shieldBuff = true;
               this.animTime = true;
@@ -402,7 +403,7 @@ class GalagaGame {
       this.ctx.fillStyle = "#0097f5";
       this.ctx.fillText(`Shield: ${this.shieldLeft}`, 440, 40);
     }
-    if (this.shieldLeft <= 1) {
+    if (this.shieldLeft <= 1 || this.shieldBuffTime<=0) {
       this.shieldBuff = false;
       this.player.shieldBuff = false;
     }
@@ -784,17 +785,24 @@ class GalagaGame {
         }, 400);
         this.healthBuff = false;
       }
-      if (this.sprayBuff) {
-        setTimeout(() => {
-          this.sprayBuff = false;
-          this.player.playerBuff = false;
-        }, 10000);
+      
+      if (this.time%1==0){
+        if (this.sprayBuff) {
+        this.sprayBuffTime--;
+        }
+        if (this.shieldBuff){
+          this.shieldBuffTime--;
+        }
       }
-      if (this.shieldBuff) {
-        setTimeout(() => {
-          this.shieldBuff = false;
-          this.player.shieldBuff = false;
-        }, 15000);
+
+      if(this.sprayBuffTime<=0){
+        this.sprayBuff=false;
+        this.player.playerBuff=false;
+      }
+
+      if (this.shieldBuffTime<=0){
+        this.shieldBuff=false;
+        this.player.shieldBuff=false; 
       }
     };
 
