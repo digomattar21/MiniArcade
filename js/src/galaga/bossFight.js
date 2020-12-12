@@ -34,7 +34,7 @@ class BossFight {
     this.laser;
     this.directionY = 1;
     this.directionX = 1;
-    this.speedX = Math.random() * 0.5 + 0.2;
+    this.speedX = Math.random() * 0.5 + 0.1;
     this.speedY = Math.random() * 0.5;
     this.laserLoad = 0;
     this.laserOn = false;
@@ -191,7 +191,7 @@ class BossFight {
     if (this.laserLoad > 2000 && this.laserLoad < 2500) {
       this.ctx.font = `15px 'Press Start 2P'`;
       this.ctx.fillStyle = "orange";
-      this.ctx.fillText(`LASER INCOMING`, this.x-10, this.y - 24);
+      this.ctx.fillText(`LASER INCOMING`, this.x - 10, this.y - 24);
     }
     if (this.laserLoad === 2500) {
       this.laserOn = true;

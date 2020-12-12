@@ -21,7 +21,7 @@ class Background {
 
     if (this.y >= this.canvas.height) {
       this.y = 0;
-      this.backList.splice(0, this.backList.length + 1);
+      this.backList.splice(0, this.backList.length);
     }
   }
 }

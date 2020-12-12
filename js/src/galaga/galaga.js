@@ -12,7 +12,7 @@ class GalagaGame {
     this.enemies = [];
     this.enemy;
     this.enemyStartPos = { x: 100, y: 50 };
-    this.wave = 4;
+    this.wave = 0;
     this.explosion;
     this.now;
     this.then;
@@ -39,7 +39,7 @@ class GalagaGame {
     this.playerWon;
     this.playerLost;
     this.overAnimation = false;
-    this.shieldBuffTime=2000;
+    this.shieldBuffTime = 2000;
     this.sprayBuffTime = 2000;
   }
 
@@ -368,25 +368,28 @@ class GalagaGame {
               this.healthBuff = true;
               //setTimout(()=>{this.playerGrab=false},1000)
               this.animTime = true;
-              this.buffs.splice(0, this.buffs.length)
-              delete this.buff
+              this.buffs.splice(0, this.buffs.length);
+              this.buff.playerGrab = true;
+              delete this.buff;
               break;
             case "spray":
               this.player.playerBuff = true;
               this.sprayBuff = true;
-              this.sprayBuffTime=2000;
+              this.sprayBuffTime = 2000;
               this.animTime = true;
-              this.buffs.splice(0, this.buffs.length)
-              delete this.buff
+              this.buff.playerGrab = true;
+              this.buffs.splice(0, this.buffs.length);
+              delete this.buff;
               break;
             case "shield":
               this.shieldBuff = true;
-              this.shieldBuffTime=2000;
+              this.shieldBuffTime = 2000;
               this.shieldLeft = 10;
               this.player.shieldBuff = true;
               this.animTime = true;
-              this.buffs.splice(0, this.buffs.length)
-              delete this.buff
+              this.buff.playerGrab = true;
+              this.buffs.splice(0, this.buffs.length);
+              delete this.buff;
               break;
           }
           this.buffs.forEach((buff, index) => {
@@ -403,7 +406,7 @@ class GalagaGame {
       this.ctx.fillStyle = "#0097f5";
       this.ctx.fillText(`Shield: ${this.shieldLeft}`, 440, 40);
     }
-    if (this.shieldLeft <= 1 || this.shieldBuffTime<=0) {
+    if (this.shieldLeft <= 1 || this.shieldBuffTime <= 0) {
       this.shieldBuff = false;
       this.player.shieldBuff = false;
     }
@@ -637,21 +640,30 @@ class GalagaGame {
     this.ctx.strokeStyle = "white";
     this.ctx.lineWidth = 0.5;
     this.ctx.beginPath();
-    this.ctx.moveTo(this.bossFight.x+30, this.bossFight.y-4);
-    this.ctx.lineTo(this.bossFight.x+150, this.bossFight.y-4);
-    this.ctx.moveTo(this.bossFight.x+150, this.bossFight.y-4);
-    this.ctx.lineTo(this.bossFight.x+150, this.bossFight.y);
-    this.ctx.moveTo(this.bossFight.x+150, this.bossFight.y);
-    this.ctx.lineTo(this.bossFight.x+30, this.bossFight.y);
-    this.ctx.moveTo(this.bossFight.x+30, this.bossFight.y);
-    this.ctx.lineTo(this.bossFight.x+30, this.bossFight.y-4);
+    this.ctx.moveTo(this.bossFight.x + 30, this.bossFight.y - 4);
+    this.ctx.lineTo(this.bossFight.x + 150, this.bossFight.y - 4);
+    this.ctx.moveTo(this.bossFight.x + 150, this.bossFight.y - 4);
+    this.ctx.lineTo(this.bossFight.x + 150, this.bossFight.y);
+    this.ctx.moveTo(this.bossFight.x + 150, this.bossFight.y);
+    this.ctx.lineTo(this.bossFight.x + 30, this.bossFight.y);
+    this.ctx.moveTo(this.bossFight.x + 30, this.bossFight.y);
+    this.ctx.lineTo(this.bossFight.x + 30, this.bossFight.y - 4);
     this.ctx.stroke();
     this.ctx.closePath();
     this.ctx.fillStyle = "red";
-    this.ctx.fillRect(this.bossFight.x+30, this.bossFight.y-4, increment / 83.333, 4);
+    this.ctx.fillRect(
+      this.bossFight.x + 30,
+      this.bossFight.y - 4,
+      increment / 83.333,
+      4
+    );
     this.ctx.font = `10px 'Press Start 2P'`;
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(`Boss Health`, this.bossFight.x+35, this.bossFight.y-10);
+    this.ctx.fillText(
+      `Boss Health`,
+      this.bossFight.x + 35,
+      this.bossFight.y - 10
+    );
   }
 
   createBossShots() {
@@ -668,18 +680,23 @@ class GalagaGame {
 
   checkIfMoreBuffs() {
     if (this.bossFight) {
-      if (this.bossFight.bossHealth ===7500 || this.bossFight.bossHealth ===5000 || this.bossFight.bossHealth === 2500) {
-        if (this.buffs.length<=1){
-        this.buff = new Buffs(
-          this.canvas,
-          this.bossFight.x+100,
-          this.bossFight.y+110,
-          this.buffList
-        );
-        this.buff.loadImgs();
-        this.buffType = this.buff.chooseBuff();
-        this.buffs.push(this.buff);}
-      } 
+      if (
+        this.bossFight.bossHealth === 7500 ||
+        this.bossFight.bossHealth === 5000 ||
+        this.bossFight.bossHealth === 2500
+      ) {
+        if (this.buffs.length <= 1) {
+          this.buff = new Buffs(
+            this.canvas,
+            this.bossFight.x + 100,
+            this.bossFight.y + 110,
+            this.buffList
+          );
+          this.buff.loadImgs();
+          this.buffType = this.buff.chooseBuff();
+          this.buffs.push(this.buff);
+        }
+      }
     }
   }
 
@@ -785,24 +802,24 @@ class GalagaGame {
         }, 400);
         this.healthBuff = false;
       }
-      
-      if (this.time%1==0){
+
+      if (this.time % 1 == 0) {
         if (this.sprayBuff) {
-        this.sprayBuffTime--;
+          this.sprayBuffTime--;
         }
-        if (this.shieldBuff){
+        if (this.shieldBuff) {
           this.shieldBuffTime--;
         }
       }
 
-      if(this.sprayBuffTime<=0){
-        this.sprayBuff=false;
-        this.player.playerBuff=false;
+      if (this.sprayBuffTime <= 0) {
+        this.sprayBuff = false;
+        this.player.playerBuff = false;
       }
 
-      if (this.shieldBuffTime<=0){
-        this.shieldBuff=false;
-        this.player.shieldBuff=false; 
+      if (this.shieldBuffTime <= 0) {
+        this.shieldBuff = false;
+        this.player.shieldBuff = false;
       }
     };
 

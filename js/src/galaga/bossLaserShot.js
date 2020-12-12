@@ -41,8 +41,8 @@ class LaserShot {
         break;
       case "mid":
         this.ctx.beginPath();
-        this.ctx.moveTo(this.x+15, this.y);
-        this.ctx.lineTo(this.x+15, this.canvas.height);
+        this.ctx.moveTo(this.x + 15, this.y);
+        this.ctx.lineTo(this.x + 15, this.canvas.height);
         this.ctx.stroke();
         this.ctx.closePath();
         this.ctx.beginPath();

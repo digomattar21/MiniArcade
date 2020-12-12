@@ -1,5 +1,5 @@
 class Enemy {
-  constructor(canvas, x, y, lives,enemy) {
+  constructor(canvas, x, y, lives, enemy) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.enemyX = x;
