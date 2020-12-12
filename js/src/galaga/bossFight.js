@@ -18,10 +18,10 @@ class BossFight {
     this.bossMid = new Image();
     this.bossMidOpen = new Image();
     this.imgSrcs = [
-      "../../../img/boss_left.png",
-      "../../../img/boss_right.png",
-      "../../../img/boss_middle.png",
-      "../../../img/boss_middle_open.png",
+      "./img/boss_left.png",
+      "./img/boss_right.png",
+      "./img/boss_middle.png",
+      "./img/boss_middle_open.png",
     ];
     this.imgs = [this.bossLeft, this.bossRight, this.bossMid, this.bossMidOpen];
     this.loadCount = 0;
@@ -40,6 +40,13 @@ class BossFight {
     this.laserOn = false;
     this.shotX = this.x + 100;
     this.shotY = this.y + 120;
+    this.freeze=false;
+  }
+
+  getPath() {
+      if(this.laserFired.length>0){
+          return [this.laserFired[0].path1,this.laserFired[0].path2]
+      } 
   }
 
   looseHealth() {
@@ -83,9 +90,13 @@ class BossFight {
         break;
     }
     this.updateSelf();
+    if (this.laserFired.length>0){
+        this.laserFired[this.laserFired.length-1].updateSelf(this.x+30,this.y+115)
+    }
   }
 
   updateSelf() {
+    if (!this.freeze){  
     let rando = Math.floor(Math.random() * 2);
     let newDir;
     if (rando < 1) {
@@ -108,82 +119,78 @@ class BossFight {
       this.directionY = newDir;
     }
     this.x += this.speedX * this.directionX;
-    this.y += this.speedY * this.directionY;
+    this.y += this.speedY * this.directionY;}
   }
 
-  drawLaserShot() {
+  createLaserShot() {
     if (this.laserOn) {
       switch (this.randlaserDir) {
         case "left":
           let laserShot = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot);
-          laserShot.drawLaser(this.randlaserDir);
+          //laserShot.drawLaser(this.randlaserDir);
           break;
         case "left-mid":
           let laserShot1 = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot1);
-          laserShot1.drawLaser(this.randlaserDir);
+          //laserShot1.drawLaser(this.randlaserDir);
           break;
         case "right":
           let laserShot2 = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot2);
-          laserShot2.drawLaser(this.randlaserDir);
+          //laserShot2.drawLaser(this.randlaserDir);
           break;
         case "right-mid":
           let laserShot3 = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot3);
-          laserShot3.drawLaser(this.randlaserDir);
+          //laserShot3.drawLaser(this.randlaserDir);
           break;
         case "mid":
           let laserShot4 = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot4);
-          laserShot4.drawLaser(this.randlaserDir);
+          //laserShot4.drawLaser(this.randlaserDir);
           break;
         case "mid-open":
           let laserShot5 = new LaserShot(
             this.canvas,
             this.x + 30,
-            this.y + 115,
-            -2,
-            0.5
+            this.y + 115
           );
           this.laserFired.push(laserShot5);
-          laserShot5.drawLaser(this.randlaserDir);
+          //laserShot5.drawLaser(this.randlaserDir);
           break;
         default:
           break;
       }
     }
+  }
+
+
+  drawLasers() {
+      if (this.laserFired.length>0){
+          let last = this.laserFired[this.laserFired.length-1];
+          last.drawLaser(this.randlaserDir);
+      }
   }
 
   updateTimes() {
@@ -195,13 +202,16 @@ class BossFight {
     }
     if (this.laserLoad === 2500) {
       this.laserOn = true;
+      this.createLaserShot();
+      this.laserLoad = 0;
+      this.freeze=true;
       setTimeout(() => {
         this.laserOn = false;
-        this.laserLoad = 0;
         this.randlaserDir = this.laserDir[
           Math.floor(Math.random() * this.laserDir.length)
         ];
         this.laserFired.splice(0, this.laserFired.length);
+        this.freeze=false;
       }, 1500);
     }
   }

@@ -12,7 +12,7 @@ class GalagaGame {
     this.enemies = [];
     this.enemy;
     this.enemyStartPos = { x: 100, y: 50 };
-    this.wave = 0;
+    this.wave =4;
     this.explosion;
     this.now;
     this.then;
@@ -441,7 +441,7 @@ class GalagaGame {
           let c4 = shot.shotY + 5 <= enemy.enemyY + enemy.radius;
           if (c1 && c2 && c3 && c4) {
             this.explosion = new Image();
-            this.explosion.src = "../../../img/explosion.png";
+            this.explosion.src = "./img/explosion.png";
             this.explosionTime = true;
             this.playExplosionSound(true);
             this.shotsFired.splice(index1, 1);
@@ -495,7 +495,7 @@ class GalagaGame {
           let c4 = shot.y + 5 <= enemy.enemyY + enemy.radius;
           if (((c1 && c2) || c5 & c6 || (c7 && c8)) && c3 && c4) {
             this.explosion = new Image();
-            this.explosion.src = "../../../img/explosion.png";
+            this.explosion.src = "./img/explosion.png";
             this.explosionTime = true;
             this.shotsFired.splice(index1, 1);
             this.playExplosionSound(true);
@@ -568,7 +568,7 @@ class GalagaGame {
             this.playBossHitSound(true);
             this.shotsFired.splice(index, 1);
             this.explosion = new Image();
-            this.explosion.src = "../../../img/explosion.png";
+            this.explosion.src = "./img/explosion.png";
             this.explosionTime = true;
             this.ctx.drawImage(this.explosion, shot.shotX, shot.shotY, 30, 30);
           }
@@ -595,7 +595,7 @@ class GalagaGame {
             this.playBossHitSound(true);
             this.sprayShots.splice(index, 1);
             this.explosion = new Image();
-            this.explosion.src = "../../../img/explosion.png";
+            this.explosion.src = "./img/explosion.png";
             this.explosionTime = true;
             this.ctx.drawImage(this.explosion, shot.x, shot.y, 30, 30);
           }
@@ -620,20 +620,13 @@ class GalagaGame {
 
           this.bossShotsFired.splice(index, 1);
           this.explosion = new Image();
-          this.explosion.src = "../../../img/explosion.png";
+          this.explosion.src = "./img/explosion.png";
           this.explosionTime = true;
           this.playPlayerHitSound(true);
           this.ctx.drawImage(this.explosion, shot.x, shot.y, 30, 30);
         }
       });
-    } else {
-      console.log("");
-      /*
-      if (this.bossFight.laserFired.length>0){
-        this.bossFight.laserFired.forEach((laser,index)=>{
-          let c1 = laser.x 
-        })*/
-    }
+    } 
   }
 
   drawBossHealth(increment) {
@@ -678,6 +671,23 @@ class GalagaGame {
     }
   }
 
+  checkIfLaserHit () {
+    if (this.bossFight.laserFired.length>0){
+      let hitLine = [];
+    for (let i = 0; i<80; i++){
+      hitLine.push({x:this.player.playerX+i, y:this.player.playerY+40})
+    }
+      let path1 = this.bossFight.getPath()[0];
+      let path2 = this.bossFight.getPath()[1];
+      
+    hitLine.forEach((point,index)=>{
+       console.log(this.ctx.isPointInPath(path1, point.x, point.y))
+      //if ((this.ctx.isPointInPath(path1,point.x,point.y)) || (this.ctx.isPointInPath(path2,point.x,point.y))){
+        //console.log('ACERTOU')
+      //}
+    })
+  }}
+
   checkIfMoreBuffs() {
     if (this.bossFight) {
       if (
@@ -717,6 +727,7 @@ class GalagaGame {
 
   update() {
     const update = () => {
+
       if (!this.isOver) {
         window.requestAnimationFrame(update);
         this.time++;
@@ -728,7 +739,7 @@ class GalagaGame {
           let gameWon = new GameWon(this.canvas);
           window.cancelAnimationFrame(update);
           this.explosion = new Image();
-          this.explosion.src = "../../../img/explosion.png";
+          this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
           if (this.overAnimation) {
             setInterval(() => {
@@ -749,7 +760,7 @@ class GalagaGame {
           let gameOver = new GameLost(this.canvas, this.score.score);
           window.cancelAnimationFrame(update);
           this.explosion = new Image();
-          this.explosion.src = "../../../img/explosion.png";
+          this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
           if (this.overAnimation) {
             setInterval(() => {
@@ -784,17 +795,15 @@ class GalagaGame {
         this.createBossShots();
         this.bossFight.updateTimes();
         this.checkBossHit();
-        this.bossFight.drawLaserShot();
         this.checkPlayerHitByBoss();
         this.drawBossHealth(this.bossFight.bossHealth);
         this.checkIfMoreBuffs();
+        this.checkIfLaserHit();
+        this.bossFight.drawLasers();
       }
 
       if (this.time % 200 == 0) {
         this.score.timeUpdate();
-      }
-      if (this.time % 50 == 0) {
-        this.ctx.clearRect(0, 0, 600, 600);
       }
       if (this.time % 800 == 0) {
         setTimeout(() => {
