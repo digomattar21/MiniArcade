@@ -25,7 +25,7 @@ class BossFight {
     ];
     this.imgs = [this.bossLeft, this.bossRight, this.bossMid, this.bossMidOpen];
     this.loadCount = 0;
-    this.bossHealth = 7500;
+    this.bossHealth = 10000;
     this.x = this.canvas.width / 2 - 100;
     this.y = 5;
     this.shotsFired = [];
@@ -221,13 +221,13 @@ class BossFight {
 
   updateTimes() {
     this.laserLoad++;
-    if (this.laserLoad > 2500 && this.laserLoad < 3000) {
+    if (this.laserLoad > 2250 && this.laserLoad < 2750) {
       this.ctx.font = `15px 'Press Start 2P'`;
       this.ctx.fillStyle = "orange";
       this.ctx.fillText(`LASER INCOMING`, this.x - 10, this.y - 24);
       this.playLaserCharge(true);
     }
-    if (this.laserLoad === 3000) {
+    if (this.laserLoad === 2750) {
       this.laserOn = true;
       this.createLaserShot();
       this.laserLoad = 0;

@@ -55,4 +55,9 @@ class Player {
     //We can use set interval to change the speed gradually.
     this.playerY += 20;
   }
+
+  move(x,y) {
+    this.playerX = x;
+    this.playerY = y;
+  }
 }

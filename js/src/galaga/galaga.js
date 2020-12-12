@@ -12,7 +12,7 @@ class GalagaGame {
     this.enemies = [];
     this.enemy;
     this.enemyStartPos = { x: 100, y: 50 };
-    this.wave =4;
+    this.wave = 0;
     this.explosion;
     this.now;
     this.then;
@@ -41,6 +41,13 @@ class GalagaGame {
     this.overAnimation = false;
     this.shieldBuffTime = 2000;
     this.sprayBuffTime = 2000;
+    this.tips = [
+     'TIP: your shield doesnt protect you from the boss laser',
+     '          TIP: use your mouse to move the player faster',
+     'TIP: listen to the laser warning sound in the boss fight',
+     'TIP: watch out for the direction that the boss laser points'
+    ];
+    this.tip = this.tips[Math.floor(Math.random()*this.tips.length)]
   }
 
   renderStartScreen() {
@@ -54,6 +61,23 @@ class GalagaGame {
         this.canvas.width / 2 - 130,
         this.canvas.height / 2 + 10
       );
+      this.ctx.font = `10px 'Press Start 2P'`;
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(
+        "Commands: ",
+        200,
+        this.canvas.height / 2 + 105
+      );
+      this.ctx.fillText(
+        "mouse: Move PLayer",
+        200,
+        this.canvas.height / 2 + 140
+      );
+      this.ctx.fillText(
+        "Space : Shoot",
+        200,
+        this.canvas.height / 2 + 175
+      );
     }, 100);
 
     setTimeout(() => {
@@ -66,11 +90,29 @@ class GalagaGame {
         this.canvas.width / 2 - 70,
         this.canvas.height / 2 + 10
       );
+      this.ctx.font = `10px 'Press Start 2P'`;
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(
+        "Commands: ",
+        200,
+        this.canvas.height / 2 + 105
+      );
+      this.ctx.fillText(
+        "mouse: Move PLayer",
+        200,
+        this.canvas.height / 2 + 140
+      );
+      this.ctx.fillText(
+        "Space : Shoot",
+        200,
+        this.canvas.height / 2 + 175
+      );
+      
     }, 1500);
 
     setTimeout(() => {
       this.start();
-    }, 2500);
+    }, 3000);
 
     WebFont.load({
       google: { families: ["Press Start 2P"] },
@@ -81,7 +123,7 @@ class GalagaGame {
   start() {
     //Initialize everything and call update()
     this.background = new Background(this.canvas);
-    this.player = new Player(this.canvas, 2500);
+    this.player = new Player(this.canvas, 1500);
     this.score = new Score(this.canvas);
     this.createEnemies(5);
     this.playThemeSound(true);
@@ -102,8 +144,10 @@ class GalagaGame {
       this.createWaves();
       this.update();
       this.waveMessage = false;
+      this.tips.splice(this.tips.indexOf(this.tip),1)
+      this.tip = this.tips[Math.floor(Math.random()*this.tips.length)]
       this.bossMessage = false;
-    }, 2000);
+    }, 3500);
   }
 
   createWaves() {
@@ -123,7 +167,7 @@ class GalagaGame {
       case 3:
         this.createEnemies(20);
         this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = 1.7;
+          enemy.multiplier = 1.6;
         });
         break;
       case 4:
@@ -138,7 +182,7 @@ class GalagaGame {
         this.bossFightOn = true;
         this.createEnemies(10);
         this.enemies.forEach((enemy,index)=>{
-          enemy.multiplier = 1;
+          enemy.multiplier = 1.2;
         })
       default:
         break;
@@ -218,7 +262,6 @@ class GalagaGame {
 
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index) => {
-        //shot.drawSelf();
         shot.drawRegular();
         if (shot.shotY < 0) {
           this.shotsFired.splice(index, 1);
@@ -247,6 +290,13 @@ class GalagaGame {
 
       this.ctx.fillText(`Wave ${this.wave} cleared`, 60, 250);
       this.ctx.fillText(`Get ready`, 150, 350);
+      this.ctx.font = `10px 'Press Start 2P'`;
+      this.ctx.fillStyle = "white";
+      this.ctx.fillText(
+        `${this.tip}`,
+        10,
+        this.canvas.height / 2 + 150
+      );
     }
     if (this.bossMessage) {
       this.ctx.font = '35px "Press Start 2P"';
@@ -693,7 +743,7 @@ class GalagaGame {
             
         }
         if ((this.player.playerX < yInt2) && (this.player.playerX +80>yInt2)){
-          if (this.player.playerY+40> this.bossFight.y){
+          if (this.player.playerY+40> this.bossFight.y+120){
             this.player.health--;
           }  
         }
@@ -714,11 +764,11 @@ class GalagaGame {
   checkIfMoreBuffs() {
     if (this.bossFight) {
       if (
-        this.bossFight.bossHealth === 5500 ||
-        this.bossFight.bossHealth === 3500 ||
+        this.bossFight.bossHealth === 7500 ||
+        this.bossFight.bossHealth === 5000 ||
         this.bossFight.bossHealth === 2500
       ) {
-        if (this.buffs.length < 1) {
+        if (this.buffs.length <= 1) {
           this.buff = new Buffs(
             this.canvas,
             this.bossFight.x + 100,

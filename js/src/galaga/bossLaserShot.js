@@ -85,7 +85,6 @@ class LaserShot {
         this.slope2 = (this.canvas.height-this.y)/150;
         this.yInt1 = this.y - (this.slope1*(this.x+15));
         this.yInt2 = this.y - (this.slope2*(this.x+130));
-        console.log('right', this.slope1, this.slope2)
         break;
       case "right-mid":
         this.path1.moveTo(this.x + 20, this.y);
@@ -100,7 +99,6 @@ class LaserShot {
         this.slope2 = (this.canvas.height-this.y)/60;
         this.yInt1 = this.y - (this.slope1*(this.x+20));
         this.yInt2 = this.y - (this.slope2*(this.x+135));
-        console.log('right-mid', this.slope1, this.slope2)
         break;
     }
     this.updateSelf();

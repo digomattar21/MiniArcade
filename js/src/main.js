@@ -164,6 +164,11 @@ window.onload = () => {
           break;
       }
     });
+    canvas.addEventListener('mousemove', (event)=>{
+      let x = event.offsetX;
+      let y = event.offsetY;
+      game1.player.move(x,y);
+    })
   }
 
   function renderHomeScreen() {
