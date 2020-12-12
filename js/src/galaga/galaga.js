@@ -312,6 +312,7 @@ class GalagaGame {
             this.enemyStartPos.x,
             this.enemyStartPos.y
           );
+          this.enemy.loadImg();
           this.enemies.push(this.enemy);
           this.enemyStartPos.x += 70;
         } else {
