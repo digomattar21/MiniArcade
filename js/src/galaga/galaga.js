@@ -81,7 +81,7 @@ class GalagaGame {
   start() {
     //Initialize everything and call update()
     this.background = new Background(this.canvas);
-    this.player = new Player(this.canvas, 500);
+    this.player = new Player(this.canvas, 2500);
     this.score = new Score(this.canvas);
     this.createEnemies(5);
     this.playThemeSound(true);
@@ -137,9 +137,9 @@ class GalagaGame {
         this.bossFight.loadImgs();
         this.bossFightOn = true;
         this.createEnemies(10);
-        this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = 1.2;
-        });
+        this.enemies.forEach((enemy,index)=>{
+          enemy.multiplier = 1;
+        })
       default:
         break;
     }
@@ -171,13 +171,14 @@ class GalagaGame {
     }
   }
 
+
   playBossHitSound(play) {
     var sound = document.getElementsByTagName("audio")[2];
     sound.setAttribute("preload", "auto");
     sound.style.display = "none";
 
     if (play) {
-      sound.currentTime = 0;
+      sound.currentTime = 0.2;
       sound.play();
     } else {
       sound.pause();
@@ -364,9 +365,8 @@ class GalagaGame {
         if (c1 && c2 && c3 && c4) {
           switch (this.buffType) {
             case "health":
-              this.player.health += 250;
+              this.player.health += 500;
               this.healthBuff = true;
-              //setTimout(()=>{this.playerGrab=false},1000)
               this.animTime = true;
               this.buffs.splice(0, this.buffs.length);
               this.buff.playerGrab = true;
@@ -416,7 +416,7 @@ class GalagaGame {
     if (this.healthBuff && this.animTime) {
       this.ctx.font = `35px 'Press Start 2P'`;
       this.ctx.fillStyle = "green";
-      this.ctx.fillText(`+250HP`, 170, 100);
+      this.ctx.fillText(`+500HP`, 170, 100);
     }
     if (this.sprayBuff && this.animTime && !this.shieldBuff) {
       this.ctx.font = `35px 'Press Start 2P'`;
@@ -544,7 +544,7 @@ class GalagaGame {
         let c4 = shot.shotY + 5 > this.player.playerY;
         if (c1 && c2 && c3 && c4) {
           if (!this.shieldBuff) {
-            this.player.health -= 5;
+            this.player.health -= 15;
           } else if (this.shieldLeft > 0) {
             this.shieldLeft--;
           }
@@ -613,7 +613,7 @@ class GalagaGame {
         let c4 = shot.shotY + 5 > this.player.playerY;
         if (c1 && c2 && c3 && c4) {
           if (!this.shieldBuff || this.shieldleft <= 0) {
-            this.player.health -= 20;
+            this.player.health -= 50;
           } else {
             this.shieldLeft -= 2;
           }
@@ -674,28 +674,51 @@ class GalagaGame {
   checkIfLaserHit () {
     if (this.bossFight.laserFired.length>0){
       let hitLine = [];
-    for (let i = 0; i<80; i++){
+    for (let i = 15; i<65; i++){
       hitLine.push({x:this.player.playerX+i, y:this.player.playerY+40})
     }
-      let path1 = this.bossFight.getPath()[0];
-      let path2 = this.bossFight.getPath()[1];
-      
-    hitLine.forEach((point,index)=>{
-       console.log(this.ctx.isPointInPath(path1, point.x, point.y))
-      //if ((this.ctx.isPointInPath(path1,point.x,point.y)) || (this.ctx.isPointInPath(path2,point.x,point.y))){
-        //console.log('ACERTOU')
-      //}
-    })
-  }}
+      let slope1 = this.bossFight.getSlope()[0];
+      let slope2 = this.bossFight.getSlope()[1];
+      let yInt1 = this.bossFight.getSlope()[2];
+      let yInt2 = this.bossFight.getSlope()[3];
+      //console.log("SLOPE1: ", slope1);
+      //console.log("SLOPE2: ", slope2);
+      //console.log("YINT1: ", yInt1);
+      //console.log("YINT2: ", yInt2);
+    if (slope1>9000 && slope2 > 9000){
+        if ((this.player.playerX < yInt1) && (this.player.playerX +80>yInt1)){
+          if (this.player.playerY+40> this.bossFight.y){
+            this.player.health--;
+          }
+            
+        }
+        if ((this.player.playerX < yInt2) && (this.player.playerX +80>yInt2)){
+          if (this.player.playerY+40> this.bossFight.y){
+            this.player.health--;
+          }  
+        }
+    } else(hitLine.forEach((point)=>{
+      //console.log(point.y,Math.round(Math.abs(point.x*slope1+yInt1)))
+      let c1 = point.y < Math.round(Math.abs(point.x*slope1+yInt1))+15;
+      let c2 = point.y > Math.round(Math.abs(point.x*slope1+yInt1))-15;
+      let c3 =  point.y < Math.round(Math.abs(point.x*slope2+yInt2))+15;
+      let c4 =  point.y > Math.round(Math.abs(point.x*slope2+yInt2))-15;
+     if ((c1 && c2) || (c3 && c4)){
+       this.player.health--;
+     }
+   }))
+   
+  }
+  }
 
   checkIfMoreBuffs() {
     if (this.bossFight) {
       if (
-        this.bossFight.bossHealth === 7500 ||
-        this.bossFight.bossHealth === 5000 ||
+        this.bossFight.bossHealth === 5500 ||
+        this.bossFight.bossHealth === 3500 ||
         this.bossFight.bossHealth === 2500
       ) {
-        if (this.buffs.length <= 1) {
+        if (this.buffs.length < 1) {
           this.buff = new Buffs(
             this.canvas,
             this.bossFight.x + 100,

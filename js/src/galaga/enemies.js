@@ -5,7 +5,7 @@ class Enemy {
     this.enemyX = x;
     this.enemyY = y;
     this.lives = lives;
-    this.multiplier = 0;
+    this.multiplier = 1;
     this.speedX = Math.random() * 2.5 + 0.5 * this.multiplier;
     this.speedY = Math.random() * 1 + 0.5 * this.multiplier;
     this.directionX = 1;

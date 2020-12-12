@@ -25,7 +25,7 @@ class BossFight {
     ];
     this.imgs = [this.bossLeft, this.bossRight, this.bossMid, this.bossMidOpen];
     this.loadCount = 0;
-    this.bossHealth = 10000;
+    this.bossHealth = 7500;
     this.x = this.canvas.width / 2 - 100;
     this.y = 5;
     this.shotsFired = [];
@@ -43,9 +43,10 @@ class BossFight {
     this.freeze=false;
   }
 
-  getPath() {
+  getSlope() {
+      //console.log(this.laserFired.length)
       if(this.laserFired.length>0){
-          return [this.laserFired[0].path1,this.laserFired[0].path2]
+          return [this.laserFired[0].slope1, this.laserFired[0].slope2, this.laserFired[0].yInt1, this.laserFired[0].yInt2]
       } 
   }
 
@@ -193,26 +194,54 @@ class BossFight {
       }
   }
 
+  playLaserCharge(play) {
+    var sound = document.getElementsByTagName("audio")[7];
+    sound.setAttribute("preload", "auto");
+    sound.style.display = "none";
+
+    if (play) {
+      sound.play();
+    } else {
+      sound.pause();
+    }
+  }
+
+  playLaserFired(play) {
+    var sound = document.getElementsByTagName("audio")[6];
+    sound.setAttribute("preload", "auto");
+    sound.style.display = "none";
+
+    if (play) {
+      sound.currentTime = 0;
+      sound.play();
+    } else {
+      sound.pause();
+    }
+  }
+
   updateTimes() {
     this.laserLoad++;
-    if (this.laserLoad > 2000 && this.laserLoad < 2500) {
+    if (this.laserLoad > 2500 && this.laserLoad < 3000) {
       this.ctx.font = `15px 'Press Start 2P'`;
       this.ctx.fillStyle = "orange";
       this.ctx.fillText(`LASER INCOMING`, this.x - 10, this.y - 24);
+      this.playLaserCharge(true);
     }
-    if (this.laserLoad === 2500) {
+    if (this.laserLoad === 3000) {
       this.laserOn = true;
       this.createLaserShot();
       this.laserLoad = 0;
       this.freeze=true;
+      this.playLaserFired(true)
       setTimeout(() => {
+        this.playLaserFired(false)
         this.laserOn = false;
         this.randlaserDir = this.laserDir[
           Math.floor(Math.random() * this.laserDir.length)
         ];
         this.laserFired.splice(0, this.laserFired.length);
         this.freeze=false;
-      }, 1500);
+      }, 1200);
     }
   }
 }
