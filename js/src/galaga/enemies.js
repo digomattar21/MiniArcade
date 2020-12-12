@@ -13,7 +13,7 @@ class Enemy {
     this.enemy = new Image();
     this.hit = false;
     this.radius = 30;
-    this.imgSrc = ["/img/enemy.png"];
+    this.imgSrc = ["https://github.com/digomattar21/MiniArcade/blob/main/img/enemy.png"];
     this.imgs = [this.enemy];
     this.loadCount = 0;
   }
