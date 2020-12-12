@@ -10,7 +10,7 @@ class Background {
 
   drawSelf() {
     var background = new Image();
-    background.src = "https://github.com/digomattar21/MiniArcade/blob/main/img/background.png";
+    background.src = "../../../img/background.png";
     this.y += this.speed;
 
     background.onload = () => {

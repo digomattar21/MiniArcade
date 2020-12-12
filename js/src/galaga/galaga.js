@@ -33,7 +33,7 @@ class GalagaGame {
     this.bossFight;
     this.bossFightOn = false;
     this.bossShotsFired = [];
-    this.buffList = [ "spray", "shield"];
+    this.buffList = ["health", "spray", "shield"];
     this.soundTheme;
     this.bossMessage = false;
     this.playerWon;
@@ -312,7 +312,6 @@ class GalagaGame {
             this.enemyStartPos.x,
             this.enemyStartPos.y
           );
-          this.enemy.loadImg();
           this.enemies.push(this.enemy);
           this.enemyStartPos.x += 70;
         } else {
@@ -669,7 +668,7 @@ class GalagaGame {
   checkIfMoreBuffs() {
     if (this.bossFight) {
       if (this.bossFight.bossHealth ===7500 || this.bossFight.bossHealth ===5000 || this.bossFight.bossHealth === 2500) {
-        if (this.buffs.length<=2){
+        if (this.buffs.length<=1){
         this.buff = new Buffs(
           this.canvas,
           this.bossFight.x+100,

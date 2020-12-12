@@ -9,7 +9,7 @@ class Buffs {
     this.healthImage = new Image();
     this.bulletImage = new Image();
     this.shieldImage = new Image();
-    this.imgSrcs = ["/img/health.png", "/img/bullet.png", "/img/shield.png"];
+    this.imgSrcs = ["../../../img/health.png", "../../../img/bullet.png", "../../../img/shield.png"];
     this.images =[this.healthImage, this.bulletImage, this.shieldImage];
     this.loadCount = 0;
     this.buff = false;
