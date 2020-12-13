@@ -21,7 +21,7 @@ class Score {
     if (this.animDone > 0) {
       this.ctx.fillStyle = "lightyellow";
       this.ctx.font = `25px 'Press Start 2P'`;
-      this.ctx.fillText(`+10`, this.canvas.width / 2 - 50, 30);
+      this.ctx.fillText(`+10`, this.canvas.width / 2 -10, 30);
       setTimeout(() => {
         this.animDone = 0;
       }, 500);

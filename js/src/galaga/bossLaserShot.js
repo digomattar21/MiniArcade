@@ -10,6 +10,7 @@ class LaserShot {
     this.path2 = new Path2D();
     this.yInt1 = 0;
     this.yInt2 =0;
+    this.mobile=false;
   }
 
   drawLaser(dir) {

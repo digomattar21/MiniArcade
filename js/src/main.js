@@ -11,6 +11,15 @@ window.onload = () => {
     startGalaga();
   };
 
+  function getScreenSize(){
+    var win = window,
+        doc = document,
+        docElem = doc.documentElement,
+        body = doc.getElementsByTagName('body')[0],
+        x = win.innerWidth || docElem.clientWidth || body.clientWidth,
+        y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+        return [x,y]}
+
   var homeBtn = document.getElementById("homeButton");
   let canvasContainer = document.getElementById("canvas-container");
 
@@ -114,12 +123,19 @@ window.onload = () => {
     while (canvasContainer.hasChildNodes()) {
       canvasContainer.removeChild(canvasContainer.firstChild);
     }
-
+    if (getScreenSize()[0]< 400){
+    galagaCanvas.id = "canvas";
+    galagaCanvas.height = 500;
+    galagaCanvas.width = 350;
+    galagaCanvas.style.marginLeft = "10%";
+    canvasContainer.appendChild(galagaCanvas);
+  } else {
     galagaCanvas.id = "canvas";
     galagaCanvas.height = 600;
     galagaCanvas.width = 600;
     galagaCanvas.style.marginLeft = "10%";
     canvasContainer.appendChild(galagaCanvas);
+  }
 
     let canvas = document.getElementById("canvas");
     canvas.style.marginRight = "10%";
@@ -131,6 +147,10 @@ window.onload = () => {
     }
 
     var game1 = new GalagaGame(canvas, 5);
+
+    if (getScreenSize()[0]<400){
+      game1.mobileDevice = true;
+    }
     game1.renderStartScreen();
     canvas.scrollIntoView(true);
 
@@ -166,6 +186,14 @@ window.onload = () => {
       let x = event.offsetX;
       let y = event.offsetY;
       game1.player.move(x,y);
+    })
+
+    canvas.addEventListener('touchmove', (event)=>{
+      event.preventDefault();
+      let x = (event.touches[0].clientX);
+      let y = (event.touches[0].clientY)-200;
+      game1.player.move(x-50,y);
+      game1.createShot();
     })
   }
 

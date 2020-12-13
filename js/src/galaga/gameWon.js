@@ -13,7 +13,7 @@ class GameWon {
     this.ctx.fillText("Thank You for Playing", 30, 375);
     this.ctx.fillStyle='white'; 
     this.ctx.font = `12px 'Press Start 2P'`;
-    this.ctx.fillText("Play with arrow instead of mouse if you dare", 10, 410);
+    this.ctx.fillText("Play with arrow instead of mouse if you dare", 15, 410);
     this.playWinnerSound(true);
   }
 
