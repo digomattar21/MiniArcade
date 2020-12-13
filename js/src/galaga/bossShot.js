@@ -10,7 +10,6 @@ class BossShot {
 
   drawRegular() {
     this.ctx.fillStyle = "lawngreen";
-    //this.ctx.arc(this.shotX,this.shotY,5,0,Math.PI*2);
     this.ctx.fillRect(this.shotX, this.shotY, 10, 10);
     this.updateSelf();
   }

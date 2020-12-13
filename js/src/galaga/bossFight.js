@@ -44,7 +44,6 @@ class BossFight {
   }
 
   getSlope() {
-      //console.log(this.laserFired.length)
       if(this.laserFired.length>0){
           return [this.laserFired[0].slope1, this.laserFired[0].slope2, this.laserFired[0].yInt1, this.laserFired[0].yInt2]
       } 

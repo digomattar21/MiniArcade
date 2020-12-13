@@ -121,7 +121,6 @@ class GalagaGame {
   }
 
   start() {
-    //Initialize everything and call update()
     this.background = new Background(this.canvas);
     this.player = new Player(this.canvas, 1500);
     this.score = new Score(this.canvas);
@@ -481,7 +480,6 @@ class GalagaGame {
   }
 
   checkShotHit() {
-    //Check if enemy is hit
     if (this.shotsFired.length > 0) {
       this.shotsFired.forEach((shot, index1) => {
         this.enemies.forEach((enemy, index) => {
@@ -585,7 +583,6 @@ class GalagaGame {
         });
       });
     }
-    //Check if player is hit by a shot
     if (this.enemyShots.length > 0) {
       this.enemyShots.forEach((shot, index) => {
         let c1 = shot.shotX + 2.5 > this.player.playerX;
@@ -744,7 +741,6 @@ class GalagaGame {
           }  
         }
     } else(hitLine.forEach((point)=>{
-      //console.log(point.y,Math.round(Math.abs(point.x*slope1+yInt1)))
       let c1 = point.y < Math.round((point.x*slope1+yInt1))+15;
       let c2 = point.y > Math.round((point.x*slope1+yInt1))-15;
       let c3 =  point.y < Math.round((point.x*slope2+yInt2))+15;

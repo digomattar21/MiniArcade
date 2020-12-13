@@ -32,7 +32,6 @@ window.onload = () => {
 
     let canvasTetris = document.getElementById("canvasTetris");
 
-    //Removing the buttons that user pressed to choose game
     let buttonsContainer = document.getElementById("container");
 
     while (buttonsContainer.hasChildNodes()) {
@@ -108,7 +107,6 @@ window.onload = () => {
   function startGalaga() {
     let canvasContainer = document.getElementById("canvas-container");
     let galagaCanvas = document.createElement("canvas");
-    let container = document.getElementById("homebutton-container");
     let homeBtn = document.getElementById("homeButton");
 
     homeBtn.style.visibility = "visible";
@@ -131,7 +129,7 @@ window.onload = () => {
     while (buttonsContainer.hasChildNodes()) {
       buttonsContainer.removeChild(buttonsContainer.firstChild);
     }
-    //Initialize game
+
     var game1 = new GalagaGame(canvas, 5);
     game1.renderStartScreen();
     canvas.scrollIntoView(true);
@@ -231,7 +229,6 @@ window.onload = () => {
 
     button2.addEventListener("click", () => {
       startGalaga();
-      //homeBtn.style.visibility='visible';
     });
   }
 };
