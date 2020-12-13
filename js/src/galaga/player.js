@@ -10,6 +10,7 @@ class Player {
     this.speedX = 0;
     this.speedY = 0;
     this.shieldBuff = false;
+    this.isOver=false;
   }
 
   drawSelf() {
@@ -37,27 +38,32 @@ class Player {
   }
 
   moveRight() {
-    //We can use set interval to change the speed gradually.
-    this.playerX += 25;
+    if (!this.isOver){
+      this.playerX += 25;
+    }
   }
 
   moveLeft() {
-    //We can use set interval to change the speed gradually.
-    this.playerX -= 25;
+    if (!this.isOver){
+      this.playerX -= 25;
+    }
   }
 
   moveUp() {
-    //We can use set interval to change the speed gradually.
-    this.playerY -= 20;
+    if (!this.isOver){
+      this.playerY -= 20;
+    }
   }
 
   moveDown() {
-    //We can use set interval to change the speed gradually.
-    this.playerY += 20;
+    if (!this.isOver){
+      this.playerY += 20;
+    }
   }
 
   move(x,y) {
+    if (!this.isOver){
     this.playerX = x;
-    this.playerY = y;
+    this.playerY = y;}
   }
 }

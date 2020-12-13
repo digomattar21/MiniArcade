@@ -11,7 +11,7 @@ class BossFight {
       "right",
     ];
     this.randlaserDir = this.laserDir[
-      Math.floor(Math.random() * this.laserDir.length)
+      Math.floor(Math.random() * (this.laserDir.length-1))
     ];
     this.bossLeft = new Image();
     this.bossRight = new Image();
@@ -133,7 +133,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot);
-          //laserShot.drawLaser(this.randlaserDir);
           break;
         case "left-mid":
           let laserShot1 = new LaserShot(
@@ -142,7 +141,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot1);
-          //laserShot1.drawLaser(this.randlaserDir);
           break;
         case "right":
           let laserShot2 = new LaserShot(
@@ -151,7 +149,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot2);
-          //laserShot2.drawLaser(this.randlaserDir);
           break;
         case "right-mid":
           let laserShot3 = new LaserShot(
@@ -160,7 +157,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot3);
-          //laserShot3.drawLaser(this.randlaserDir);
           break;
         case "mid":
           let laserShot4 = new LaserShot(
@@ -169,7 +165,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot4);
-          //laserShot4.drawLaser(this.randlaserDir);
           break;
         case "mid-open":
           let laserShot5 = new LaserShot(
@@ -178,7 +173,6 @@ class BossFight {
             this.y + 115
           );
           this.laserFired.push(laserShot5);
-          //laserShot5.drawLaser(this.randlaserDir);
           break;
         default:
           break;

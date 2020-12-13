@@ -1,10 +1,9 @@
 class Enemy {
-  constructor(canvas, x, y, lives, enemy) {
+  constructor(canvas, x, y) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
     this.enemyX = x;
     this.enemyY = y;
-    this.lives = lives;
     this.multiplier = 1;
     this.speedX = Math.random() * 2.5 + 0.5 * this.multiplier;
     this.speedY = Math.random() * 1 + 0.5 * this.multiplier;

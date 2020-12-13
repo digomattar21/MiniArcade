@@ -309,14 +309,14 @@ class GalagaGame {
 
   checkBoundaries() {
     if (this.player) {
-      if (this.player.playerX < 0) {
+      if (this.player.playerX <= 2) {
         this.player.playerX = 0;
-      } else if (this.player.playerX >= 520) {
+      } else if (this.player.playerX + 80 > 598) {
         this.player.playerX = 520;
       }
-      if (this.player.playerY < 0) {
+      if (this.player.playerY <= 2) {
         this.player.playerY = 0;
-      } else if (this.player.playerY > 520) {
+      } else if (this.player.playerY+80 > 598) {
         this.player.playerY = 520;
       }
     }
@@ -731,10 +731,6 @@ class GalagaGame {
       let slope2 = this.bossFight.getSlope()[1];
       let yInt1 = this.bossFight.getSlope()[2];
       let yInt2 = this.bossFight.getSlope()[3];
-      //console.log("SLOPE1: ", slope1);
-      //console.log("SLOPE2: ", slope2);
-      //console.log("YINT1: ", yInt1);
-      //console.log("YINT2: ", yInt2);
     if (slope1>9000 && slope2 > 9000){
         if ((this.player.playerX < yInt1) && (this.player.playerX +80>yInt1)){
           if (this.player.playerY+40> this.bossFight.y){
@@ -749,10 +745,10 @@ class GalagaGame {
         }
     } else(hitLine.forEach((point)=>{
       //console.log(point.y,Math.round(Math.abs(point.x*slope1+yInt1)))
-      let c1 = point.y < Math.round(Math.abs(point.x*slope1+yInt1))+15;
-      let c2 = point.y > Math.round(Math.abs(point.x*slope1+yInt1))-15;
-      let c3 =  point.y < Math.round(Math.abs(point.x*slope2+yInt2))+15;
-      let c4 =  point.y > Math.round(Math.abs(point.x*slope2+yInt2))-15;
+      let c1 = point.y < Math.round((point.x*slope1+yInt1))+15;
+      let c2 = point.y > Math.round((point.x*slope1+yInt1))-15;
+      let c3 =  point.y < Math.round((point.x*slope2+yInt2))+15;
+      let c4 =  point.y > Math.round((point.x*slope2+yInt2))-15;
      if ((c1 && c2) || (c3 && c4)){
        this.player.health--;
      }
@@ -848,6 +844,7 @@ class GalagaGame {
             setTimeout(() => {
               this.overAnimation = false;
               gameOver.renderSelf();
+              this.player.isOver=true;
             }, 800);
           }
         }
