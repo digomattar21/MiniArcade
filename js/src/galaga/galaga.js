@@ -12,7 +12,7 @@ class GalagaGame {
     this.enemies = [];
     this.enemy;
     this.enemyStartPos = { x: 100, y: 50 };
-    this.wave = 4;
+    this.wave = 0;
     this.explosion;
     this.now;
     this.then;
@@ -50,12 +50,14 @@ class GalagaGame {
     ];
     this.tip = this.tips[Math.floor(Math.random()*this.tips.length)]
     this.mobileDevice=false;
+    this.scores=[];
   }
 
   renderStartScreen() {
     if (this.mobileDevice){
-      this.ctx.scale(0.58333,0.8333)
+      this.ctx.scale(0.58333,0.8333);
     }
+
     setTimeout(() => {
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -159,25 +161,25 @@ class GalagaGame {
     switch (wave) {
       case 1:
         this.createEnemies(10);
-        this.enemies.forEach((enemy, index) => {
+        this.enemies.forEach((enemy) => {
           enemy.multiplier = 1.2;
         });
       case 2:
         this.createEnemies(15);
-        this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = 1.5;
+        this.enemies.forEach((enemy) => {
+          enemy.multiplier = 1.3;
         });
         break;
       case 3:
         this.createEnemies(20);
-        this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = 1.6;
+        this.enemies.forEach((enemy) => {
+          enemy.multiplier = 1.4;
         });
         break;
       case 4:
         this.createEnemies(25);
-        this.enemies.forEach((enemy, index) => {
-          enemy.multiplier = 1.7;
+        this.enemies.forEach((enemy) => {
+          enemy.multiplier = 1.5;
         });
         break;
       case 5:
@@ -185,7 +187,7 @@ class GalagaGame {
         this.bossFight.loadImgs();
         this.bossFightOn = true;
         this.createEnemies(10);
-        this.enemies.forEach((enemy,index)=>{
+        this.enemies.forEach((enemy)=>{
           enemy.multiplier = 1.2;
         })
       default:
@@ -422,7 +424,7 @@ class GalagaGame {
         if (c1 && c2 && c3 && c4) {
           switch (this.buffType) {
             case "health":
-              this.player.health += 500;
+              this.player.health += 250;
               this.healthBuff = true;
               this.animTime = true;
               this.buffs.splice(0, this.buffs.length);
@@ -473,7 +475,7 @@ class GalagaGame {
     if (this.healthBuff && this.animTime) {
       this.ctx.font = `35px 'Press Start 2P'`;
       this.ctx.fillStyle = "green";
-      this.ctx.fillText(`+500HP`, 170, 100);
+      this.ctx.fillText(`+250HP`, 170, 100);
     }
     if (this.sprayBuff && this.animTime && !this.shieldBuff) {
       this.ctx.font = `35px 'Press Start 2P'`;
@@ -796,6 +798,11 @@ class GalagaGame {
         this.overAnimation = true;
       }
     }
+  }
+
+  checkStorage () {
+    const isStorage = 'undefined' !== typeof localStorage;
+    if (isStorage && localStorage.getItem('fap-scores')) {}
   }
 
   update() {

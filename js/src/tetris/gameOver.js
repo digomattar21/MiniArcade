@@ -3,12 +3,9 @@ class GameOver {
     this.score = score;
     this.canvas = canvas;
     this.ctx = this.canvas.getContext("2d");
+    this.index = 0;
   }
 
-  updateScore() {
-    var score = document.getElementById("score");
-    score.value = this.score;
-  }
 
   gameOverScreen() {
     this.renderText();
@@ -25,11 +22,12 @@ class GameOver {
       this.ctx.fillText("Game Over", 6, 14);
       this.ctx.fillText(`Score: ${this.score}`, 6, 16);
       console.log("entrou");
-      this.updateScore();
     };
     WebFont.load({
       google: { families: ["Press Start 2P"] },
       active: renderText,
     });
   }
+
+  
 }

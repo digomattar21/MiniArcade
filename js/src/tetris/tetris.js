@@ -25,9 +25,52 @@ class Game {
     this.inc;
     this.next;
     this.noGameArea = 7;
+    this.scores = [];
   }
 
   start(interval) {
+    var isStorage = 'undefined' !== localStorage;
+    var extra=[];
+    var items = [];
+    if (isStorage && localStorage.length===10) {
+        for (let i = 0;i < 10; i++) {
+            items.push(localStorage.key(i));
+        }
+        items.forEach((item,index)=>{
+            var it = localStorage.getItem(item);
+            this.scores.push({name:`${item}`,score:it})
+        })
+
+        this.scores.sort((a,b)=>{a.score-b.score})
+    }
+    else if (localStorage.length>10){
+        for (let i=10;i<localStorage.length;i++){
+            extra.push(localStorage.key(i))
+        }
+        extra.forEach((extra,index)=>{
+            localStorage.removeItem(`${extra}`)
+        })
+        for (let i = 0;i < 10; i++) {
+            items.push(localStorage.key(i));
+        }
+        items.forEach((item,index)=>{
+            var it = localStorage.getItem(item);
+            this.scores.push({name:`${item}`,score:it})
+        })
+        this.scores.sort((a,b)=>{a.score-b.score})
+    } else if (localStorage.length<=9){
+        this.scores = [{name:'Fedora', score: 501},
+        {name:'Kevin Mitnick', score: 380},
+        {name:'Carrao da Monica', score: 345},
+        {name:'Pied Piper', score: 324},
+        {name:'Richar Jenkins', score: 313},
+        {name:'Hans Solo', score: 219},
+        {name:'Gozdzila', score: 149},
+        {name:'Firefox', score: 91},
+        {name:'Kali', score: 66},
+        {name:'I Love You', score: 0}
+        ]
+    }
     setTimeout(() => {
       let renderText1 = () => {
         this.ctx.fillStyle = "black";
@@ -94,6 +137,7 @@ class Game {
           window.cancelAnimationFrame(update);
           var gameOver = new GameOver(this.score, this.canvas);
           gameOver.renderText();
+          this.updateScore();
         }
 
         if (this.time % interval == 0) {
@@ -290,6 +334,40 @@ class Game {
     this.ctx.font = '0.7px "Press Start 2P"';
     this.ctx.fillStyle = "blue";
     this.ctx.fillText(`Score:${this.score}`, 5.5, this.noGameArea + 1);
+  }
+
+
+  updateScore() {
+    var score = document.getElementById("score");
+    var highscoreList = document.getElementById('highscores')
+    score.value = this.score;
+    var submitBtn  = document.getElementsByClassName("submitBtn")[0];
+    submitBtn.addEventListener('click', (event)=>{
+    event.preventDefault();
+    var playerName = document.getElementById("player_name").value;
+        
+      for (let i = 0; i<this.scores.length;i++){
+        if ((this.scores[i].score<this.score) && (this.scores[i+1].score>=this.score)){
+            this.scores[i].name = playerName;
+            this.scores[i].score=this.score;
+        } else if (this.scores[this.scores.length-1].score< this.score){
+          this.scores[this.scores.length-1].name = playerName;
+          this.scores[this.scores.length-1].score= this.score;
+        }
+      }
+
+      this.scores.forEach((player)=>{
+          var li = document.createElement('LI');
+          li.innerHTML= `${player.name} : ${player.score}`;
+          highscoreList.appendChild(li);
+          highscoreList.style.visibility='visible';
+          highscoreList.style.color='lightgray';
+      })
+
+      document.getElementById("myform").style.display='none';
+      submitBtn.style.visibility='hidden';
+    });
+
   }
 
   createPiece(x) {

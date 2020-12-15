@@ -1,6 +1,6 @@
 window.onload = () => {
   document.getElementById("tetris").onclick = () => {
-    startTetris(40);
+    startTetris(20);
 
     document.getElementById("homeButton").addEventListener("click", () => {
       renderHomeScreen();
@@ -12,13 +12,14 @@ window.onload = () => {
   };
 
   function getScreenSize(){
-    var win = window,
-        doc = document,
-        docElem = doc.documentElement,
-        body = doc.getElementsByTagName('body')[0],
-        x = win.innerWidth || docElem.clientWidth || body.clientWidth,
-        y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
-        return [x,y]}
+    let win = window;
+    let doc = document;
+    let docElem = doc.documentElement;
+    let body = doc.getElementsByTagName('body')[0];
+    let x = win.innerWidth || docElem.clientWidth || body.clientWidth;
+    let y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+        return [x,y]
+      }
 
   var homeBtn = document.getElementById("homeButton");
   let canvasContainer = document.getElementById("canvas-container");
@@ -47,7 +48,7 @@ window.onload = () => {
       buttonsContainer.removeChild(buttonsContainer.firstChild);
     }
 
-    if (interval == 40) {
+    if (interval === 20) {
       var game = new Game(canvasTetris);
     }
     game.start(interval);
@@ -123,6 +124,7 @@ window.onload = () => {
     while (canvasContainer.hasChildNodes()) {
       canvasContainer.removeChild(canvasContainer.firstChild);
     }
+    
     if (getScreenSize()[0]< 400){
     galagaCanvas.id = "canvas";
     galagaCanvas.height = 500;
@@ -146,7 +148,8 @@ window.onload = () => {
       buttonsContainer.removeChild(buttonsContainer.firstChild);
     }
 
-    var game1 = new GalagaGame(canvas, 5);
+
+    let game1 = new GalagaGame(canvas, 5);
 
     if (getScreenSize()[0]<400){
       game1.mobileDevice = true;
@@ -190,7 +193,7 @@ window.onload = () => {
 
     canvas.addEventListener('touchmove', (event)=>{
       event.preventDefault();
-      let x = (event.touches[0].clientX);
+      let x = (event.touches[0].clientX)
       let y = (event.touches[0].clientY)-200;
       game1.player.move(x-50,y);
       game1.createShot();
@@ -246,11 +249,14 @@ window.onload = () => {
     container.appendChild(button1);
     container.appendChild(button2);
 
+    var img = document.getElementById('title')
+    img.scrollIntoView(true)
+
     homeBtn.style.visibility = "hidden";
 
     button1.onclick = () => {
       canvasContainer.appendChild(highscoreContainer);
-      startTetris(40);
+      startTetris(20);
       var submitBtn = document.getElementsByClassName("submitBtn")[0];
       submitBtn.style.visibility = "visible";
     };
