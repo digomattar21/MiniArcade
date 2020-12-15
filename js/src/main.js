@@ -11,15 +11,15 @@ window.onload = () => {
     startGalaga();
   };
 
-  function getScreenSize(){
+  function getScreenSize() {
     let win = window;
     let doc = document;
     let docElem = doc.documentElement;
-    let body = doc.getElementsByTagName('body')[0];
+    let body = doc.getElementsByTagName("body")[0];
     let x = win.innerWidth || docElem.clientWidth || body.clientWidth;
-    let y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
-        return [x,y]
-      }
+    let y = win.innerHeight || docElem.clientHeight || body.clientHeight;
+    return [x, y];
+  }
 
   var homeBtn = document.getElementById("homeButton");
   let canvasContainer = document.getElementById("canvas-container");
@@ -124,20 +124,20 @@ window.onload = () => {
     while (canvasContainer.hasChildNodes()) {
       canvasContainer.removeChild(canvasContainer.firstChild);
     }
-    
-    if (getScreenSize()[0]< 400){
-    galagaCanvas.id = "canvas";
-    galagaCanvas.height = 500;
-    galagaCanvas.width = 350;
-    galagaCanvas.style.marginLeft = "10%";
-    canvasContainer.appendChild(galagaCanvas);
-  } else {
-    galagaCanvas.id = "canvas";
-    galagaCanvas.height = 600;
-    galagaCanvas.width = 600;
-    galagaCanvas.style.marginLeft = "10%";
-    canvasContainer.appendChild(galagaCanvas);
-  }
+
+    if (getScreenSize()[0] < 400) {
+      galagaCanvas.id = "canvas";
+      galagaCanvas.height = 500;
+      galagaCanvas.width = 350;
+      galagaCanvas.style.marginLeft = "10%";
+      canvasContainer.appendChild(galagaCanvas);
+    } else {
+      galagaCanvas.id = "canvas";
+      galagaCanvas.height = 600;
+      galagaCanvas.width = 600;
+      galagaCanvas.style.marginLeft = "10%";
+      canvasContainer.appendChild(galagaCanvas);
+    }
 
     let canvas = document.getElementById("canvas");
     canvas.style.marginRight = "10%";
@@ -148,10 +148,9 @@ window.onload = () => {
       buttonsContainer.removeChild(buttonsContainer.firstChild);
     }
 
-
     let game1 = new GalagaGame(canvas, 5);
 
-    if (getScreenSize()[0]<400){
+    if (getScreenSize()[0] < 400) {
       game1.mobileDevice = true;
     }
     game1.renderStartScreen();
@@ -159,6 +158,7 @@ window.onload = () => {
 
     homeBtn.onclick = () => {
       game1.isOver = true;
+      game1.playThemeSound(false);
       renderHomeScreen();
     };
 
@@ -185,19 +185,19 @@ window.onload = () => {
           break;
       }
     });
-    canvas.addEventListener('mousemove', (event)=>{
+    canvas.addEventListener("mousemove", (event) => {
       let x = event.offsetX;
       let y = event.offsetY;
-      game1.player.move(x,y);
-    })
+      game1.player.move(x, y);
+    });
 
-    canvas.addEventListener('touchmove', (event)=>{
+    canvas.addEventListener("touchmove", (event) => {
       event.preventDefault();
-      let x = (event.touches[0].clientX)
-      let y = (event.touches[0].clientY)-200;
-      game1.player.move(x-50,y);
+      let x = event.touches[0].clientX;
+      let y = event.touches[0].clientY - 200;
+      game1.player.move(x - 50, y);
       game1.createShot();
-    })
+    });
   }
 
   function renderHomeScreen() {
@@ -249,8 +249,8 @@ window.onload = () => {
     container.appendChild(button1);
     container.appendChild(button2);
 
-    var img = document.getElementById('title')
-    img.scrollIntoView(true)
+    var img = document.getElementById("title");
+    img.scrollIntoView(true);
 
     homeBtn.style.visibility = "hidden";
 

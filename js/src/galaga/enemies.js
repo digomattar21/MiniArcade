@@ -48,14 +48,14 @@ class Enemy {
     } else {
       newDir = 1;
     }
-    if (this.enemyX >= 565) {
+    if (this.enemyX >= this.canvas.width - 35) {
       this.directionX = -1;
       this.directionY = newDir;
     } else if (this.enemyX <= 5) {
       this.directionX = 1;
       this.directionY = newDir;
     }
-    if (this.enemyY > 350) {
+    if (this.enemyY > this.canvas.height - 200) {
       this.directionY = -1;
       this.directionX = newDir;
     } else if (this.enemyY <= 5) {

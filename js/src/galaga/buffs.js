@@ -5,26 +5,28 @@ class Buffs {
     this.x = x;
     this.y = y;
     this.types = buffList;
-    this.speedY = 0.9;
+    this.speedY = 0.6;
     this.healthImage = new Image();
     this.bulletImage = new Image();
     this.shieldImage = new Image();
     this.imgSrcs = ["./img/health.png", "./img/bullet.png", "./img/shield.png"];
-    this.images =[this.healthImage, this.bulletImage, this.shieldImage];
+    this.images = [this.healthImage, this.bulletImage, this.shieldImage];
     this.loadCount = 0;
     this.buff = false;
     this.playerGrab = false;
   }
 
   loadImgs() {
-    for (let i = 0; i<this.images.length;i ++){
+    for (let i = 0; i < this.images.length; i++) {
       this.loadImage(this.images[i], this.imgSrcs[i]);
     }
   }
 
-  loadImage(img,src){
-    img.addEventListener('load',()=>{this.loadCount++})
-    img.src=src;
+  loadImage(img, src) {
+    img.addEventListener("load", () => {
+      this.loadCount++;
+    });
+    img.src = src;
   }
 
   chooseBuff() {
@@ -69,7 +71,7 @@ class Buffs {
   drawMisselBuff() {}
 
   drawShieldBuff() {
-    if (this.y < 600 && this.playerGrab === false) {
+    if (this.y < this.canvas.height && this.playerGrab === false) {
       setInterval(() => {
         if (!this.playerGrab) {
           this.ctx.drawImage(this.shieldImage, this.x, this.y, 25, 25);
@@ -82,7 +84,7 @@ class Buffs {
   }
 
   drawHealthBuff() {
-    if (this.y < 600 && this.playerGrab === false) {
+    if (this.y < this.canvas.height && this.playerGrab === false) {
       setInterval(() => {
         if (!this.playerGrab) {
           this.ctx.drawImage(this.healthImage, this.x, this.y, 25, 25);
@@ -95,7 +97,7 @@ class Buffs {
   }
 
   drawSprayBuff() {
-    if (this.y < 600 && this.playerGrab === false) {
+    if (this.y < this.canvas.height && this.playerGrab === false) {
       setInterval(() => {
         if (!this.playerGrab) {
           this.ctx.drawImage(this.bulletImage, this.x, this.y, 25, 25);

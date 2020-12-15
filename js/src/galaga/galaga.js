@@ -41,81 +41,69 @@ class GalagaGame {
     this.overAnimation = false;
     this.shieldBuffTime = 2000;
     this.sprayBuffTime = 2000;
-    this.shotOK =  true;
+    this.shotOK = true;
     this.tips = [
-     'TIP: your shield doesnt protect you from the boss laser',
-     '          TIP: use your mouse to move the player faster',
-     'TIP: listen to the laser warning sound in the boss fight',
-     'TIP: watch out for the direction that the boss laser points'
+      "TIP: your shield doesnt protect you from the boss laser",
+      "          TIP: use your mouse to move the player faster",
+      "TIP: listen to the laser warning sound in the boss fight",
+      "TIP: watch out for the direction that the boss laser points",
     ];
-    this.tip = this.tips[Math.floor(Math.random()*this.tips.length)]
-    this.mobileDevice=false;
-    this.scores=[];
+    this.tip = this.tips[Math.floor(Math.random() * this.tips.length)];
+    this.mobileDevice = false;
+    this.font = `60px 'Press Start 2P'`;
+    this.font1 = '35px "Press Start 2P"';
+    this.font3 = `10px 'Press Start 2P'`;
+    this.font4 =`10px 'Press Start 2P'`;
   }
 
   renderStartScreen() {
-    if (this.mobileDevice){
-      this.ctx.scale(0.58333,0.8333);
+    if (this.mobileDevice) {
+      this.font = `30px 'Press Start 2P'`;
+      this.font1 = '15px "Press Start 2P"';
+      this.font3 = `8px 'Press Start 2P'`;
+      this.font4=`6px 'Press Start 2P'`;
     }
-
     setTimeout(() => {
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.font = `60px 'Press Start 2P'`;
+      this.ctx.font = this.font;
       this.ctx.fillStyle = "red";
       this.ctx.fillText(
         "READY",
         this.canvas.width / 2 - 130,
         this.canvas.height / 2 + 10
       );
-      this.ctx.font = `10px 'Press Start 2P'`;
+      this.ctx.font = this.font3;
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(
-        "Commands: ",
-        200,
-        this.canvas.height / 2 + 105
-      );
+      this.ctx.fillText("Commands: ", 200, this.canvas.height / 2 + 105);
       this.ctx.fillText(
         "mouse: Move PLayer",
         200,
         this.canvas.height / 2 + 140
       );
-      this.ctx.fillText(
-        "Space : Shoot",
-        200,
-        this.canvas.height / 2 + 175
-      );
+      this.ctx.fillText("Space : Shoot", 200, this.canvas.height / 2 + 175);
     }, 100);
 
     setTimeout(() => {
       this.ctx.fillStyle = "black";
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.font = `60px 'Press Start 2P'`;
+      this.ctx.font = this.font;
       this.ctx.fillStyle = "red";
       this.ctx.fillText(
         "GO!",
         this.canvas.width / 2 - 70,
         this.canvas.height / 2 + 10
       );
-      this.ctx.font = `10px 'Press Start 2P'`;
+      this.ctx.font = this.font3;
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(
-        "Commands: ",
-        200,
-        this.canvas.height / 2 + 105
-      );
+      this.ctx.fillText("Commands: ", 200, this.canvas.height / 2 + 105);
       this.ctx.fillText(
         "mouse: Move PLayer",
         200,
         this.canvas.height / 2 + 140
       );
-      this.ctx.fillText(
-        "Space : Shoot",
-        200,
-        this.canvas.height / 2 + 175
-      );
-      
-    }, 1500);
+      this.ctx.fillText("Space : Shoot", 200, this.canvas.height / 2 + 175);
+    }, 1750);
 
     setTimeout(() => {
       this.start();
@@ -131,6 +119,10 @@ class GalagaGame {
     this.background = new Background(this.canvas);
     this.player = new Player(this.canvas, 1500);
     this.score = new Score(this.canvas);
+    if (this.mobileDevice) {
+      this.player.mobile = true;
+      this.score.mobile = true;
+    }
     this.createEnemies(5);
     this.playThemeSound(true);
 
@@ -150,8 +142,8 @@ class GalagaGame {
       this.createWaves();
       this.update();
       this.waveMessage = false;
-      this.tips.splice(this.tips.indexOf(this.tip),1)
-      this.tip = this.tips[Math.floor(Math.random()*this.tips.length)]
+      this.tips.splice(this.tips.indexOf(this.tip), 1);
+      this.tip = this.tips[Math.floor(Math.random() * this.tips.length)];
       this.bossMessage = false;
     }, 3500);
   }
@@ -187,9 +179,9 @@ class GalagaGame {
         this.bossFight.loadImgs();
         this.bossFightOn = true;
         this.createEnemies(10);
-        this.enemies.forEach((enemy)=>{
+        this.enemies.forEach((enemy) => {
           enemy.multiplier = 1.2;
-        })
+        });
       default:
         break;
     }
@@ -220,7 +212,6 @@ class GalagaGame {
       sound.pause();
     }
   }
-
 
   playBossHitSound(play) {
     var sound = document.getElementsByTagName("audio")[2];
@@ -259,7 +250,7 @@ class GalagaGame {
       if (this.bossShotsFired.length > 0) {
         this.bossShotsFired.forEach((shot, index) => {
           shot.drawRegular();
-          if (shot.shotY > 600) {
+          if (shot.shotY > this.canvas.height) {
             this.bossShotsFired.splice(index, 1);
           }
         });
@@ -285,31 +276,36 @@ class GalagaGame {
     if (this.enemyShots.length > 0) {
       this.enemyShots.forEach((enemyShot, index) => {
         enemyShot.drawRegular();
-        if (enemyShot.shotY > 600) {
+        if (enemyShot.shotY > this.canvas.height) {
           this.enemyShots.splice(index, 1);
         }
       });
     }
     if (this.waveMessage) {
-      this.ctx.font = '35px "Press Start 2P"';
+      this.ctx.font = this.font1;
       this.ctx.fillStyle = "red";
 
       this.ctx.fillText(`Wave ${this.wave} cleared`, 60, 250);
-      this.ctx.fillText(`Get ready`, 150, 350);
-      this.ctx.font = `10px 'Press Start 2P'`;
+      if (this.mobileDevice){
+        this.ctx.fillText(`Get ready`, 150, 300);
+      } else {
+        this.ctx.fillText(`Get ready`, 150, 350);
+      }
+      
+      this.ctx.font = this.font4;
       this.ctx.fillStyle = "white";
-      this.ctx.fillText(
-        `${this.tip}`,
-        10,
-        this.canvas.height / 2 + 150
-      );
+      this.ctx.fillText(`${this.tip}`, 10, this.canvas.height / 2 + 150);
     }
     if (this.bossMessage) {
-      this.ctx.font = '35px "Press Start 2P"';
+      this.ctx.font = this.font1;
       this.ctx.fillStyle = "red";
 
       this.ctx.fillText(`BOSS FIGHT`, 60, 250);
-      this.ctx.fillText(`You're Dead.`, 130, 350);
+      if (this.mobileDevice){
+        this.ctx.fillText(`You're Dead.`, 130, 300);
+      } else {
+        this.ctx.fillText(`You're Dead.`, 130, 350);
+      }
     }
   }
 
@@ -317,13 +313,13 @@ class GalagaGame {
     if (this.player) {
       if (this.player.playerX <= 2) {
         this.player.playerX = 0;
-      } else if (this.player.playerX + 80 > 598) {
-        this.player.playerX = 520;
+      } else if (this.player.playerX + 80 > this.canvas.width - 5) {
+        this.player.playerX = this.canvas.width - 83;
       }
       if (this.player.playerY <= 2) {
         this.player.playerY = 0;
-      } else if (this.player.playerY+80 > 598) {
-        this.player.playerY = 520;
+      } else if (this.player.playerY + 80 >= this.canvas.height - 5) {
+        this.player.playerY = this.canvas.height - 83;
       }
     }
     if (this.shotsFired.length > 0) {
@@ -336,22 +332,23 @@ class GalagaGame {
   }
 
   createShot() {
-    if (this.shotOK){
-    if (this.sprayBuff) {
-      this.sprayShot = new SprayShot(
-        this.canvas,
-        this.player.playerX + 40,
-        this.player.playerY - 5
-      );
-      this.sprayShots.push(this.sprayShot);
-      this.shotOK=false;
-    } else {
-      let x = this.player.playerX + 40;
-      let y = this.player.playerY;
-      this.shot = new Shot(this.canvas, x, y);
-      this.shotsFired.push(this.shot);
-      this.shotOK=false;
-    }}
+    if (this.shotOK) {
+      if (this.sprayBuff) {
+        this.sprayShot = new SprayShot(
+          this.canvas,
+          this.player.playerX + 40,
+          this.player.playerY - 5
+        );
+        this.sprayShots.push(this.sprayShot);
+        this.shotOK = false;
+      } else {
+        let x = this.player.playerX + 40;
+        let y = this.player.playerY;
+        this.shot = new Shot(this.canvas, x, y);
+        this.shotsFired.push(this.shot);
+        this.shotOK = false;
+      }
+    }
   }
 
   drawEnemies() {
@@ -473,17 +470,17 @@ class GalagaGame {
 
   checkDrawBuffs() {
     if (this.healthBuff && this.animTime) {
-      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.font = this.font1;
       this.ctx.fillStyle = "green";
       this.ctx.fillText(`+250HP`, 170, 100);
     }
     if (this.sprayBuff && this.animTime && !this.shieldBuff) {
-      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.font = this.font1;
       this.ctx.fillStyle = "lawngreen";
       this.ctx.fillText(`SPRAY BUFF ON`, 660, 200);
     }
     if (this.shieldBuff && this.animTime && !this.sprayBuff) {
-      this.ctx.font = `35px 'Press Start 2P'`;
+      this.ctx.font = this.font1;
       this.ctx.fillStyle = "blue";
       this.ctx.fillText(`SHIELD BUFF ON`, 60, 200);
     }
@@ -683,7 +680,7 @@ class GalagaGame {
           this.ctx.drawImage(this.explosion, shot.x, shot.y, 30, 30);
         }
       });
-    } 
+    }
   }
 
   drawBossHealth(increment) {
@@ -707,7 +704,7 @@ class GalagaGame {
       increment / 83.333,
       4
     );
-    this.ctx.font = `10px 'Press Start 2P'`;
+    this.ctx.font = this.font3;
     this.ctx.fillStyle = "white";
     this.ctx.fillText(
       `Boss Health`,
@@ -728,39 +725,41 @@ class GalagaGame {
     }
   }
 
-  checkIfLaserHit () {
-    if (this.bossFight.laserFired.length>0){
+  checkIfLaserHit() {
+    if (this.bossFight.laserFired.length > 0) {
       let hitLine = [];
-    for (let i = 15; i<65; i++){
-      hitLine.push({x:this.player.playerX+i, y:this.player.playerY+40})
-    }
+      for (let i = 15; i < 65; i++) {
+        hitLine.push({
+          x: this.player.playerX + i,
+          y: this.player.playerY + 40,
+        });
+      }
       let slope1 = this.bossFight.getSlope()[0];
       let slope2 = this.bossFight.getSlope()[1];
       let yInt1 = this.bossFight.getSlope()[2];
       let yInt2 = this.bossFight.getSlope()[3];
-    if (slope1>9000 && slope2 > 9000){
-        if ((this.player.playerX < yInt1) && (this.player.playerX +80>yInt1)){
-          if (this.player.playerY+40> this.bossFight.y){
+      if (slope1 > 9000 && slope2 > 9000) {
+        if (this.player.playerX < yInt1 && this.player.playerX + 80 > yInt1) {
+          if (this.player.playerY + 40 > this.bossFight.y) {
             this.player.health--;
           }
-            
         }
-        if ((this.player.playerX < yInt2) && (this.player.playerX +80>yInt2)){
-          if (this.player.playerY+40> this.bossFight.y+120){
+        if (this.player.playerX < yInt2 && this.player.playerX + 80 > yInt2) {
+          if (this.player.playerY + 40 > this.bossFight.y + 120) {
             this.player.health--;
-          }  
+          }
         }
-    } else(hitLine.forEach((point)=>{
-      let c1 = point.y < Math.round((point.x*slope1+yInt1))+15;
-      let c2 = point.y > Math.round((point.x*slope1+yInt1))-15;
-      let c3 =  point.y < Math.round((point.x*slope2+yInt2))+15;
-      let c4 =  point.y > Math.round((point.x*slope2+yInt2))-15;
-     if ((c1 && c2) || (c3 && c4)){
-       this.player.health--;
-     }
-   }))
-   
-  }
+      } else
+        hitLine.forEach((point) => {
+          let c1 = point.y < Math.round(point.x * slope1 + yInt1) + 15;
+          let c2 = point.y > Math.round(point.x * slope1 + yInt1) - 15;
+          let c3 = point.y < Math.round(point.x * slope2 + yInt2) + 15;
+          let c4 = point.y > Math.round(point.x * slope2 + yInt2) - 15;
+          if ((c1 && c2) || (c3 && c4)) {
+            this.player.health--;
+          }
+        });
+    }
   }
 
   checkIfMoreBuffs() {
@@ -800,14 +799,14 @@ class GalagaGame {
     }
   }
 
-  checkStorage () {
-    const isStorage = 'undefined' !== typeof localStorage;
-    if (isStorage && localStorage.getItem('fap-scores')) {}
+  checkStorage() {
+    const isStorage = "undefined" !== typeof localStorage;
+    if (isStorage && localStorage.getItem("fap-scores")) {
+    }
   }
 
   update() {
     const update = () => {
-
       if (!this.isOver) {
         window.requestAnimationFrame(update);
         this.time++;
@@ -818,17 +817,18 @@ class GalagaGame {
         if (this.playerWon) {
           let gameWon = new GameWon(this.canvas);
           window.cancelAnimationFrame(update);
+          gameWon.mobileDevice = true;
           this.explosion = new Image();
           this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
           if (this.overAnimation) {
-              this.ctx.drawImage(
-                this.explosion,
-                this.bossFight.x,
-                this.bossFight.y,
-                200,
-                150
-              );
+            this.ctx.drawImage(
+              this.explosion,
+              this.bossFight.x,
+              this.bossFight.y,
+              200,
+              150
+            );
             setTimeout(() => {
               this.overAnimation = false;
               gameWon.renderSelf();
@@ -838,20 +838,21 @@ class GalagaGame {
           let gameOver = new GameLost(this.canvas, this.score.score);
           window.cancelAnimationFrame(update);
           this.explosion = new Image();
+          gameOver.mobileDevice = true;
           this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
           if (this.overAnimation) {
-              this.ctx.drawImage(
-                this.explosion,
-                this.player.playerX,
-                this.player.playerY,
-                80,
-                80
-              );
+            this.ctx.drawImage(
+              this.explosion,
+              this.player.playerX,
+              this.player.playerY,
+              80,
+              80
+            );
             setTimeout(() => {
               this.overAnimation = false;
               gameOver.renderSelf();
-              this.player.isOver=true;
+              this.player.isOver = true;
             }, 800);
           }
         }
@@ -869,9 +870,9 @@ class GalagaGame {
       this.checkDrawShieldLeft();
 
       if (this.bossFight) {
-        if (this.mobileDevice){
-          if (this.bossFight.laserFired.length>0){
-            this.bossFight.laserFired[0].mobile=true;
+        if (this.mobileDevice) {
+          if (this.bossFight.laserFired.length > 0) {
+            this.bossFight.laserFired[0].mobile = true;
           }
         }
         this.createBossShots();
@@ -882,7 +883,6 @@ class GalagaGame {
         this.checkIfMoreBuffs();
         this.checkIfLaserHit();
         this.bossFight.drawLasers();
-        
       }
 
       if (this.time % 200 == 0) {
@@ -904,8 +904,8 @@ class GalagaGame {
         }
       }
 
-      if(this.time%12==0){
-        this.shotOK=true;
+      if (this.time % 12 == 0) {
+        this.shotOK = true;
       }
 
       if (this.sprayBuffTime <= 0) {
@@ -917,7 +917,6 @@ class GalagaGame {
         this.shieldBuff = false;
         this.player.shieldBuff = false;
       }
-      
     };
 
     window.requestAnimationFrame(update);

@@ -10,10 +10,15 @@ class Player {
     this.speedX = 0;
     this.speedY = 0;
     this.shieldBuff = false;
-    this.isOver=false;
+    this.isOver = false;
+    this.mobile = false;
+    this.font = `17px "Press Start 2P"`;
   }
 
   drawSelf() {
+    if (this.mobile) {
+      this.font = `8px "Press Start 2P"`;
+    }
     if (this.playerBuff && this.shieldBuff) {
       this.player.src = "./img/sprayShieldBuff.png";
     } else if (this.shieldBuff) {
@@ -32,38 +37,39 @@ class Player {
   }
 
   drawHealth() {
-    this.ctx.font = `17px "Press Start 2P"`;
+    this.ctx.font = this.font;
     this.ctx.fillStyle = "lightblue";
-    this.ctx.fillText(`Health ${this.health}`, 20, 20);
+    this.ctx.fillText(`Health ${this.health}`, 5, 20);
   }
 
   moveRight() {
-    if (!this.isOver){
+    if (!this.isOver) {
       this.playerX += 25;
     }
   }
 
   moveLeft() {
-    if (!this.isOver){
+    if (!this.isOver) {
       this.playerX -= 25;
     }
   }
 
   moveUp() {
-    if (!this.isOver){
+    if (!this.isOver) {
       this.playerY -= 20;
     }
   }
 
   moveDown() {
-    if (!this.isOver){
+    if (!this.isOver) {
       this.playerY += 20;
     }
   }
 
-  move(x,y) {
-    if (!this.isOver){
-    this.playerX = x;
-    this.playerY = y;}
+  move(x, y) {
+    if (!this.isOver) {
+      this.playerX = x;
+      this.playerY = y;
+    }
   }
 }

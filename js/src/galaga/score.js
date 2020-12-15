@@ -4,12 +4,19 @@ class Score {
     this.ctx = this.canvas.getContext("2d");
     this.score = 0;
     this.animDone = 0;
+    this.mobile = false;
+    this.font = `17px 'Press Start 2P'`;
+    this.font2 = `25px 'Press Start 2P'`;
   }
 
   drawSelf() {
-    this.ctx.font = `17px 'Press Start 2P'`;
+    if (this.mobile) {
+      this.font = `8px 'Press Start 2P'`;
+      this.font2 = `12px 'Press Start 2P'`;
+    }
+    this.ctx.font = this.font;
     this.ctx.fillStyle = "lightgreen";
-    this.ctx.fillText(`Score: ${this.score}`, 400, 20);
+    this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 20);
   }
 
   killUpdate() {
@@ -20,8 +27,8 @@ class Score {
   drawScoreIncrease() {
     if (this.animDone > 0) {
       this.ctx.fillStyle = "lightyellow";
-      this.ctx.font = `25px 'Press Start 2P'`;
-      this.ctx.fillText(`+10`, this.canvas.width / 2 -10, 30);
+      this.ctx.font = this.font2;
+      this.ctx.fillText(`+10`, this.canvas.width / 2 - 10, 30);
       setTimeout(() => {
         this.animDone = 0;
       }, 500);

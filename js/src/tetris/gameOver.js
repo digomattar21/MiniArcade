@@ -6,7 +6,6 @@ class GameOver {
     this.index = 0;
   }
 
-
   gameOverScreen() {
     this.renderText();
   }
@@ -28,6 +27,4 @@ class GameOver {
       active: renderText,
     });
   }
-
-  
 }
