@@ -33,7 +33,7 @@ class GalagaGame {
     this.bossFight;
     this.bossFightOn = false;
     this.bossShotsFired = [];
-    this.buffList = ["health", "spray", "shield"];
+    this.buffList = ["health", "shield"];
     this.soundTheme;
     this.bossMessage = false;
     this.playerWon;
@@ -117,7 +117,7 @@ class GalagaGame {
 
   start() {
     this.background = new Background(this.canvas);
-    this.player = new Player(this.canvas, 1500);
+    this.player = new Player(this.canvas, 750);
     this.score = new Score(this.canvas);
     if (this.mobileDevice) {
       this.player.mobile = true;
@@ -164,6 +164,7 @@ class GalagaGame {
         break;
       case 3:
         this.createEnemies(20);
+        this.buffList.splice(1,0,'spray');
         this.enemies.forEach((enemy) => {
           enemy.multiplier = 1.4;
         });
@@ -769,7 +770,7 @@ class GalagaGame {
         this.bossFight.bossHealth === 5000 ||
         this.bossFight.bossHealth === 2500
       ) {
-        if (this.buffs.length <= 1) {
+        if (this.buffs.length <= 0) {
           this.buff = new Buffs(
             this.canvas,
             this.bossFight.x + 100,
@@ -817,7 +818,9 @@ class GalagaGame {
         if (this.playerWon) {
           let gameWon = new GameWon(this.canvas);
           window.cancelAnimationFrame(update);
-          gameWon.mobileDevice = true;
+          if (this.mobileDevice){
+            gameWon.mobileDevice = true;
+          }
           this.explosion = new Image();
           this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
@@ -838,7 +841,9 @@ class GalagaGame {
           let gameOver = new GameLost(this.canvas, this.score.score);
           window.cancelAnimationFrame(update);
           this.explosion = new Image();
-          gameOver.mobileDevice = true;
+          if (this.mobileDevice){
+            gameOver.mobileDevice = true;
+          }
           this.explosion.src = "./img/explosion.png";
           this.playExplosionSound(true);
           if (this.overAnimation) {

@@ -5,7 +5,7 @@ class Buffs {
     this.x = x;
     this.y = y;
     this.types = buffList;
-    this.speedY = 0.6;
+    this.speedY = 0.9;
     this.healthImage = new Image();
     this.bulletImage = new Image();
     this.shieldImage = new Image();
