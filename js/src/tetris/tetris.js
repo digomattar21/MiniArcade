@@ -32,7 +32,7 @@ class Game {
     var isStorage = "undefined" !== localStorage;
     var extra = [];
     var items = [];
-    if (isStorage && localStorage.length === 10) {
+    if (isStorage && localStorage.getItem("Fedora")) {
       for (let i = 0; i < 10; i++) {
         items.push(localStorage.key(i));
       }
@@ -344,21 +344,20 @@ class Game {
     var score = document.getElementById("score");
     var highscoreList = document.getElementById("highscores");
     score.value = this.score;
+
     var submitBtn = document.getElementsByClassName("submitBtn")[0];
     submitBtn.addEventListener("click", (event) => {
       event.preventDefault();
       var playerName = document.getElementById("player_name").value;
-
-      for (let i = 0; i < this.scores.length; i++) {
-        if (
-          this.scores[i].score < this.score &&
-          this.scores[i + 1].score >= this.score
-        ) {
-          this.scores[i].name = playerName;
-          this.scores[i].score = this.score;
-        } else if (this.scores[this.scores.length - 1].score < this.score) {
-          this.scores[this.scores.length - 1].name = playerName;
-          this.scores[this.scores.length - 1].score = this.score;
+      for (let i = this.scores.length - 1; i > 0; i--) {
+        if (this.scores[i].score < this.score) {
+          if (this.scores[i - 1].score >= this.score) {
+            this.scores.splice(i, 0, {
+              name: `${playerName}`,
+              score: `${this.score}`,
+            });
+            this.scores.pop();
+          }
         }
       }
 

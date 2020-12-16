@@ -53,7 +53,7 @@ class GalagaGame {
     this.font = `60px 'Press Start 2P'`;
     this.font1 = '35px "Press Start 2P"';
     this.font3 = `10px 'Press Start 2P'`;
-    this.font4 =`10px 'Press Start 2P'`;
+    this.font4 = `10px 'Press Start 2P'`;
   }
 
   renderStartScreen() {
@@ -61,7 +61,7 @@ class GalagaGame {
       this.font = `30px 'Press Start 2P'`;
       this.font1 = '15px "Press Start 2P"';
       this.font3 = `8px 'Press Start 2P'`;
-      this.font4=`6px 'Press Start 2P'`;
+      this.font4 = `6px 'Press Start 2P'`;
     }
     setTimeout(() => {
       this.ctx.fillStyle = "black";
@@ -286,12 +286,12 @@ class GalagaGame {
       this.ctx.fillStyle = "red";
 
       this.ctx.fillText(`Wave ${this.wave} cleared`, 60, 250);
-      if (this.mobileDevice){
+      if (this.mobileDevice) {
         this.ctx.fillText(`Get ready`, 150, 300);
       } else {
         this.ctx.fillText(`Get ready`, 150, 350);
       }
-      
+
       this.ctx.font = this.font4;
       this.ctx.fillStyle = "white";
       this.ctx.fillText(`${this.tip}`, 10, this.canvas.height / 2 + 150);
@@ -301,7 +301,7 @@ class GalagaGame {
       this.ctx.fillStyle = "red";
 
       this.ctx.fillText(`BOSS FIGHT`, 60, 250);
-      if (this.mobileDevice){
+      if (this.mobileDevice) {
         this.ctx.fillText(`You're Dead.`, 130, 300);
       } else {
         this.ctx.fillText(`You're Dead.`, 130, 350);

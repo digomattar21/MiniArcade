@@ -74,46 +74,46 @@ class BossFight {
   drawSelf() {
     switch (this.randlaserDir) {
       case "left":
-          if (this.mobileDevice){
-            this.ctx.drawImage(this.bossLeft, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossLeft, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossLeft, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossLeft, this.x, this.y);
+        }
         break;
       case "left-mid":
-        if (this.mobileDevice){
-            this.ctx.drawImage(this.bossLeft, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossLeft, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossLeft, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossLeft, this.x, this.y);
+        }
         break;
       case "mid":
-        if (this.mobileDevice){
-            this.ctx.drawImage(this.bossMid, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossMid, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossMid, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossMid, this.x, this.y);
+        }
         break;
       case "mid-open":
-        if (this.mobileDevice){
-            this.ctx.drawImage(this.bossMidOpen, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossMidOpen, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossMidOpen, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossMidOpen, this.x, this.y);
+        }
         break;
       case "right-mid":
-        if (this.mobileDevice){
-            this.ctx.drawImage(this.bossRight, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossRight, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossRight, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossRight, this.x, this.y);
+        }
         break;
       case "right":
-        if (this.mobileDevice){
-            this.ctx.drawImage(this.bossRight, this.x, this.y,100,100);
-          } else {
-            this.ctx.drawImage(this.bossRight, this.x, this.y);
-          }
+        if (this.mobileDevice) {
+          this.ctx.drawImage(this.bossRight, this.x, this.y, 100, 100);
+        } else {
+          this.ctx.drawImage(this.bossRight, this.x, this.y);
+        }
         break;
       default:
         break;
@@ -143,21 +143,23 @@ class BossFight {
         this.directionY = -1;
         this.directionX = newDir;
       }
-      if (this.mobileDevice){
-        if (this.x >= this.canvas.width-100) {
-            this.directionX = -1;
-            this.directionY = newDir;
-          } else if (this.x <= 0) {
-            this.directionX = 1;
-            this.directionY = newDir;
-      }} else {
-      if (this.x >= this.canvas.width-200) {
-        this.directionX = -1;
-        this.directionY = newDir;
-      } else if (this.x <= 0) {
-        this.directionX = 1;
-        this.directionY = newDir;
-      }}
+      if (this.mobileDevice) {
+        if (this.x >= this.canvas.width - 100) {
+          this.directionX = -1;
+          this.directionY = newDir;
+        } else if (this.x <= 0) {
+          this.directionX = 1;
+          this.directionY = newDir;
+        }
+      } else {
+        if (this.x >= this.canvas.width - 200) {
+          this.directionX = -1;
+          this.directionY = newDir;
+        } else if (this.x <= 0) {
+          this.directionX = 1;
+          this.directionY = newDir;
+        }
+      }
       this.x += this.speedX * this.directionX;
       this.y += this.speedY * this.directionY;
     }
