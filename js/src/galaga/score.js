@@ -16,7 +16,11 @@ class Score {
     }
     this.ctx.font = this.font;
     this.ctx.fillStyle = "lightgreen";
-    this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 20);
+    if (this.mobile) {
+      this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 100, 20);
+    } else {
+      this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 200, 20);
+    }
   }
 
   killUpdate() {

@@ -337,7 +337,7 @@ class Game {
   drawScore() {
     this.ctx.font = '0.7px "Press Start 2P"';
     this.ctx.fillStyle = "blue";
-    this.ctx.fillText(`Score:${this.score}`, 5.5, this.noGameArea + 1);
+    this.ctx.fillText(`Score:${this.score}`, 5, this.noGameArea + 1);
   }
 
   updateScore() {
