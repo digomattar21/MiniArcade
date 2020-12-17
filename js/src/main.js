@@ -125,7 +125,7 @@ window.onload = () => {
       canvasContainer.removeChild(canvasContainer.firstChild);
     }
 
-    if (getScreenSize()[0] < 400) {
+    if (getScreenSize()[0] < 430) {
       galagaCanvas.id = "canvas";
       galagaCanvas.height = 500;
       galagaCanvas.width = 350;
@@ -150,7 +150,7 @@ window.onload = () => {
 
     let game1 = new GalagaGame(canvas, 5);
 
-    if (getScreenSize()[0] < 400) {
+    if (getScreenSize()[0] < 430) {
       game1.mobileDevice = true;
     }
     game1.renderStartScreen();
